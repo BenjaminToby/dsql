@@ -17,6 +17,7 @@ const https = require("https");
  * Main Function
  * ==============================================================================
  * @param {String} key - API Key
+ * @param {String} db - Database Slug
  * @param {String} query - SQL query
  */
 module.exports = async function ({ key, db, query }) {

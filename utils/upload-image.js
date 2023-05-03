@@ -17,7 +17,7 @@ const https = require("https");
  * Main Function
  * ==============================================================================
  * @param {String} key - API Key
- * @param {String} payload - Image Data Eg. {
+ * @param {Object} payload - Image Data Eg. {
         imageData: imageBase64,
         imageName: `cast_cord_user_${newUser.payload.insertId}`,
         mimeType: "jpg",
