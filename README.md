@@ -4,10 +4,6 @@ This package requires an account with datasquirel, so be sure to create an accou
 
 ## Instalation
 
-### Package manager
-
-Using npm:
-
 ```bash
 $ npm install datasquirel
 ```
