@@ -4,6 +4,8 @@
  * ==============================================================================
  */
 const get = require("./utils/get");
+const post = require("./utils/post");
+const uploadImage = require("./utils/upload-image");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -20,6 +22,8 @@ const get = require("./utils/get");
  */
 const datasquirel = {
     get: get,
+    post: post,
+    uploadImage: uploadImage,
 };
 
 module.exports = datasquirel;

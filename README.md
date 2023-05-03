@@ -110,7 +110,7 @@ This method requires is similar to the `post` method, but with different paramet
 ```js
 const datasquirel = require("datasquirel");
 
-const postData = await datasquirel.post({
+const postData = await datasquirel.uploadImage({
     key: process.env.FULL_ACCESS_API_KEY,
     payload: {
         imageData: "6ejsiua2i29ndsajkfn9n==", // Image in base64
