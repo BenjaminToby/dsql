@@ -1,6 +1,6 @@
 # Datasquirel
 
-This package requires an account with datasquirel, so be sure to create an account at [datasquirel-create-account](https://datasquire.com/create-account) before you continue.
+This package requires an account with datasquirel, so be sure to create an account at [datasquirel-create-account](https://datasquirel.com/create-account) before you continue.
 
 ## Instalation
 
@@ -19,3 +19,9 @@ const datasquirel = require("datasquirel");
 ```
 
 ## Usage
+
+### Fetch Data
+
+This method requires a readonly key or fullaccess key gotten from [datasquirel](https://datasquirel.com/). It uses a basic https get request paired with some query params.
+
+`code`
