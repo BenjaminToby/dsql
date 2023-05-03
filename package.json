@@ -1,28 +1,28 @@
 {
-  "name": "dsql",
-  "version": "1.0.0",
-  "description": "Cloud-based SQL data management tool",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BenjaminToby/dsql.git"
-  },
-  "keywords": [
-    "SQL",
-    "Cloud",
-    "Cloud",
-    "Storage",
-    "API",
-    "Data",
-    "Storage"
-  ],
-  "author": "Benjamin Toby",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BenjaminToby/dsql/issues"
-  },
-  "homepage": "https://github.com/BenjaminToby/dsql#readme"
+    "name": "datasquirel",
+    "version": "1.0.0",
+    "description": "Cloud-based SQL data management tool",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BenjaminToby/dsql.git"
+    },
+    "keywords": [
+        "SQL",
+        "Cloud",
+        "Cloud",
+        "Storage",
+        "API",
+        "Data",
+        "Storage"
+    ],
+    "author": "Benjamin Toby",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/BenjaminToby/dsql/issues"
+    },
+    "homepage": "https://github.com/BenjaminToby/dsql#readme"
 }

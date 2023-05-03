@@ -18,11 +18,11 @@ const get = require("./utils/get");
  * ==============================================================================
  * @param {Object} mailObject - foundUser if any
  */
-const dsql = {
+const datasquirel = {
     get: get,
 };
 
-module.exports = dsql;
+module.exports = datasquirel;
 
 /** ********************************************** */
 /** ********************************************** */
