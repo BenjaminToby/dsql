@@ -72,47 +72,48 @@ module.exports = async function ({ key, payload, database, response, encryptionK
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        https
-            .request(
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: key,
-                    },
-                    port: 443,
-                    hostname: "datasquirel.com",
-                    path: `/api/user/login-user`,
+        const reqPayload = JSON.stringify({
+            payload,
+            database,
+        });
+
+        const httpsRequest = https.request(
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Content-Length": reqPayload.length,
+                    Authorization: key,
                 },
+                port: 443,
+                hostname: "datasquirel.com",
+                path: `/api/user/login-user`,
+            },
 
-                /**
-                 * Callback Function
-                 *
-                 * @description https request callback
-                 */
-                (response) => {
-                    var str = "";
+            /**
+             * Callback Function
+             *
+             * @description https request callback
+             */
+            (response) => {
+                var str = "";
 
-                    response.on("data", function (chunk) {
-                        str += chunk;
-                    });
+                response.on("data", function (chunk) {
+                    str += chunk;
+                });
 
-                    response.on("end", function () {
-                        resolve(JSON.parse(str));
-                    });
+                response.on("end", function () {
+                    resolve(JSON.parse(str));
+                });
 
-                    response.on("error", (err) => {
-                        reject(err);
-                    });
-                }
-            )
-            .write(
-                JSON.stringify({
-                    payload,
-                    database,
-                })
-            )
-            .end();
+                response.on("error", (err) => {
+                    reject(err);
+                });
+            }
+        );
+
+        httpsRequest.write(reqPayload);
+        httpsRequest.end();
     });
 
     /** ********************************************** */
