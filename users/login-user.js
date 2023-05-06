@@ -131,7 +131,7 @@ module.exports = async function ({ key, payload, database, response, encryptionK
             encryptionSalt,
         });
 
-        response.setHeader("Set-Cookie", [`datasquirelAuthKey=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `csrf=${httpResponse.csrf};samesite=strict;path=/;HttpOnly=true`]);
+        response.setHeader("Set-Cookie", [`datasquirelAuthKey=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `csrf=${httpResponse.payload.csrf};samesite=strict;path=/;HttpOnly=true`]);
     }
 
     /** ********************************************** */
