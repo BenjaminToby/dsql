@@ -10,7 +10,7 @@ module.exports = function ({ response }) {
      *
      * @description Check Encryption Keys
      */
-    response.setHeader("Set-Cookie", ["datasquirelAuthKey=none;max-age=0", "usertype=none;max-age=0", `refresh_properties=1;Max-Age=7000`]);
+    response.setHeader("Set-Cookie", ["datasquirelAuthKey=null;samesite=strict;path=/;HttpOnly=true;Secure=true", "csrf=null;samesite=strict;path=/;HttpOnly=true"]);
 
     /** ********************************************** */
     /** ********************************************** */
