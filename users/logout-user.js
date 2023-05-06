@@ -3,13 +3,6 @@
  * Imports
  * ==============================================================================
  */
-const get = require("./utils/get");
-const post = require("./utils/post");
-const uploadImage = require("./utils/upload-image");
-const createUser = require("./users/add-user");
-const loginUser = require("./users/login-user");
-const logoutUser = require("./users/logout-user");
-const userAuth = require("./users/user-auth");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -22,19 +15,25 @@ const userAuth = require("./users/user-auth");
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {Object} mailObject - foundUser if any
+ * @param {Object} response - Http response object
  */
-const datasquirel = {
-    get: get,
-    post: post,
-    uploadImage: uploadImage,
-    createUser: createUser,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
-    userAuth: userAuth,
-};
+module.exports = async function ({ response }) {
+    /**
+     * Check Encryption Keys
+     *
+     * @description Check Encryption Keys
+     */
+    response.setHeader("Set-Cookie", ["datasquirelAuthKey=none;max-age=0", "usertype=none;max-age=0", `refresh_properties=1;Max-Age=7000`]);
 
-module.exports = datasquirel;
+    /** ********************************************** */
+    /** ********************************************** */
+    /** ********************************************** */
+
+    return {
+        success: true,
+        payload: "User Logged Out",
+    };
+};
 
 /** ********************************************** */
 /** ********************************************** */
