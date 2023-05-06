@@ -20,8 +20,15 @@ const decrypt = require("../functions/decrypt");
  * @param {String} encryptionKey - Encryption Key
  * @param {String} encryptionSalt - Encryption Salt
  */
-module.exports = function ({ request, encryptionKey, encryptionSalt }) {
+module.exports = function ({ request, encryptionKey, encryptionSalt, level }) {
     try {
+        /**
+         * Grab the payload
+         *
+         * @description Grab the payload
+         */
+        const csrf = request.cookies.csrf;
+
         /**
          * Grab the payload
          *
@@ -70,7 +77,7 @@ module.exports = function ({ request, encryptionKey, encryptionSalt }) {
          *
          * @description Grab the payload
          */
-        if (csrf && !req.headers["x-csrf-auth"]?.match(new RegExp(`${userObject.csrf_k}`))) {
+        if (level?.match(/deep/i) && !csrf?.match(new RegExp(`${userObject.csrf_k}`))) {
             return {
                 success: false,
                 payload: null,
