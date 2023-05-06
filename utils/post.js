@@ -68,7 +68,7 @@ module.exports = async function ({ key, payload }) {
                     });
                 }
             )
-            .write(payload)
+            .write(JSON.stringify(payload))
             .end();
     });
 

@@ -69,10 +69,12 @@ module.exports = async function ({ key, payload, database }) {
                     });
                 }
             )
-            .write({
-                payload,
-                database,
-            })
+            .write(
+                JSON.stringify({
+                    payload,
+                    database,
+                })
+            )
             .end();
     });
 

@@ -4,7 +4,7 @@
  * ==============================================================================
  * @param {Object} response - Http response object
  */
-module.exports = async function ({ response }) {
+module.exports = function ({ response }) {
     /**
      * Check Encryption Keys
      *

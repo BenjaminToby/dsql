@@ -20,7 +20,7 @@ const decrypt = require("../functions/decrypt");
  * @param {String} encryptionKey - Encryption Key
  * @param {String} encryptionSalt - Encryption Salt
  */
-module.exports = async function ({ request, encryptionKey, encryptionSalt }) {
+module.exports = function ({ request, encryptionKey, encryptionSalt }) {
     /**
      * Grab the payload
      *

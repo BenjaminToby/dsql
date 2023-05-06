@@ -106,10 +106,12 @@ module.exports = async function ({ key, payload, database, response, encryptionK
                     });
                 }
             )
-            .write({
-                payload,
-                database,
-            })
+            .write(
+                JSON.stringify({
+                    payload,
+                    database,
+                })
+            )
             .end();
     });
 
