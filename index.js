@@ -27,11 +27,15 @@ const userAuth = require("./users/user-auth");
 const datasquirel = {
     get: get,
     post: post,
-    uploadImage: uploadImage,
-    createUser: createUser,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
-    userAuth: userAuth,
+    media: {
+        uploadImage: uploadImage,
+    },
+    user: {
+        createUser: createUser,
+        loginUser: loginUser,
+        logoutUser: logoutUser,
+        userAuth: userAuth,
+    },
 };
 
 module.exports = datasquirel;
