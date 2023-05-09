@@ -19,15 +19,22 @@ const decrypt = require("../functions/decrypt");
  * @param {Object} request - Http request object
  * @param {String} encryptionKey - Encryption Key
  * @param {String} encryptionSalt - Encryption Salt
+ * @param {String} level - Optional. "Deep" value indicates an extra layer of security
+ * @param {String} database - Database Name
  */
-module.exports = function ({ request, encryptionKey, encryptionSalt, level }) {
+module.exports = function ({ request, encryptionKey, encryptionSalt, level, database }) {
     try {
         /**
          * Grab the payload
          *
          * @description Grab the payload
          */
-        const csrf = request.cookies.csrf;
+        const dsqluid = request.cookies.dsqluid;
+        const authKeyName = `datasquirel_${dsqluid}_${database}_auth_key`;
+        const csrfName = `datasquirel_${dsqluid}_${database}_csrf`;
+
+        const key = request.cookies[authKeyName];
+        const csrf = request.cookies[csrfName];
 
         /**
          * Grab the payload
@@ -35,7 +42,7 @@ module.exports = function ({ request, encryptionKey, encryptionSalt, level }) {
          * @description Grab the payload
          */
         let userPayload = decrypt({
-            encryptedString: request.cookies.datasquirelAuthKey,
+            encryptedString: key,
             encryptionKey,
             encryptionSalt,
         });

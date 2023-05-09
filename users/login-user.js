@@ -131,7 +131,12 @@ module.exports = async function ({ key, payload, database, response, encryptionK
             encryptionSalt,
         });
 
-        response.setHeader("Set-Cookie", [`datasquirelAuthKey=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `csrf=${httpResponse.payload.csrf_k};samesite=strict;path=/;HttpOnly=true`]);
+        const { userId } = httpResponse;
+
+        const authKeyName = `datasquirel_${userId}_${database}_auth_key`;
+        const csrfName = `datasquirel_${userId}_${database}_csrf`;
+
+        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${httpResponse.payload.csrf_k};samesite=strict;path=/;HttpOnly=true`, `dsqluid=${userId};samesite=strict;path=/;HttpOnly=true`]);
     }
 
     /** ********************************************** */
