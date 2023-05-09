@@ -11,8 +11,10 @@ module.exports = function ({ request, response }) {
      * @description Check Encryption Keys
      */
     try {
-        const authKeyName = request.cookies.filter((cookie) => cookie.match(/datasquirel_.*_auth_key/))[0];
-        const csrfName = request.cookies.filter((cookie) => cookie.match(/datasquirel_.*_csrf/))[0];
+        const cookiesKeys = Object.keys(request.cookies);
+
+        const authKeyName = cookiesKeys.filter((cookieKey) => cookieKey.match(/datasquirel_.*_auth_key/))[0];
+        const csrfName = cookiesKeys.filter((cookieKey) => cookieKey.match(/datasquirel_.*_csrf/))[0];
 
         response.setHeader("Set-Cookie", [`${authKeyName}=null;samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=null;samesite=strict;path=/;HttpOnly=true`, `dsqluid=null;samesite=strict;path=/;HttpOnly=true`]);
 
