@@ -19,13 +19,11 @@ const https = require("https");
  * @param {String} key - API Key
  * @param {String} database - Target Database
  * @param {String | Object} payload - SQL query String or Request Object. Eg. {
-        action: "insert | update | delete",
-        data: {
-            user_id: user.id,
-            user_first_name: user.first_name,
-            user_last_name: user.last_name,
-        },
-        table: "posts",
+        first_name: "Benjamin",
+        last_name:"Toby",
+        email:"benoti.san@gmail.com",
+        username:"tben",
+        password:"12345678",
     }
  */
 module.exports = async function ({ key, payload, database }) {

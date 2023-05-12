@@ -17,21 +17,26 @@ const https = require("https");
  * Main Function
  * ==============================================================================
  * @param {String} key - API Key
- * @param {Object} payload - Image Data Eg. {
-        imageData: imageBase64,
-        imageName: `cast_cord_user_${newUser.payload.insertId}`,
-        mimeType: "jpg",
-        thumbnailSize: 120,
+ * @param {String} database - Target Database
+ * @param {String | Object} payload - SQL query String or Request Object. Eg. {
+        first_name: "Benjamin",
+        last_name:"Toby",
+        email:"benoti.san@gmail.com",
+        username:"tben",
+        password:"12345678",
     }
  */
-module.exports = async function ({ key, payload }) {
+module.exports = async function ({ key, payload, database }) {
     /**
      * Make https request
      *
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        const reqPayload = JSON.stringify(payload);
+        const reqPayload = JSON.stringify({
+            payload,
+            database,
+        });
 
         const httpsRequest = https.request(
             {
@@ -43,7 +48,7 @@ module.exports = async function ({ key, payload }) {
                 },
                 port: 443,
                 hostname: "datasquirel.com",
-                path: `/api/query/add-image`,
+                path: `/api/user/update-user`,
             },
 
             /**
@@ -67,7 +72,6 @@ module.exports = async function ({ key, payload }) {
                 });
             }
         );
-
         httpsRequest.write(reqPayload);
         httpsRequest.end();
     });
