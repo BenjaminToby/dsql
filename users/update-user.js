@@ -18,7 +18,8 @@ const https = require("https");
  * ==============================================================================
  * @param {String} key - API Key
  * @param {String} database - Target Database
- * @param {String | Object} payload - SQL query String or Request Object. Eg. {
+ * @param {String | Object} payload - User Object. Eg. {
+        id: 3, ****Required
         first_name: "Benjamin",
         last_name:"Toby",
         email:"benoti.san@gmail.com",
