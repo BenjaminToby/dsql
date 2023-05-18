@@ -23,12 +23,13 @@ const userAuth = require("./users/user-auth");
  * ==============================================================================
  * User Functions Object
  * ==============================================================================
- * @type {Object}
- * @property {Function} createUser - Create User Function
- * @property {Function} loginUser - Login User Function
- * @property {Function} logoutUser - Logout User Function
- * @property {Function} userAuth - User Auth Function
- * @property {Function} updateUser - Update User Function
+ * @type {{
+ *    createUser: Function
+ *    loginUser: Function
+ *    logoutUser: Function
+ *    userAuth: Function
+ *    updateUser: Function
+ *  }}
  */
 const user = {
     createUser: createUser,
@@ -42,8 +43,9 @@ const user = {
  * ==============================================================================
  * Media Functions Object
  * ==============================================================================
- * @type {Object}
- * @property {Function} uploadImage - Upload Image async Function
+ * @type {{
+ *  uploadImage: Function
+ * }}
  */
 const media = {
     uploadImage: uploadImage,
@@ -53,9 +55,21 @@ const media = {
  * ==============================================================================
  * Main Export
  * ==============================================================================
- * @type {Object}
- * @property {Function} get - get Function
- * @property {Function} post - post Function
+ * @type {{
+ *   get: Function,
+ *   post: Function,
+ *   media: {
+ *       uploadImage: Function
+ *   },
+ *   user: {
+ *       createUser: Function
+ *       loginUser: Function
+ *       logoutUser: Function
+ *       userAuth: Function
+ *       updateUser: Function
+ *   },
+ * }}
+ * ==============================================================================
  */
 const datasquirel = {
     get: get,
