@@ -13,18 +13,24 @@ const https = require("https");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {Promise<object>} FunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - Payload
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {String} key - API Key
- * @param {String} database - Target Database
- * @param {String | Object} payload - User Object. Eg. {
-        first_name: "Benjamin",
-        last_name:"Toby",
-        email:"benoti.san@gmail.com",
-        username:"tben",
-        password:"12345678",
-    }
+ * @async
+ *
+ * @param {{
+ *  key: string,
+ *  payload: string,
+ *  database: string
+ * }}
+ *
+ * @returns {FunctionReturn}
  */
 module.exports = async function ({ key, payload, database }) {
     /**

@@ -2,7 +2,9 @@
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {Object} response - Http response object
+ * @param {object} params - Single Param object containing params
+ * @param {object} params.request - Http request object
+ * @param {object} params.response - Http response object
  */
 module.exports = function ({ request, response }) {
     /**

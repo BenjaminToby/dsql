@@ -23,13 +23,6 @@ const userAuth = require("./users/user-auth");
  * ==============================================================================
  * User Functions Object
  * ==============================================================================
- * @type {{
- *    createUser: Function
- *    loginUser: Function
- *    logoutUser: Function
- *    userAuth: Function
- *    updateUser: Function
- *  }}
  */
 const user = {
     createUser: createUser,
@@ -43,9 +36,6 @@ const user = {
  * ==============================================================================
  * Media Functions Object
  * ==============================================================================
- * @type {{
- *  uploadImage: Function
- * }}
  */
 const media = {
     uploadImage: uploadImage,
@@ -54,21 +44,6 @@ const media = {
 /**
  * ==============================================================================
  * Main Export
- * ==============================================================================
- * @type {{
- *   get: Function,
- *   post: Function,
- *   media: {
- *       uploadImage: Function
- *   },
- *   user: {
- *       createUser: Function
- *       loginUser: Function
- *       logoutUser: Function
- *       userAuth: Function
- *       updateUser: Function
- *   },
- * }}
  * ==============================================================================
  */
 const datasquirel = {

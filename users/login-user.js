@@ -14,23 +14,24 @@ const encrypt = require("../functions/encrypt");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {Promise<object>} FunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - Payload
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {String} key - API Key
- * @param {String} database - Target Database
- * @param {Object} payload - SQL query String or Request Object. Eg. {
-        action: "insert | update | delete",
-        data: {
-            user_id: user.id,
-            user_first_name: user.first_name,
-            user_last_name: user.last_name,
-        },
-        table: "posts",
-    }
- * @param {Object} response - Http response object
- * @param {String} encryptionKey - Encryption Key
- * @param {String} encryptionSalt - Encryption Salt
+ * @param {object} params - Single Param object containing params
+ * @param {String} params.key - API Key
+ * @param {String} params.database - Target Database
+ * @param {(Object | string)} [params.payload={ action: "insert | update | delete", data: {}, table: "posts"  }] SQL query String or Request
+ * @param {Object} params.response - Http response object
+ * @param {String} params.encryptionKey - Encryption Key
+ * @param {String} params.encryptionSalt - Encryption Salt
+ *
+ * @returns {FunctionReturn}
  */
 module.exports = async function ({ key, payload, database, response, encryptionKey, encryptionSalt }) {
     /**
