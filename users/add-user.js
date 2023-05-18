@@ -13,7 +13,7 @@ const https = require("https");
 /** ****************************************************************************** */
 
 /**
- * @typedef {Promise<object>} FunctionReturn
+ * @typedef {object} FunctionReturn
  * @property {boolean} success - Did the function run successfully?
  * @property {(Object[]|string)} [payload=[]] - Payload
  */

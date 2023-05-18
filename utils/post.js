@@ -27,12 +27,13 @@ const https = require("https");
  * @param {Object} params - Single object passed
  * @param {string} params.key - API Key
  * @param {string} params.database - Database Name
- * @param {(Object | string)} params.query - SQL query String or Request Object
- * @param {string} [params.query.action="insert"] - Query action => insert | update | delete
- * @param {string} params.query.table - Database table slug
- * @param {string} params.query.identifierColumnName - Name of column(or field) to match
- * @param {(string | number)} params.query.identifierValue - Value attached to target column(or field)
- * @param {Object} params.query.data - data to be inserted: eg. { id: 1267, first_name: John, last_name: Doe }
+ * @param {({
+ *  action: [string="insert"],
+ *  table: string,
+ *  identifierColumnName: string,
+ *  identifierValue: (string|number),
+ *  data: object,
+ * } | string)} params.query - SQL query String or Request Object
  *
  * @returns { PostReturn } - Return Object
  */
