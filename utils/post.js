@@ -13,23 +13,28 @@ const https = require("https");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {Object} PostReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {String} key - API Key
- * @param {String} database - Database Name
- * @param {String | Object} query - SQL query String or Request Object. Eg. {
-        action: "insert | update | delete",
-        data: {
-            user_id: user.id,
-            user_first_name: user.first_name,
-            user_last_name: user.last_name,
-        },
-        table: "posts",
-        identifierColumnName: "id", 
-        identifierValue: 1, 
-        condition: "WHERE likes > 2"
-    }
+ * @async
+ *
+ * @param {Object} params - Single object passed
+ * @param {string} params.key - API Key
+ * @param {string} params.database - Database Name
+ * @param {(Object | string)} params.query - SQL query String or Request Object
+ * @param {string} [params.query.action="insert"] - Query action => insert | update | delete
+ * @param {string} params.query.table - Database table slug
+ * @param {string} params.query.identifierColumnName - Name of column(or field) to match
+ * @param {(string | number)} params.query.identifierValue - Value attached to target column(or field)
+ * @param {Object} params.query.data - data to be inserted: eg. { id: 1267, first_name: John, last_name: Doe }
+ *
+ * @returns { PostReturn } - Return Object
  */
 module.exports = async function ({ key, query, database }) {
     /**

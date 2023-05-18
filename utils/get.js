@@ -13,12 +13,23 @@ const https = require("https");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {Object} GetReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {String} key - API Key
- * @param {String} db - Database Slug
- * @param {String} query - SQL query
+ * @async
+ *
+ * @param {Object} params - Single object passed
+ * @param {string} params.key - API Key
+ * @param {string} params.db - Database Name
+ * @param {(string | Object)} params.query - SQL Query
+ *
+ * @returns {GetReturn} - Return Object
  */
 module.exports = async function ({ key, db, query }) {
     /**
