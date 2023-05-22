@@ -44,10 +44,25 @@ module.exports = async function ({ key, query, database }) {
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        const reqPayload = JSON.stringify({
+        const reqPayloadString = JSON.stringify({
             query,
             database,
         }).replace(/\n|\r|\n\r/gm, "");
+
+        try {
+            JSON.parse(reqPayloadString);
+        } catch (error) {
+            console.log(error);
+            console.log(reqPayloadString);
+
+            return {
+                success: false,
+                payload: null,
+                error: "Query object is invalid. Please Check query data values",
+            };
+        }
+
+        const reqPayload = reqPayloadString;
 
         const httpsRequest = https.request(
             {
