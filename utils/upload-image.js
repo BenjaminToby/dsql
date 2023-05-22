@@ -13,16 +13,29 @@ const https = require("https");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {Object} FunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {{
+ *   urlPath: string,
+ *   urlThumbnailPath: string
+ * }} payload - Payload containing the url for the image and its thumbnail
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {String} key - API Key
- * @param {Object} payload - Image Data Eg. {
-        imageData: imageBase64,
-        imageName: `cast_cord_user_${newUser.payload.insertId}`,
-        mimeType: "jpg",
-        thumbnailSize: 120,
-    }
+ * @param {Object} params - API Key
+ * @param {String} params.key - API Key
+ * @param {{
+ *    imageData: string,
+ *    imageName: string,
+ *    mimeType: [string],
+ *    thumbnailSize: [number],
+ *    folder: [string],
+ * }} params.payload - Image Data Eg.
+ *
+ * @returns { Promise<FunctionReturn> } - Return Object
  */
 module.exports = async function ({ key, payload }) {
     /**
