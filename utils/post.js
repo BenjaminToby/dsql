@@ -47,7 +47,7 @@ module.exports = async function ({ key, query, database }) {
         const reqPayload = JSON.stringify({
             query,
             database,
-        });
+        }).replace(/\n|\r|\n\r/gm, "");
 
         const httpsRequest = https.request(
             {
