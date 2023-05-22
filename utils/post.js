@@ -79,7 +79,7 @@ module.exports = async function ({ key, query, database }) {
                         resolve(JSON.parse(str));
                     } catch (error) {
                         console.log(error.message);
-                        console.log(str);
+                        console.log("Fetched Payload =>", str);
 
                         resolve({
                             success: false,
