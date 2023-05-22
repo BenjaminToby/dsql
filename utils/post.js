@@ -75,11 +75,24 @@ module.exports = async function ({ key, query, database }) {
                 });
 
                 response.on("end", function () {
-                    resolve(JSON.parse(str));
+                    try {
+                        resolve(JSON.parse(str));
+                    } catch (error) {
+                        console.log(error);
+                        resolve({
+                            success: false,
+                            payload: null,
+                            error: error.message,
+                        });
+                    }
                 });
 
                 response.on("error", (err) => {
-                    reject(err);
+                    resolve({
+                        success: false,
+                        payload: null,
+                        error: err.message,
+                    });
                 });
             }
         );
