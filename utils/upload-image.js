@@ -25,6 +25,8 @@ const https = require("https");
  * ==============================================================================
  * Main Function
  * ==============================================================================
+ * @async
+ *
  * @param {Object} params - API Key
  * @param {String} params.key - API Key
  * @param {{
