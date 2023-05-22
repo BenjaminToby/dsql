@@ -49,8 +49,6 @@ module.exports = async function ({ key, query, database }) {
             database,
         });
 
-        console.log(reqPayload);
-
         const httpsRequest = https.request(
             {
                 method: "POST",
