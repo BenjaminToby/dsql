@@ -29,7 +29,7 @@ const https = require("https");
  * @param {string} params.db - Database Name
  * @param {(string | Object)} params.query - SQL Query
  *
- * @returns {GetReturn} - Return Object
+ * @returns { Promise<GetReturn> } - Return Object
  */
 module.exports = async function ({ key, db, query }) {
     /**

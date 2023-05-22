@@ -31,7 +31,7 @@ const encrypt = require("../functions/encrypt");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
- * @returns {FunctionReturn}
+ * @returns { Promise<FunctionReturn>}
  */
 module.exports = async function ({ key, payload, database, response, encryptionKey, encryptionSalt }) {
     /**

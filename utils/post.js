@@ -35,7 +35,7 @@ const https = require("https");
  *  data: object,
  * } | string)} params.query - SQL query String or Request Object
  *
- * @returns { PostReturn } - Return Object
+ * @returns { Promise<PostReturn> } - Return Object
  */
 module.exports = async function ({ key, query, database }) {
     /**

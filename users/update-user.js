@@ -30,7 +30,7 @@ const https = require("https");
  * @param {String | Object} [params.payload={ id: 4, first_name: "Benjamin" }] - User Object.
  * @param {number} [params.payload.id] - User id => Required
  *
- * @returns {FunctionReturn}
+ * @returns { Promise<FunctionReturn>}
  */
 module.exports = async function ({ key, payload, database }) {
     /**

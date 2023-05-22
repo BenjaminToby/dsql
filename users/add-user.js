@@ -30,7 +30,7 @@ const https = require("https");
  *  database: string
  * }}
  *
- * @returns {FunctionReturn}
+ * @returns { Promise<FunctionReturn> }
  */
 module.exports = async function ({ key, payload, database }) {
     /**
