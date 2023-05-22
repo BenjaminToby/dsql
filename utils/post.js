@@ -115,6 +115,11 @@ module.exports = async function ({ key, query, database }) {
         );
 
         httpsRequest.write(reqPayload);
+
+        httpsRequest.on("error", (error) => {
+            console.log("HTTPS request ERROR =>", error);
+        });
+
         httpsRequest.end();
     });
 
