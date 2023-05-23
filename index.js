@@ -11,6 +11,7 @@ const updateUser = require("./users/update-user");
 const loginUser = require("./users/login-user");
 const logoutUser = require("./users/logout-user");
 const userAuth = require("./users/user-auth");
+const reAuthUser = require("./users/reauth-user");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -29,6 +30,7 @@ const user = {
     loginUser: loginUser,
     logoutUser: logoutUser,
     userAuth: userAuth,
+    reAuthUser: reAuthUser,
     updateUser: updateUser,
 };
 
