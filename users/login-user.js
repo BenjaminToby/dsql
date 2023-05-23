@@ -26,7 +26,10 @@ const encrypt = require("../functions/encrypt");
  * @param {object} params - Single Param object containing params
  * @param {String} params.key - API Key
  * @param {String} params.database - Target Database
- * @param {(Object | string)} [params.payload={ action: "insert | update | delete", data: {}, table: "posts"  }] SQL query String or Request
+ * @param {{
+ *  email: string,
+ *  password: string
+ * }} params.payload Login Email/Username and Password
  * @param {Object} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
