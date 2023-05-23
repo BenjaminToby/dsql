@@ -12,6 +12,7 @@ const loginUser = require("./users/login-user");
 const logoutUser = require("./users/logout-user");
 const userAuth = require("./users/user-auth");
 const reAuthUser = require("./users/reauth-user");
+const getUser = require("./users/get-user");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -32,6 +33,7 @@ const user = {
     userAuth: userAuth,
     reAuthUser: reAuthUser,
     updateUser: updateUser,
+    getUser: getUser,
 };
 
 /**
