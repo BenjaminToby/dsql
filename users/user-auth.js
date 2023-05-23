@@ -16,11 +16,12 @@ const decrypt = require("../functions/decrypt");
  * ==============================================================================
  * Main Function
  * ==============================================================================
- * @param {Object} request - Http request object
- * @param {String} encryptionKey - Encryption Key
- * @param {String} encryptionSalt - Encryption Salt
- * @param {String} level - Optional. "Deep" value indicates an extra layer of security
- * @param {String} database - Database Name
+ * @param {Object} params - Arg
+ * @param {Object} params.request - Http request object
+ * @param {String} params.encryptionKey - Encryption Key
+ * @param {String} params.encryptionSalt - Encryption Salt
+ * @param {String} params.level - Optional. "Deep" value indicates an extra layer of security
+ * @param {String} params.database - Database Name
  */
 module.exports = function ({ request, encryptionKey, encryptionSalt, level, database }) {
     try {

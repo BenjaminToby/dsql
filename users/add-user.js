@@ -26,8 +26,14 @@ const https = require("https");
  *
  * @param {{
  *  key: string,
- *  payload: string,
  *  database: string
+ *  payload: {
+ *      first_name: string,
+ *      last_name: string,
+ *      user_name: string,
+ *      email: string,
+ *      password: string,
+ *  },
  * }}
  *
  * @returns { Promise<FunctionReturn> }

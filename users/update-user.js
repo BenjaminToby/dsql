@@ -28,7 +28,7 @@ const https = require("https");
  * @param {String} params.key - API Key
  * @param {String} params.database - Target Database
  * @param {String | Object} [params.payload={ id: 4, first_name: "Benjamin" }] - User Object.
- * @param {number} [params.payload.id] - User id => Required
+ * @param {number} params.payload.id - User id => Required
  *
  * @returns { Promise<FunctionReturn>}
  */
