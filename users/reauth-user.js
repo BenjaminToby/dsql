@@ -55,7 +55,7 @@ const userAuth = require("./user-auth");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
- * @returns { Promise<FunctionReturn>}
+ * @returns { Promise<FunctionReturn> }
  */
 module.exports = async function ({ key, database, response, request, level, encryptionKey, encryptionSalt }) {
     /**

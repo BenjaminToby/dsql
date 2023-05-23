@@ -13,6 +13,30 @@ const decrypt = require("../functions/decrypt");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {object} FunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {{
+ *   id: number,
+ *   first_name: string,
+ *   last_name: string,
+ *   username: string,
+ *   email: string,
+ *   phone: string,
+ *   social_id: [string],
+ *   image: string,
+ *   image_thumbnail: string,
+ *   verification_status: [number=0],
+ *   social_login: [number],
+ *   social_platform: [string],
+ *   csrf_k: string,
+ *   more_data: [string],
+ *   logged_in_status: boolean,
+ *   date: string,
+ * }} payload - Payload
+ * @property {string} [msg] - Response Message
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -22,6 +46,8 @@ const decrypt = require("../functions/decrypt");
  * @param {String} params.encryptionSalt - Encryption Salt
  * @param {String} params.level - Optional. "Deep" value indicates an extra layer of security
  * @param {String} params.database - Database Name
+ *
+ * @returns { FunctionReturn }
  */
 module.exports = function ({ request, encryptionKey, encryptionSalt, level, database }) {
     try {
