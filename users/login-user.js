@@ -105,7 +105,7 @@ module.exports = async function ({ key, payload, database, response, encryptionK
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Content-Length": reqPayload.length,
+                    "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
                 port: 443,
