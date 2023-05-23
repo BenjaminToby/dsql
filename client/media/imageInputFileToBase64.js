@@ -28,8 +28,6 @@ module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidt
      * @description make a request to datasquirel.com
      */
     try {
-        console.log(typeof imageInputFile);
-
         let imageName = imageInputFile.name.replace(/\..*/, "");
         let imageDataBase64;
         let imageSize;
@@ -73,9 +71,7 @@ module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidt
                 const srcEncoded = canvas.toDataURL(MIME_TYPE, QUALITY);
 
                 if (imagePreviewNode) {
-                    document.querySelectorAll(`[data-imagepreview='image']`).forEach((img) => {
-                        img.src = srcEncoded;
-                    });
+                    imagePreviewNode.src = srcEncoded;
                 }
 
                 res(srcEncoded);
