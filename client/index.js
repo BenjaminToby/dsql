@@ -32,7 +32,7 @@ const datasquirelClient = {
     media: media,
 };
 
-export default datasquirelClient;
+module.exports = datasquirelClient;
 
 /** ********************************************** */
 /** ********************************************** */
