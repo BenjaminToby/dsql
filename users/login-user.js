@@ -16,13 +16,32 @@ const encrypt = require("../functions/encrypt");
 /**
  * @typedef {object} FunctionReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - Payload
+ * @property {{
+ *   id: number,
+ *   first_name: string,
+ *   last_name: string,
+ *   username: string,
+ *   email: string,
+ *   phone: string,
+ *   social_id: [string],
+ *   image: string,
+ *   image_thumbnail: string,
+ *   verification_status: [number=0],
+ *   social_login: [number],
+ *   social_platform: [string],
+ *   csrf_k: string,
+ *   more_data: [string],
+ *   logged_in_status: boolean,
+ *   date: string,
+ * }} payload - Payload
  */
 
 /**
  * ==============================================================================
  * Main Function
  * ==============================================================================
+ * @async
+ *
  * @param {object} params - Single Param object containing params
  * @param {String} params.key - API Key
  * @param {String} params.database - Target Database
