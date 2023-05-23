@@ -3,8 +3,8 @@
  * Imports
  * ==============================================================================
  */
-const imageInputFileToBase64 = require("./media/imageInputFileToBase64");
-const imageInputToBase64 = require("./media/imageInputToBase64");
+import imageInputFileToBase64 from "./imageInputFileToBase64";
+import imageInputToBase64 from "./imageInputToBase64";
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -32,7 +32,7 @@ const datasquirelClient = {
     media: media,
 };
 
-module.exports = datasquirelClient;
+export default datasquirelClient;
 
 /** ********************************************** */
 /** ********************************************** */

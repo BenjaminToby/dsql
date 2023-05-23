@@ -21,7 +21,7 @@
  *
  * @returns { Promise<FunctionReturn> } - Return Object
  */
-export default async function imageInputFileToBase64({ imageInputFile, maxWidth, imagePreviewNode }) {
+module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidth, imagePreviewNode }) {
     /**
      * Make https request
      *
@@ -108,7 +108,7 @@ export default async function imageInputFileToBase64({ imageInputFile, maxWidth,
             imageSize: null,
         };
     }
-}
+};
 
 /** ********************************************** */
 /** ********************************************** */
