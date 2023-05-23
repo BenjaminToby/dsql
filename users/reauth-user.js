@@ -71,6 +71,14 @@ module.exports = async function ({ key, database, response, request, level, encr
         request,
     });
 
+    if (!existingUser?.payload?.id) {
+        return {
+            success: false,
+            payload: null,
+            msg: "Cookie Credentials Invalid",
+        };
+    }
+
     /**
      * Make https request
      *
@@ -78,7 +86,7 @@ module.exports = async function ({ key, database, response, request, level, encr
      */
     const httpResponse = await new Promise((resolve, reject) => {
         const reqPayload = JSON.stringify({
-            existingUser,
+            existingUser: existingUser.payload,
             database,
         });
 
