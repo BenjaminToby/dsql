@@ -52,7 +52,7 @@ module.exports = async function logout(params) {
     ////////////////////////////////////////
 
     const cookies = parseClientCookies();
-    const socialId = cookies.datasquirel_social_id;
+    const socialId = cookies?.datasquirel_social_id && typeof cookies.datasquirel_social_id == "string" && !cookies.datasquirel_social_id.match(/^null$/i) ? cookies.datasquirel_social_id : null;
 
     ////////////////////////////////////////
     ////////////////////////////////////////
@@ -75,7 +75,7 @@ module.exports = async function logout(params) {
         //////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////
 
-        if (socialId) {
+        if (socialId && !socialId?.match(/^null$/i)) {
             const googleClientId = params?.googleClientId;
 
             if (googleClientId) {
@@ -110,6 +110,8 @@ module.exports = async function logout(params) {
                         ////////////////////////////////////////
                     }
                 };
+            } else {
+                resolve(true);
             }
 
             ////////////////////////////////////////
