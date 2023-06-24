@@ -7,6 +7,7 @@ const imageInputFileToBase64 = require("./media/imageInputFileToBase64");
 const imageInputToBase64 = require("./media/imageInputToBase64");
 const inputFileToBase64 = require("./media/inputFileToBase64");
 const loginWithGoogle = require("./auth/loginWithGoogle");
+const getAccessToken = require("./auth/google/getAccessToken");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -32,7 +33,9 @@ const media = {
  * ==============================================================================
  */
 const auth = {
-    loginWithGoogle: loginWithGoogle,
+    google: {
+        getAccessToken: getAccessToken,
+    },
 };
 
 /**

@@ -53,8 +53,6 @@ module.exports = async function loginWithGoogle({ username, database, clientId, 
     document.body.appendChild(googleScript);
 
     googleScript.onload = function (e) {
-        console.log("GOOGLE script loaded!");
-        console.log(element);
         if (google) {
             if (readyStateDispatch) readyStateDispatch(true);
 
