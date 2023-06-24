@@ -4,6 +4,7 @@
  * ==============================================================================
  */
 const decrypt = require("../functions/decrypt");
+const parseCookies = require("../utils/functions/parseCookies");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -56,12 +57,13 @@ module.exports = function ({ request, encryptionKey, encryptionSalt, level, data
          *
          * @description Grab the payload
          */
-        const dsqluid = request.cookies.dsqluid;
+        const cookies = parseCookies({ request });
+        const dsqluid = cookies.dsqluid;
         const authKeyName = `datasquirel_${dsqluid}_${database}_auth_key`;
         const csrfName = `datasquirel_${dsqluid}_${database}_csrf`;
 
-        const key = request.cookies[authKeyName];
-        const csrf = request.cookies[csrfName];
+        const key = cookies[authKeyName];
+        const csrf = cookies[csrfName];
 
         /**
          * Grab the payload

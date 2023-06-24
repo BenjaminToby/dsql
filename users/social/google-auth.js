@@ -170,12 +170,12 @@ module.exports = async function ({ key, token, database, clientId, response, enc
             encryptionSalt,
         });
 
-        const { user } = httpResponse;
+        const { user, dsqlUserId } = httpResponse;
 
-        const authKeyName = `datasquirel_${user.id}_${database}_auth_key`;
-        const csrfName = `datasquirel_${user.id}_${database}_csrf`;
+        const authKeyName = `datasquirel_${dsqlUserId}_${database}_auth_key`;
+        const csrfName = `datasquirel_${dsqlUserId}_${database}_csrf`;
 
-        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${httpResponse.user.csrf_k};samesite=strict;path=/;sHttpOnly=true`, `dsqluid=${user.id};samesite=strict;path=/;HttpOnly=true`]);
+        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${user.csrf_k};samesite=strict;path=/;HttpOnly=true`, `dsqluid=${dsqlUserId};samesite=strict;path=/;HttpOnly=true`, `datasquirel_social_id=${user.social_id};samesite=strict;path=/`]);
     }
 
     ////////////////////////////////////////

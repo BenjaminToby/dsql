@@ -131,3 +131,6 @@ dist
 
 # typescript
 tsconfig.json
+
+# others
+deprecated

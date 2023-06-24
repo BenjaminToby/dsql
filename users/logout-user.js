@@ -1,10 +1,13 @@
+const parseCookies = require("../utils/functions/parseCookies");
+
 /**
- * ==============================================================================
- * Main Function
+ * Logout user
  * ==============================================================================
  * @param {object} params - Single Param object containing params
  * @param {object} params.request - Http request object
  * @param {object} params.response - Http response object
+ *
+ * @returns {{success: boolean, payload: string}}
  */
 module.exports = function ({ request, response }) {
     /**
@@ -13,7 +16,7 @@ module.exports = function ({ request, response }) {
      * @description Check Encryption Keys
      */
     try {
-        const cookiesKeys = Object.keys(request.cookies);
+        const cookiesKeys = Object.keys(parseCookies({ request }));
 
         const authKeyName = cookiesKeys.filter((cookieKey) => cookieKey.match(/datasquirel_.*_auth_key/))[0];
         const csrfName = cookiesKeys.filter((cookieKey) => cookieKey.match(/datasquirel_.*_csrf/))[0];
