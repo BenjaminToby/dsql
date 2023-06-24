@@ -5,6 +5,7 @@
  */
 import imageInputFileToBase64 from "./imageInputFileToBase64";
 import imageInputToBase64 from "./imageInputToBase64";
+import loginWithGoogle from "../auth/loginWithGoogle";
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -19,6 +20,16 @@ import imageInputToBase64 from "./imageInputToBase64";
  * ==============================================================================
  */
 const media = {
+    imageInputToBase64: imageInputToBase64,
+    imageInputFileToBase64: imageInputFileToBase64,
+};
+
+/**
+ * ==============================================================================
+ * Media Functions Object
+ * ==============================================================================
+ */
+const auth = {
     imageInputToBase64: imageInputToBase64,
     imageInputFileToBase64: imageInputFileToBase64,
 };
