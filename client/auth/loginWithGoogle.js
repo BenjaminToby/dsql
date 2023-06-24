@@ -83,7 +83,7 @@ module.exports = async function loginWithGoogle({ username, database, clientId, 
                     callback: handleCredentialResponse,
                 });
 
-                google.accounts.id.renderButton(document.getElementById("google-identity-button"), {
+                google.accounts.id.renderButton(element, {
                     theme: "outline",
                     size: "large",
                     logo_alignment: "center",
