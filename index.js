@@ -13,6 +13,7 @@ const logoutUser = require("./users/logout-user");
 const userAuth = require("./users/user-auth");
 const reAuthUser = require("./users/reauth-user");
 const getUser = require("./users/get-user");
+const loginWithGoogle = require("./users/social/google-auth");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -34,6 +35,9 @@ const user = {
     reAuthUser: reAuthUser,
     updateUser: updateUser,
     getUser: getUser,
+    social: {
+        loginWithGoogle: loginWithGoogle,
+    },
 };
 
 /**
