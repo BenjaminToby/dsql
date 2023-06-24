@@ -19,12 +19,15 @@ const parseClientCookies = require("../utils/parseClientCookies");
  *
  * @async
  *
+ * @param {object} params - Single object passed
+ * @param {string|null} params.googleClientId - Google client Id if applicable
+ *
  * @requires localStorageUser - a "user" JSON string stored in local storage with all
  * the necessary user data gotten from the server
  *
  * @returns {Promise<boolean>} - Return
  */
-module.exports = async function logout() {
+module.exports = async function logout(params) {
     /**
      * == Initialize
      *
@@ -73,37 +76,45 @@ module.exports = async function logout() {
         //////////////////////////////////////////////////////////////////////////////////
 
         if (socialId) {
-            const googleScript = document.createElement("script");
-            googleScript.src = "https://accounts.google.com/gsi/client";
-            googleScript.className = "social-script-tag";
+            const googleClientId = params.googleClientId;
 
-            document.body.appendChild(googleScript);
+            if (googleClientId) {
+                const googleScript = document.createElement("script");
+                googleScript.src = "https://accounts.google.com/gsi/client";
+                googleScript.className = "social-script-tag";
+
+                document.body.appendChild(googleScript);
+
+                ////////////////////////////////////////
+                ////////////////////////////////////////
+                ////////////////////////////////////////
+
+                googleScript.onload = function (e) {
+                    if (google) {
+                        ////////////////////////////////////////
+                        ////////////////////////////////////////
+                        ////////////////////////////////////////
+
+                        google.accounts.id.initialize({
+                            client_id: googleClientId,
+                        });
+
+                        google.accounts.id.revoke(socialId, (done) => {
+                            console.log(done.error);
+
+                            resolve(true);
+                        });
+
+                        ////////////////////////////////////////
+                        ////////////////////////////////////////
+                        ////////////////////////////////////////
+                    }
+                };
+            }
 
             ////////////////////////////////////////
             ////////////////////////////////////////
             ////////////////////////////////////////
-
-            googleScript.onload = function (e) {
-                if (google) {
-                    ////////////////////////////////////////
-                    ////////////////////////////////////////
-                    ////////////////////////////////////////
-
-                    google.accounts.id.initialize({
-                        client_id: clientId,
-                    });
-
-                    google.accounts.id.revoke(socialId, (done) => {
-                        console.log(done.error);
-
-                        resolve(true);
-                    });
-
-                    ////////////////////////////////////////
-                    ////////////////////////////////////////
-                    ////////////////////////////////////////
-                }
-            };
         } else {
             resolve(true);
         }
