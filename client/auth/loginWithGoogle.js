@@ -52,62 +52,62 @@ module.exports = async function loginWithGoogle({ username, database, clientId, 
 
     document.body.appendChild(googleScript);
 
-    const response = await new Promise((resolve, reject) => {
-        googleScript.onload = function (e) {
-            if (google) {
-                if (readyStateDispatch) readyStateDispatch(true);
+    googleScript.onload = function (e) {
+        console.log("GOOGLE script loaded!");
+        console.log(element);
+        if (google) {
+            if (readyStateDispatch) readyStateDispatch(true);
 
-                ////////////////////////////////////////
-                ////////////////////////////////////////
-                ////////////////////////////////////////
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+            ////////////////////////////////////////
 
-                if (element) {
-                    /**
-                     * Handle google credentials response
-                     * ========================================================
-                     * @param {object} response - Google response with credentials
-                     * @param {string} response.credential - Google access token
-                     */
-                    function handleCredentialResponse(response) {
-                        userLoginWithGoogle({
-                            gUser: null,
-                            accessToken: response.credential,
-                        }).then((result) => {
-                            resolve(result);
-                        });
-                    }
-
-                    google.accounts.id.initialize({
-                        client_id: clientId,
-                        callback: handleCredentialResponse,
-                    });
-
-                    google.accounts.id.renderButton(document.getElementById("google-identity-button"), {
-                        theme: "outline",
-                        size: "large",
-                        logo_alignment: "center",
+            if (element) {
+                /**
+                 * Handle google credentials response
+                 * ========================================================
+                 * @param {object} response - Google response with credentials
+                 * @param {string} response.credential - Google access token
+                 */
+                function handleCredentialResponse(response) {
+                    userLoginWithGoogle({
+                        gUser: null,
+                        accessToken: response.credential,
+                    }).then((result) => {
+                        console.log(result);
                     });
                 }
 
-                ////////////////////////////////////////
-                ////////////////////////////////////////
-                ////////////////////////////////////////
+                google.accounts.id.initialize({
+                    client_id: clientId,
+                    callback: handleCredentialResponse,
+                });
 
-                if (triggerPrompt) {
-                    google.accounts.id.prompt(
-                        /**
-                         * Google prompt notification callback
-                         * ========================================================
-                         * @param {GoogleIdentityPromptNotification} notification - Notification object
-                         */
-                        (notification) => {
-                            notification.isDisplayed();
-                        }
-                    );
-                }
+                google.accounts.id.renderButton(document.getElementById("google-identity-button"), {
+                    theme: "outline",
+                    size: "large",
+                    logo_alignment: "center",
+                });
             }
-        };
-    });
+
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+
+            if (triggerPrompt) {
+                google.accounts.id.prompt(
+                    /**
+                     * Google prompt notification callback
+                     * ========================================================
+                     * @param {GoogleIdentityPromptNotification} notification - Notification object
+                     */
+                    (notification) => {
+                        notification.isDisplayed();
+                    }
+                );
+            }
+        }
+    };
 
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +178,4 @@ module.exports = async function loginWithGoogle({ username, database, clientId, 
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
-
-    return response;
 };
