@@ -19,7 +19,7 @@ const parseClientCookies = require("../utils/parseClientCookies");
  *
  * @async
  *
- * @param {object} params - Single object passed
+ * @param {object|null} params - Single object passed
  * @param {string|null} params.googleClientId - Google client Id if applicable
  *
  * @requires localStorageUser - a "user" JSON string stored in local storage with all
@@ -76,7 +76,7 @@ module.exports = async function logout(params) {
         //////////////////////////////////////////////////////////////////////////////////
 
         if (socialId) {
-            const googleClientId = params.googleClientId;
+            const googleClientId = params?.googleClientId;
 
             if (googleClientId) {
                 const googleScript = document.createElement("script");
