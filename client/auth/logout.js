@@ -85,8 +85,6 @@ module.exports = async function logout() {
 
             googleScript.onload = function (e) {
                 if (google) {
-                    if (readyStateDispatch) readyStateDispatch(true);
-
                     ////////////////////////////////////////
                     ////////////////////////////////////////
                     ////////////////////////////////////////
