@@ -19,15 +19,12 @@ const parseClientCookies = require("../utils/parseClientCookies");
  *
  * @async
  *
- * @param {object} params - Single object passed
- * @param {string|null} params.googleClientId - Google client Id if applicable
- *
  * @requires localStorageUser - a "user" JSON string stored in local storage with all
  * the necessary user data gotten from the server
  *
  * @returns {Promise<boolean>} - Return
  */
-module.exports = async function logout({ googleClientId }) {
+module.exports = async function logout() {
     /**
      * == Initialize
      *
@@ -75,7 +72,7 @@ module.exports = async function logout({ googleClientId }) {
         //////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////
 
-        if (googleClientId) {
+        if (socialId) {
             const googleScript = document.createElement("script");
             googleScript.src = "https://accounts.google.com/gsi/client";
             googleScript.className = "social-script-tag";
@@ -109,6 +106,8 @@ module.exports = async function logout({ googleClientId }) {
                     ////////////////////////////////////////
                 }
             };
+        } else {
+            resolve(true);
         }
 
         //////////////////////////////////////////////////////////////////////////////////
