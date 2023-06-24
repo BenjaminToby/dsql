@@ -6,6 +6,7 @@
 const imageInputFileToBase64 = require("./media/imageInputFileToBase64");
 const imageInputToBase64 = require("./media/imageInputToBase64");
 const inputFileToBase64 = require("./media/inputFileToBase64");
+const loginWithGoogle = require("./auth/loginWithGoogle");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -27,11 +28,21 @@ const media = {
 
 /**
  * ==============================================================================
+ * Media Functions Object
+ * ==============================================================================
+ */
+const auth = {
+    loginWithGoogle: loginWithGoogle,
+};
+
+/**
+ * ==============================================================================
  * Main Export
  * ==============================================================================
  */
 const datasquirelClient = {
     media: media,
+    auth: auth,
 };
 
 module.exports = datasquirelClient;
