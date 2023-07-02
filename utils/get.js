@@ -15,7 +15,7 @@ const https = require("https");
 /**
  * @typedef {Object} GetReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
+ * @property {(Object[]|string)} [payload=[]] - GET request results
  */
 
 /**

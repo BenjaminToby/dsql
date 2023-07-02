@@ -19,6 +19,17 @@ const https = require("https");
  */
 
 /**
+ * @typedef {object} PostDataPayload
+ * @property {string} action - "insert" | "update" | "delete"
+ * @property {string} table - Table name(slug) eg "blog_posts"
+ * @property {string} identifierColumnName - Table identifier field name => eg. "id" OR "email"
+ * @property {string} identifierValue - Corresponding value of the selected field name => This
+ * checks for duplicate, and the function will not run if this value is found
+ * @property {object} data - Table insert payload object => This must have keys that match
+ * table fields
+ */
+
+/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -27,13 +38,7 @@ const https = require("https");
  * @param {Object} params - Single object passed
  * @param {string} params.key - API Key
  * @param {string} params.database - Database Name
- * @param {({
- *  action: [string="insert"],
- *  table: string,
- *  identifierColumnName: string,
- *  identifierValue: (string|number),
- *  data: object,
- * } | string)} params.query - SQL query String or Request Object
+ * @param {PostDataPayload} params.query - SQL query String or Request Object
  *
  * @returns { Promise<PostReturn> } - Return Object
  */

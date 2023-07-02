@@ -93,6 +93,8 @@ module.exports = async function ({ key, payload, database, response, encryptionK
      * Make https request
      *
      * @description make a request to datasquirel.com
+     *
+     * @type {{ success: boolean, payload: DATASQUIREL_LoggedInUser | null }}
      */
     const httpResponse = await new Promise((resolve, reject) => {
         const reqPayload = JSON.stringify({

@@ -3,18 +3,11 @@
  * Imports
  * ==============================================================================
  */
-const get = require("./utils/get");
-const post = require("./utils/post");
-const uploadImage = require("./utils/upload-image");
-const createUser = require("./users/add-user");
-const updateUser = require("./users/update-user");
-const loginUser = require("./users/login-user");
-const logoutUser = require("./users/logout-user");
-const userAuth = require("./users/user-auth");
-const reAuthUser = require("./users/reauth-user");
-const getUser = require("./users/get-user");
-const loginWithGoogle = require("./users/social/google-auth");
-const sanitizeSql = require("./utils/functions/sanitizeSql");
+const imageInputFileToBase64 = require("./media/imageInputFileToBase64");
+const imageInputToBase64 = require("./media/imageInputToBase64");
+const inputFileToBase64 = require("./media/inputFileToBase64");
+const getAccessToken = require("./auth/google/getAccessToken");
+const logout = require("./auth/logout");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -22,24 +15,6 @@ const sanitizeSql = require("./utils/functions/sanitizeSql");
 /** ****************************************************************************** */
 /** ****************************************************************************** */
 /** ****************************************************************************** */
-
-/**
- * ==============================================================================
- * User Functions Object
- * ==============================================================================
- */
-const user = {
-    createUser: createUser,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
-    userAuth: userAuth,
-    reAuthUser: reAuthUser,
-    updateUser: updateUser,
-    getUser: getUser,
-    social: {
-        loginWithGoogle: loginWithGoogle,
-    },
-};
 
 /**
  * ==============================================================================
@@ -47,7 +22,21 @@ const user = {
  * ==============================================================================
  */
 const media = {
-    uploadImage: uploadImage,
+    imageInputToBase64: imageInputToBase64,
+    imageInputFileToBase64: imageInputFileToBase64,
+    inputFileToBase64: inputFileToBase64,
+};
+
+/**
+ * ==============================================================================
+ * Media Functions Object
+ * ==============================================================================
+ */
+const auth = {
+    google: {
+        getAccessToken: getAccessToken,
+    },
+    logout: logout,
 };
 
 /**
@@ -55,15 +44,12 @@ const media = {
  * Main Export
  * ==============================================================================
  */
-const datasquirel = {
-    get: get,
-    post: post,
+const dsqlEngine = {
     media: media,
-    user: user,
-    sanitizeSql: sanitizeSql,
+    auth: auth,
 };
 
-module.exports = datasquirel;
+module.exports = dsqlEngine;
 
 /** ********************************************** */
 /** ********************************************** */
