@@ -10,3 +10,5 @@
  * @property {string} csrf_k - CSRF key
  * @property {boolean} logged_in_status - Is user logged in or not
  */
+
+module.exports = { DATASQUIREL_LoggedInUser };
