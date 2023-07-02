@@ -8,42 +8,41 @@
 /**
  * Sanitize SQL function
  * ==============================================================================
- * @description this function takes in a text(or number) and returns a sanitized
- * text, usually without spaces
+ * @description this function takes in a text(or number) or object or array or
+ * boolean and returns a sanitized version of the same input.
  *
- * @param {string|number|object} text - Text or number or object
- * @param {boolean?} spaces - Allow spaces
- * @param {RegExp?} regex - Regular expression, removes any match
+ * @param {string|number|object|boolean} input - Text or number or object or boolean
+ * @param {boolean?} spaces - Allow spaces?
  *
- * @returns {string|object}
+ * @returns {string|number|object|boolean}
  */
-function sanitizeSql(text, spaces, regex) {
+function sanitizeSql(input, spaces) {
     /**
      * Initial Checks
      *
      * @description Initial Checks
      */
-    if (!text) return "";
-    if (typeof text == "number" || typeof text == "boolean") return text;
-    if (typeof text == "string" && !text?.toString()?.match(/./)) return "";
+    if (!input) return "";
+    if (typeof input == "number" || typeof input == "boolean") return input;
+    if (typeof input == "string" && !input?.toString()?.match(/./)) return "";
 
-    if (typeof text == "object" && !Array.isArray(text)) {
+    if (typeof input == "object" && !Array.isArray(input)) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        const newObject = sanitizeObjects(text, spaces);
+        const newObject = sanitizeObjects(input, spaces);
         return newObject;
 
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } else if (typeof text == "object" && Array.isArray(text)) {
+    } else if (typeof input == "object" && Array.isArray(input)) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        const newArray = sanitizeArrays(text, spaces);
+        const newArray = sanitizeArrays(input, spaces);
         return newArray;
 
         ////////////////////////////////////////
@@ -51,8 +50,8 @@ function sanitizeSql(text, spaces, regex) {
         ////////////////////////////////////////
     }
 
-    // if (text?.toString()?.match(/\'|\"/)) {
-    //     console.log("TEXT containing commas =>", text);
+    // if (input?.toString()?.match(/\'|\"/)) {
+    //     console.log("TEXT containing commas =>", input);
     //     return "";
     // }
 
@@ -65,15 +64,15 @@ function sanitizeSql(text, spaces, regex) {
      *
      * @description Declare "results" variable
      */
-    let finalText = text;
+    let finalText = input;
 
     if (regex) {
-        finalText = text.toString().replace(regex, "");
+        finalText = input.toString().replace(regex, "");
     }
 
     if (spaces) {
     } else {
-        finalText = text
+        finalText = input
             .toString()
             .replace(/\n|\r|\n\r|\r\n/g, "")
             .replace(/ /g, "");
@@ -91,13 +90,6 @@ function sanitizeSql(text, spaces, regex) {
         // .replace(/(?<!\\)\"/g, '\\"')
         .replace(/\/\*\*\//g, "")
         .replace(escapeRegex, "\\$&");
-
-    // const injectionRegexp = /select .* from|\*|delete from|drop database|drop table|update .* set/i;
-
-    // if (text?.toString()?.match(injectionRegexp)) {
-    //     console.log("ATTEMPTED INJECTION =>", text);
-    //     return "";
-    // }
 
     ////////////////////////////////////////
     ////////////////////////////////////////
