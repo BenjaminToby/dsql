@@ -66,10 +66,6 @@ function sanitizeSql(input, spaces) {
      */
     let finalText = input;
 
-    if (regex) {
-        finalText = input.toString().replace(regex, "");
-    }
-
     if (spaces) {
     } else {
         finalText = input
