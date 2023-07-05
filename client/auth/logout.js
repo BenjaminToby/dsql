@@ -43,7 +43,6 @@ module.exports = async function logout(params) {
     }
 
     if (!targetUser) {
-        window.alert("NO client user object found in localStorage");
         return false;
     }
 
