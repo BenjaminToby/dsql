@@ -44,8 +44,6 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
      */
 
     if (duplicateColumnName && typeof duplicateColumnName === "string") {
-        console.log("duplicateColumnName", duplicateColumnName);
-
         const duplicateValue = await handler({
             queryString: `SELECT * FROM \`${tableName}\` WHERE \`${duplicateColumnName}\`=?`,
             queryValuesArray: [duplicateColumnValue],
@@ -146,8 +144,6 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
         encryptionSalt,
         tableSchema,
     });
-
-    console.log("DSQL: New insert =>", newInsert);
 
     ////////////////////////////////////////
     ////////////////////////////////////////
