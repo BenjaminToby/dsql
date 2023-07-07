@@ -21,22 +21,10 @@ const logout = require("./auth/logout");
  * Media Functions Object
  * ==============================================================================
  */
-const media = {
-    imageInputToBase64: imageInputToBase64,
+const db = {
+    add: imageInputToBase64,
     imageInputFileToBase64: imageInputFileToBase64,
     inputFileToBase64: inputFileToBase64,
-};
-
-/**
- * ==============================================================================
- * Media Functions Object
- * ==============================================================================
- */
-const auth = {
-    google: {
-        getAccessToken: getAccessToken,
-    },
-    logout: logout,
 };
 
 /**

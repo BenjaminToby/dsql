@@ -1,6 +1,6 @@
 {
     "name": "datasquirel",
-    "version": "1.1.59",
+    "version": "1.1.60",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "scripts": {
@@ -23,5 +23,9 @@
     "bugs": {
         "url": "https://github.com/BenjaminToby/dsql/issues"
     },
-    "homepage": "https://datasquirel.com/"
+    "homepage": "https://datasquirel.com/",
+    "dependencies": {
+        "sanitize-html": "^2.11.0",
+        "serverless-mysql": "^1.5.5"
+    }
 }
