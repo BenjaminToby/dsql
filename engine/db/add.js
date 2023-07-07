@@ -120,7 +120,7 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
 
             insertValuesArray.push(value);
         } catch (error) {
-            console.log("Error in add DB try catch block =>", error.message);
+            console.log("DSQL: Error in parsing data keys =>", error.message);
         }
     }
 
@@ -156,6 +156,8 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
         encryptionSalt,
         tableSchema,
     });
+
+    console.log("DSQL: New insert =>", newInsert);
 
     ////////////////////////////////////////
     ////////////////////////////////////////
