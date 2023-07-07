@@ -95,29 +95,33 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
     let insertValuesArray = [];
 
     for (let i = 0; i < dataKeys.length; i++) {
-        const dataKey = dataKeys[i];
-        let value = data[dataKey];
+        try {
+            const dataKey = dataKeys[i];
+            let value = data[dataKey];
 
-        const targetFieldSchemaArray = tableSchema ? tableSchema?.fields.filter((field) => field.fieldName === dataKey) : null;
-        const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
+            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields.filter((field) => field.fieldName === dataKey) : null;
+            const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
 
-        if (!value) continue;
+            if (!value) continue;
 
-        if (targetFieldSchema?.encrypted) {
-            value = encrypt({ data: value, encryptionKey, encryptionSalt });
+            if (targetFieldSchema?.encrypted) {
+                value = encrypt({ data: value, encryptionKey, encryptionSalt });
+            }
+
+            if (targetFieldSchema?.richText) {
+                value = sanitizeHtml(value, sanitizeHtmlOptions);
+            }
+
+            insertKeysArray.push("`" + dataKey + "`");
+
+            if (typeof value === "object") {
+                value = JSON.stringify(value);
+            }
+
+            insertValuesArray.push(value);
+        } catch (error) {
+            console.log("Error in add DB try catch block =>", error.message);
         }
-
-        if (targetFieldSchema?.richText) {
-            value = sanitizeHtml(value, sanitizeHtmlOptions).replace(/\n|\r|\n\r/gm, "");
-        }
-
-        insertKeysArray.push("`" + dataKey + "`");
-
-        if (typeof value === "object") {
-            value = JSON.stringify(value);
-        }
-
-        insertValuesArray.push(value);
     }
 
     /** ********************************************** */
