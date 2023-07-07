@@ -4,7 +4,8 @@
  */
 const add = require("./db/add");
 const query = require("./db/query");
-const update = require("./db/update");
+const update = require("./db/updateDb");
+const deleteDb = require("./db/deleteDb");
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -17,7 +18,7 @@ const update = require("./db/update");
 const db = {
     add: add,
     update: update,
-    delete: update,
+    delete: deleteDb,
     query: query,
 };
 

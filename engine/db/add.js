@@ -6,6 +6,7 @@ const encrypt = require("../../functions/encrypt");
 const handler = require("../utils/handler");
 const sanitizeHtml = require("sanitize-html");
 const sanitizeHtmlOptions = require("../utils/sanitizeHtmlOptions");
+const updateDb = require("./updateDb");
 
 /**
  * Add a db Entry Function
@@ -53,7 +54,19 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
         if (duplicateValue && duplicateValue[0] && !update) {
             return null;
         } else if (duplicateValue && duplicateValue[0] && update) {
-            return await update();
+            return await updateDb({
+                dbFullName,
+                tableName,
+                data,
+                tableSchema,
+                identifierColumnName: duplicateColumnName,
+                identifierValue: duplicateColumnValue,
+                dbHost,
+                dbPassword,
+                dbUsername,
+                encryptionKey,
+                encryptionSalt,
+            });
         }
     } else if (duplicateColumnName && typeof duplicateColumnName === "object" && duplicateColumnValue && typeof duplicateColumnValue === "object") {
         const duplicateArray = duplicateColumnName.map((dupColName, index) => {
