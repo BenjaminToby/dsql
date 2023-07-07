@@ -8,7 +8,7 @@ const sanitizeHtml = require("sanitize-html");
 const sanitizeHtmlOptions = require("../utils/sanitizeHtmlOptions");
 
 /**
- * add Function
+ * Add a db Entry Function
  * ==============================================================================
  * @description Description
  *
@@ -103,7 +103,7 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
             value = JSON.stringify(value);
         }
 
-        insertValuesArray.push(dataValue);
+        insertValuesArray.push(value);
     }
 
     /** ********************************************** */

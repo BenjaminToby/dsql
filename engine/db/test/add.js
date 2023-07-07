@@ -16,6 +16,8 @@ const dbHandler = require("../dbHandler");
  * @param {object} params.data - Data to be added
  * @param {string?} params.duplicateColumnName - Duplicate Column Name
  * @param {string | number?} params.duplicateColumnValue - Duplicate Column Value
+ *
+ * @returns {object}
  */
 async function addDbEntry({ tableName, data, duplicateColumnName, duplicateColumnValue }) {
     /**
