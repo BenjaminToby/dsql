@@ -8,6 +8,7 @@ const handler = require("../utils/handler");
  * RAW Query DB Function
  * ==============================================================================
  * @description Description
+ * @async
  *
  * @param {object} params - An object containing the function parameters.
  * @param {string} params.dbFullName - Database full name
@@ -16,7 +17,7 @@ const handler = require("../utils/handler");
  * @param {string?} params.dbUsername - Database username
  * @param {string?} params.query - Query string
  *
- * @returns {object}
+ * @returns {Promise<object|null>}
  */
 module.exports = async function query({ dbFullName, dbHost, dbPassword, dbUsername, query }) {
     /**

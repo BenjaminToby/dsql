@@ -7,6 +7,7 @@ const handler = require("../utils/handler");
  * Update DB Function
  * ==============================================================================
  * @description Description
+ * @async
  *
  * @param {object} params - An object containing the function parameters.
  * @param {string} params.dbFullName - Database full name
@@ -22,7 +23,7 @@ const handler = require("../utils/handler");
  * @param {string?} params.encryptionKey - Encryption key
  * @param {string?} params.encryptionSalt - Encryption salt
  *
- * @returns {object}
+ * @returns {Promise<object|null>}
  */
 module.exports = async function updateDb({ dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
     /**
