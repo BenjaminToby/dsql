@@ -42,7 +42,10 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
     /**
      * Handle function logic
      */
+
     if (duplicateColumnName && typeof duplicateColumnName === "string") {
+        console.log("duplicateColumnName", duplicateColumnName);
+
         const duplicateValue = await handler({
             queryString: `SELECT * FROM \`${tableName}\` WHERE \`${duplicateColumnName}\`=?`,
             queryValuesArray: [duplicateColumnValue],
@@ -68,19 +71,6 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
                 encryptionKey,
                 encryptionSalt,
             });
-        }
-    } else if (duplicateColumnName && typeof duplicateColumnName === "object" && duplicateColumnValue && typeof duplicateColumnValue === "object") {
-        const duplicateArray = duplicateColumnName.map((dupColName, index) => {
-            return `\`${dupColName}\`='${duplicateColumnValue[index]}'`;
-        });
-
-        const duplicateValue = await handler({
-            queryString: `SELECT * FROM ${tableName} WHERE ${duplicateArray.join(" AND ")}`,
-            database: dbFullName,
-        });
-
-        if (duplicateValue && duplicateValue[0] && !update) {
-            return null;
         }
     }
 
