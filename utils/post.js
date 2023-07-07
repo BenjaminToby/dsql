@@ -42,7 +42,7 @@ const https = require("https");
  *
  * @returns { Promise<PostReturn> } - Return Object
  */
-module.exports = async function ({ key, query, database }) {
+async function post({ key, query, database }) {
     /**
      * Make https request
      *
@@ -133,8 +133,10 @@ module.exports = async function ({ key, query, database }) {
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = post;

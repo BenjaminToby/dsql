@@ -25,7 +25,7 @@ const handler = require("../utils/handler");
  *
  * @returns {Promise<object|null>}
  */
-module.exports = async function updateDb({ dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
+async function updateDb({ dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
     /**
      * Check if data is valid
      */
@@ -89,4 +89,10 @@ module.exports = async function updateDb({ dbFullName, tableName, data, tableSch
      * Return statement
      */
     return updatedEntry;
-};
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+module.exports = updateDb;

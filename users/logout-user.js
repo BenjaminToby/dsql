@@ -12,7 +12,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  *
  * @returns {{success: boolean, payload: string}}
  */
-module.exports = function ({ request, response, database }) {
+function logoutUser({ request, response, database }) {
     /**
      * Check Encryption Keys
      *
@@ -62,8 +62,10 @@ module.exports = function ({ request, response, database }) {
     /** ********************************************** */
     /** ********************************************** */
     /** ********************************************** */
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = logoutUser;

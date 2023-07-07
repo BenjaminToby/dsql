@@ -31,7 +31,7 @@ const https = require("https");
  *
  * @returns { Promise<GetReturn> } - Return Object
  */
-module.exports = async function ({ key, db, query }) {
+async function get({ key, db, query }) {
     /**
      * Make https request
      *
@@ -83,8 +83,10 @@ module.exports = async function ({ key, db, query }) {
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = get;

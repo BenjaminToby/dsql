@@ -50,7 +50,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  *
  * @returns { FunctionReturn }
  */
-module.exports = function ({ request, encryptionKey, encryptionSalt, level, database }) {
+function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
     try {
         /**
          * Grab the payload
@@ -146,8 +146,10 @@ module.exports = function ({ request, encryptionKey, encryptionSalt, level, data
             msg: error.message,
         };
     }
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = userAuth;

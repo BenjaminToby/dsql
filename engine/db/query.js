@@ -19,7 +19,7 @@ const handler = require("../utils/handler");
  *
  * @returns {Promise<object|null>}
  */
-module.exports = async function query({ dbFullName, dbHost, dbPassword, dbUsername, query }) {
+async function query({ dbFullName, dbHost, dbPassword, dbUsername, query }) {
     /**
      * Initialize variables
      */
@@ -74,4 +74,10 @@ module.exports = async function query({ dbFullName, dbHost, dbPassword, dbUserna
         console.log("\x1b[31mDSQL RAW Database Handler No results returned\x1b[0m =>", results);
         return null;
     }
-};
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+module.exports = query;

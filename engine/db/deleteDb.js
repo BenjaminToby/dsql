@@ -24,7 +24,7 @@ const handler = require("../utils/handler");
  *
  * @returns {Promise<object|null>}
  */
-module.exports = async function deleteDb({ dbFullName, tableName, identifierColumnName, identifierValue, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
+async function deleteDb({ dbFullName, tableName, identifierColumnName, identifierValue, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
     try {
         /**
          * Check if data is valid
@@ -71,4 +71,10 @@ module.exports = async function deleteDb({ dbFullName, tableName, identifierColu
 
         return null;
     }
-};
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+module.exports = deleteDb;

@@ -2,7 +2,7 @@
  * Imports
  * ===================================
  */
-const add = require("./db/add");
+const addDb = require("./db/addDb");
 const query = require("./db/query");
 const update = require("./db/updateDb");
 const deleteDb = require("./db/deleteDb");
@@ -16,7 +16,7 @@ const deleteDb = require("./db/deleteDb");
  * ===================================
  */
 const db = {
-    add: add,
+    add: addDb,
     update: update,
     delete: deleteDb,
     query: query,

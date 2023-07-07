@@ -55,7 +55,7 @@ const encrypt = require("../functions/encrypt");
  *
  * @returns { Promise<FunctionReturn>}
  */
-module.exports = async function ({ key, payload, database, response, encryptionKey, encryptionSalt }) {
+async function loginUser({ key, payload, database, response, encryptionKey, encryptionSalt }) {
     /**
      * Check Encryption Keys
      *
@@ -170,8 +170,10 @@ module.exports = async function ({ key, payload, database, response, encryptionK
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = loginUser;

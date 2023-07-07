@@ -37,7 +37,7 @@ const encrypt = require("../../functions/encrypt");
  *
  * @returns { Promise<FunctionReturn> }
  */
-module.exports = async function ({ key, token, database, clientId, response, encryptionKey, encryptionSalt }) {
+async function googleAuth({ key, token, database, clientId, response, encryptionKey, encryptionSalt }) {
     /**
      * Check inputs
      *
@@ -183,8 +183,10 @@ module.exports = async function ({ key, token, database, clientId, response, enc
     ////////////////////////////////////////
 
     return httpResponse;
-};
+}
 
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
+
+module.exports = googleAuth;

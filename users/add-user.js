@@ -38,7 +38,7 @@ const https = require("https");
  *
  * @returns { Promise<FunctionReturn> }
  */
-module.exports = async function ({ key, payload, database }) {
+async function addUser({ key, payload, database }) {
     /**
      * Make https request
      *
@@ -93,8 +93,10 @@ module.exports = async function ({ key, payload, database }) {
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = addUser;

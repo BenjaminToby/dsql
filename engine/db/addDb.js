@@ -30,7 +30,7 @@ const updateDb = require("./updateDb");
  *
  * @returns {Promise<object|null>}
  */
-module.exports = async function add({ dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
+async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, dbHost, dbPassword, dbUsername, encryptionKey, encryptionSalt }) {
     /**
      * Initialize variables
      */
@@ -133,6 +133,9 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
     const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
     const queryValuesArray = insertValuesArray;
 
+    console.log("DSQL: Query =>", query);
+    console.log("DSQL: Query Values =>", queryValuesArray);
+
     const newInsert = await handler({
         queryString: query,
         database: dbFullName,
@@ -153,4 +156,10 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
      * Return statement
      */
     return newInsert;
-};
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+module.exports = addDb;

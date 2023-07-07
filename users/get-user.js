@@ -4,7 +4,6 @@
  * ==============================================================================
  */
 const https = require("https");
-const encrypt = require("../functions/encrypt");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -44,7 +43,7 @@ const encrypt = require("../functions/encrypt");
  *
  * @returns { Promise<FunctionReturn>}
  */
-module.exports = async function ({ key, userId, database, fields }) {
+async function getUser({ key, userId, database, fields }) {
     /**
      * Make https request
      *
@@ -105,8 +104,10 @@ module.exports = async function ({ key, userId, database, fields }) {
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = getUser;

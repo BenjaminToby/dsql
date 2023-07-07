@@ -39,7 +39,7 @@ const https = require("https");
  *
  * @returns { Promise<FunctionReturn> } - Return Object
  */
-module.exports = async function ({ key, payload }) {
+async function uploadImage({ key, payload }) {
     /**
      * Make https request
      *
@@ -92,8 +92,10 @@ module.exports = async function ({ key, payload }) {
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = uploadImage;

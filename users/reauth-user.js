@@ -57,7 +57,7 @@ const userAuth = require("./user-auth");
  *
  * @returns { Promise<FunctionReturn> }
  */
-module.exports = async function ({ key, database, response, request, level, encryptionKey, encryptionSalt }) {
+async function reauthUser({ key, database, response, request, level, encryptionKey, encryptionSalt }) {
     /**
      * Check Encryption Keys
      *
@@ -158,8 +158,10 @@ module.exports = async function ({ key, database, response, request, level, encr
     /** ********************************************** */
 
     return httpResponse;
-};
+}
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
+
+module.exports = reauthUser;
