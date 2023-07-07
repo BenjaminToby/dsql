@@ -114,18 +114,18 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
 
     /** ********************************************** */
 
-    insertKeysArray.push("date_created");
+    insertKeysArray.push("`date_created`");
     insertValuesArray.push(Date());
 
-    insertKeysArray.push("date_created_code");
+    insertKeysArray.push("`date_created_code`");
     insertValuesArray.push(Date.now());
 
     /** ********************************************** */
 
-    insertKeysArray.push("date_updated");
+    insertKeysArray.push("`date_updated`");
     insertValuesArray.push(Date());
 
-    insertKeysArray.push("date_updated_code");
+    insertKeysArray.push("`date_updated_code`");
     insertValuesArray.push(Date.now());
 
     /** ********************************************** */
