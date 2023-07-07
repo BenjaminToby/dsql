@@ -127,10 +127,6 @@ module.exports = async function add({ dbFullName, tableName, data, tableSchema, 
     const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
     const queryValuesArray = insertValuesArray;
 
-    // const newInsert = await dbHandler(query, queryValuesArray);
-
-    // const query = `INSERT INTO ${tableName} (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.join(",")})`;
-
     const newInsert = await handler({
         queryString: query,
         database: dbFullName,
