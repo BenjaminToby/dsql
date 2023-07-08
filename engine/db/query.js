@@ -56,7 +56,7 @@ async function query({ dbFullName, dbHost, dbPassword, dbUsername, query, values
         /**
          * Handle error and clean up
          */
-        console.log("\x1b[31mDSQL Database Handler ERROR\x1b[0m =>", database, error.message);
+        console.log("\x1b[31mDSQL Database Handler ERROR\x1b[0m =>", dbFullName, error.message);
 
         /**
          * Clean up
