@@ -22,6 +22,13 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema, e
      */
     let parsedResults = [];
 
+    /**
+     * Check if query values array is an array
+     */
+    if (!unparsedResults || !Array.isArray(unparsedResults) || !unparsedResults[0]) {
+        return unparsedResults;
+    }
+
     try {
         /**
          * Declare variables
@@ -34,23 +41,28 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema, e
             let resultFieldNames = Object.keys(result);
 
             for (let i = 0; i < resultFieldNames.length; i++) {
-                const resultFieldName = resultFieldNames[i];
-                let resultFieldSchema = tableSchema.fields[i];
+                try {
+                    const resultFieldName = resultFieldNames[i];
+                    let resultFieldSchema = tableSchema?.fields[i];
 
-                if (resultFieldName?.match(defaultFieldsRegexp)) {
-                    continue;
-                }
-
-                let value = result[resultFieldName];
-
-                if (typeof value !== "number" && !value) {
-                    continue;
-                }
-
-                if (resultFieldSchema?.encrypted) {
-                    if (value?.match(/./)) {
-                        result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
+                    if (resultFieldName?.match(defaultFieldsRegexp)) {
+                        continue;
                     }
+
+                    let value = result[resultFieldName];
+
+                    if (typeof value !== "number" && !value) {
+                        continue;
+                    }
+
+                    if (resultFieldSchema?.encrypted) {
+                        if (value?.match(/./)) {
+                            result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
+                        }
+                    }
+                } catch (error) {
+                    console.log("ERROR in parseDbResults Function =>", error.message);
+                    continue;
                 }
             }
 

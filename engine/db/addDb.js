@@ -87,7 +87,7 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
             const dataKey = dataKeys[i];
             let value = data[dataKey];
 
-            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields.filter((field) => field.fieldName === dataKey) : null;
+            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields?.filter((field) => field.fieldName === dataKey) : null;
             const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
 
             if (!value) continue;
@@ -109,6 +109,7 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
             insertValuesArray.push(value);
         } catch (error) {
             console.log("DSQL: Error in parsing data keys =>", error.message);
+            continue;
         }
     }
 
@@ -144,6 +145,8 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
         encryptionSalt,
         tableSchema,
     });
+
+    console.log(newInsert);
 
     ////////////////////////////////////////
     ////////////////////////////////////////
