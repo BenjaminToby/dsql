@@ -1,6 +1,9 @@
 /**
  * Imports: Handle imports
  */
+const encrypt = require("../../functions/encrypt");
+const sanitizeHtml = require("sanitize-html");
+const sanitizeHtmlOptions = require("../utils/sanitizeHtmlOptions");
 const dsqlDbHandler = require("../utils/dsqlDbHandler");
 
 /**
@@ -46,24 +49,52 @@ async function updateDb({ dbFullName, tableName, data, tableSchema, identifierCo
     let updateValues = [];
 
     for (let i = 0; i < dataKeys.length; i++) {
-        const dataKey = dataKeys[i];
+        try {
+            const dataKey = dataKeys[i];
+            let value = data[dataKey];
 
-        let value = data[dataKey];
+            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields?.filter((field) => field.fieldName === dataKey) : null;
+            const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
 
-        if (typeof value === "string" && value.match(/^null$/i)) value = "";
+            if (!value) continue;
 
-        if (!value && value != 0) continue;
+            if (targetFieldSchema?.encrypted) {
+                value = encrypt({ data: value, encryptionKey, encryptionSalt });
+            }
 
-        updateKeyValueArray.push(`\`${dataKey}\`=?`);
-        updateValues.push(value);
+            if (targetFieldSchema?.richText) {
+                value = sanitizeHtml(value, sanitizeHtmlOptions);
+            }
+
+            if (typeof value === "string" && value.match(/^null$/i)) value = "";
+            if (typeof value === "object") {
+                value = JSON.stringify(value);
+            }
+
+            if (!value && value != 0) continue;
+
+            updateKeyValueArray.push(`\`${dataKey}\`=?`);
+            updateValues.push(value);
+
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+        } catch (error) {
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+
+            console.log("DSQL: Error in parsing data keys in update function =>", error.message);
+            continue;
+        }
     }
 
-    /** ********************************************** */
+    ////////////////////////////////////////
+    ////////////////////////////////////////
 
     updateKeyValueArray.push(`date_updated='${Date()}'`);
     updateKeyValueArray.push(`date_updated_code='${Date.now()}'`);
 
-    /** ********************************************** */
+    ////////////////////////////////////////
+    ////////////////////////////////////////
 
     const query = `UPDATE ${tableName} SET ${updateKeyValueArray.join(",")} WHERE \`${identifierColumnName}\`=?`;
 

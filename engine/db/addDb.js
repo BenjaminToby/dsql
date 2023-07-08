@@ -146,8 +146,6 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
         tableSchema,
     });
 
-    console.log(newInsert);
-
     ////////////////////////////////////////
     ////////////////////////////////////////
     ////////////////////////////////////////
