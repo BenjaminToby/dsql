@@ -67,6 +67,11 @@ async function dsqlDbHandler({ queryString, queryValuesArray, database, tableSch
          * Clean up
          */
         await mysql.end();
+
+        /**
+         * Return error
+         */
+        return error.message;
     }
 
     /**
@@ -87,7 +92,7 @@ async function dsqlDbHandler({ queryString, queryValuesArray, database, tableSch
         return JSON.parse(JSON.stringify(results));
     } else {
         console.log("\x1b[31mDSQL Database Handler No results returned\x1b[0m =>", results);
-        return null;
+        return results;
     }
 }
 

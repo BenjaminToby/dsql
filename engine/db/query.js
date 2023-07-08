@@ -62,6 +62,11 @@ async function query({ dbFullName, dbHost, dbPassword, dbUsername, query, values
          * Clean up
          */
         await mysql.end();
+
+        /**
+         * Return error
+         */
+        return error.message;
     }
 
     ////////////////////////////////////////
