@@ -16,9 +16,9 @@ const deleteDb = require("./db/deleteDb");
  * ===================================
  */
 const db = {
-    add: addDb,
-    update: update,
-    delete: deleteDb,
+    addDb: addDb,
+    updateDb: update,
+    deleteDb: deleteDb,
     query: query,
 };
 
@@ -36,7 +36,7 @@ module.exports = dsqlEngine;
 ////////////////////////////////////////
 ////////////////////////////////////////
 
-exports.add = dsqlEngine.db.add;
-exports.update = dsqlEngine.db.update;
-exports.delete = dsqlEngine.db.delete;
+exports.addDb = dsqlEngine.db.addDb;
+exports.updateDb = dsqlEngine.db.updateDb;
+exports.deleteDb = dsqlEngine.db.deleteDb;
 exports.query = dsqlEngine.db.query;
