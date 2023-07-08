@@ -35,3 +35,8 @@ module.exports = dsqlEngine;
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
+
+exports.add = dsqlEngine.db.add;
+exports.update = dsqlEngine.db.update;
+exports.delete = dsqlEngine.db.delete;
+exports.query = dsqlEngine.db.query;

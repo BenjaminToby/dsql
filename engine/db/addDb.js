@@ -133,9 +133,6 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
     const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
     const queryValuesArray = insertValuesArray;
 
-    console.log("DSQL: Query =>", query);
-    console.log("DSQL: Query Values =>", queryValuesArray);
-
     const newInsert = await handler({
         queryString: query,
         database: dbFullName,

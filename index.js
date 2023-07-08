@@ -15,6 +15,7 @@ const reAuthUser = require("./users/reauth-user");
 const getUser = require("./users/get-user");
 const loginWithGoogle = require("./users/social/google-auth");
 const sanitizeSql = require("./utils/functions/sanitizeSql");
+const engine = require("./engine/index");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -24,9 +25,8 @@ const sanitizeSql = require("./utils/functions/sanitizeSql");
 /** ****************************************************************************** */
 
 /**
- * ==============================================================================
  * User Functions Object
- * ==============================================================================
+ * ===================================
  */
 const user = {
     createUser: createUser,
@@ -42,18 +42,16 @@ const user = {
 };
 
 /**
- * ==============================================================================
  * Media Functions Object
- * ==============================================================================
+ * ===================================
  */
 const media = {
     uploadImage: uploadImage,
 };
 
 /**
- * ==============================================================================
  * Main Export
- * ==============================================================================
+ * ===================================
  */
 const datasquirel = {
     get: get,
@@ -61,10 +59,22 @@ const datasquirel = {
     media: media,
     user: user,
     sanitizeSql: sanitizeSql,
+    engine: engine,
 };
 
 module.exports = datasquirel;
 
-/** ********************************************** */
-/** ********************************************** */
-/** ********************************************** */
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+
+exports.get = datasquirel.get;
+exports.post = datasquirel.post;
+exports.media = datasquirel.media;
+exports.user = datasquirel.user;
+exports.sanitizeSql = datasquirel.sanitizeSql;
+exports.engine = datasquirel.engine;
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
