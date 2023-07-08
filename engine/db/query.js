@@ -2,8 +2,6 @@
  * Imports: Handle imports
  */
 
-const handler = require("../utils/handler");
-
 /**
  * RAW Query DB Function
  * ==============================================================================
@@ -16,12 +14,13 @@ const handler = require("../utils/handler");
  * @param {string?} params.dbPassword - Database password
  * @param {string?} params.dbUsername - Database username
  * @param {string?} params.query - Query string
+ * @param {string[]?} params.valuesArray - Values array
  *
  * @returns {Promise<object|null>}
  */
-async function query({ dbFullName, dbHost, dbPassword, dbUsername, query }) {
+async function query({ dbFullName, dbHost, dbPassword, dbUsername, query, valuesArray }) {
     /**
-     * Initialize variables
+     * Initialize mysql
      */
     const mysql = require("serverless-mysql")({
         config: {
@@ -43,7 +42,11 @@ async function query({ dbFullName, dbHost, dbPassword, dbUsername, query }) {
         /**
          * Run Query
          */
-        results = await mysql.query(query);
+        if (valuesArray && Array.isArray(valuesArray) && valuesArray[0]) {
+            results = await mysql.query(query, valuesArray);
+        } else {
+            results = await mysql.query(query);
+        }
 
         /**
          * Clean up

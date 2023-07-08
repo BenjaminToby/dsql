@@ -1,7 +1,7 @@
 /**
  * Imports: Handle imports
  */
-const handler = require("../utils/handler");
+const dsqlDbHandler = require("../utils/dsqlDbHandler");
 
 /**
  * Delete DB Entry Function
@@ -41,7 +41,7 @@ async function deleteDb({ dbFullName, tableName, identifierColumnName, identifie
          */
         const query = `DELETE FROM ${tableName} WHERE \`${identifierColumnName}\`=?`;
 
-        const deletedEntry = await handler({
+        const deletedEntry = await dsqlDbHandler({
             queryString: query,
             database: dbFullName,
             queryValuesArray: [identifierValue],

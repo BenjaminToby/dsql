@@ -3,9 +3,9 @@
  */
 
 const encrypt = require("../../functions/encrypt");
-const handler = require("../utils/handler");
 const sanitizeHtml = require("sanitize-html");
 const sanitizeHtmlOptions = require("../utils/sanitizeHtmlOptions");
+const dsqlDbHandler = require("../utils/dsqlDbHandler");
 const updateDb = require("./updateDb");
 
 /**
@@ -44,7 +44,7 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
      */
 
     if (duplicateColumnName && typeof duplicateColumnName === "string") {
-        const duplicateValue = await handler({
+        const duplicateValue = await dsqlDbHandler({
             queryString: `SELECT * FROM \`${tableName}\` WHERE \`${duplicateColumnName}\`=?`,
             queryValuesArray: [duplicateColumnValue],
             database: dbFullName,
@@ -133,7 +133,7 @@ async function addDb({ dbFullName, tableName, data, tableSchema, duplicateColumn
     const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
     const queryValuesArray = insertValuesArray;
 
-    const newInsert = await handler({
+    const newInsert = await dsqlDbHandler({
         queryString: query,
         database: dbFullName,
         queryValuesArray,

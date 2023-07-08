@@ -18,7 +18,7 @@ const parseDbResults = require("./parseDbResults");
  *
  * @returns {Promise<object[]|null>}
  */
-async function handler({ queryString, queryValuesArray, database, tableSchema, dbHost, dbUsername, dbPassword, encryptionKey, encryptionSalt }) {
+async function dsqlDbHandler({ queryString, queryValuesArray, database, tableSchema, dbHost, dbUsername, dbPassword, encryptionKey, encryptionSalt }) {
     const mysql = require("serverless-mysql")({
         config: {
             host: dbHost,
@@ -91,4 +91,4 @@ async function handler({ queryString, queryValuesArray, database, tableSchema, d
     }
 }
 
-module.exports = handler;
+module.exports = dsqlDbHandler;

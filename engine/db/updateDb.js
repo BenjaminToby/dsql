@@ -1,7 +1,7 @@
 /**
  * Imports: Handle imports
  */
-const handler = require("../utils/handler");
+const dsqlDbHandler = require("../utils/dsqlDbHandler");
 
 /**
  * Update DB Function
@@ -69,7 +69,7 @@ async function updateDb({ dbFullName, tableName, data, tableSchema, identifierCo
 
     updateValues.push(identifierValue);
 
-    const updatedEntry = await handler({
+    const updatedEntry = await dsqlDbHandler({
         queryString: query,
         database: dbFullName,
         queryValuesArray: updateValues,
