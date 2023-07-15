@@ -12,9 +12,9 @@ const defaultFieldsRegexp = require("./defaultFieldsRegexp");
  * @param {{}[]} params.unparsedResults - Array of data objects containing Fields(keys)
  * and corresponding values of the fields(values)
  * @param {DSQL_TableSchemaType} params.tableSchema - Table schema
- * @returns {Promise<object[]|null>}
+ * @returns {object[]|null}
  */
-module.exports = async function parseDbResults({ unparsedResults, tableSchema, encryptionKey, encryptionSalt }) {
+module.exports = function parseDbResults({ unparsedResults, tableSchema, encryptionKey, encryptionSalt }) {
     /**
      * Declare variables
      *

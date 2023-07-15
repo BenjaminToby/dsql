@@ -82,7 +82,7 @@ async function dsqlDbHandler({ queryString, queryValuesArray, database, tableSch
     if (results && tableSchema) {
         try {
             const unparsedResults = JSON.parse(JSON.stringify(results));
-            const parsedResults = await parseDbResults({ unparsedResults: unparsedResults, tableSchema: tableSchema, encryptionKey, encryptionSalt });
+            const parsedResults = parseDbResults({ unparsedResults: unparsedResults, tableSchema: tableSchema, encryptionKey, encryptionSalt });
             return parsedResults;
         } catch (error) {
             console.log("\x1b[31mDSQL Database Handler ERROR\x1b[0m =>", database, error.message);

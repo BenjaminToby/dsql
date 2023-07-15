@@ -15,7 +15,6 @@ const reAuthUser = require("./users/reauth-user");
 const getUser = require("./users/get-user");
 const loginWithGoogle = require("./users/social/google-auth");
 const sanitizeSql = require("./utils/functions/sanitizeSql");
-const engine = require("./engine/index");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -59,7 +58,6 @@ const datasquirel = {
     media: media,
     user: user,
     sanitizeSql: sanitizeSql,
-    engine: engine,
 };
 
 module.exports = datasquirel;

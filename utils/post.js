@@ -24,9 +24,14 @@ const https = require("https");
  * @property {string} table - Table name(slug) eg "blog_posts"
  * @property {string} identifierColumnName - Table identifier field name => eg. "id" OR "email"
  * @property {string} identifierValue - Corresponding value of the selected field name => This
- * checks for duplicate, and the function will not run if this value is found
+ * checks identifies a the target row for "update" or "delete". Not needed for "insert"
  * @property {object} data - Table insert payload object => This must have keys that match
  * table fields
+ * @property {string?} duplicateColumnName - Duplicate column name to check for
+ * @property {string?} duplicateColumnValue - Duplicate column value to match. If no "update" param
+ * provided, function will return null
+ * @property {boolean?} update - Should the "insert" action update the existing entry if indeed
+ * the entry with "duplicateColumnValue" exists?
  */
 
 /**
@@ -36,7 +41,7 @@ const https = require("https");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {string} params.key - API Key
+ * @param {string} params.key - FULL ACCESS API Key
  * @param {string} params.database - Database Name
  * @param {PostDataPayload} params.query - SQL query String or Request Object
  *

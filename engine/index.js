@@ -30,13 +30,13 @@ const dsqlEngine = {
     db: db,
 };
 
-module.exports = dsqlEngine;
+// module.exports = dsqlEngine;
 
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
 
-exports.addDb = dsqlEngine.db.addDb;
-exports.updateDb = dsqlEngine.db.updateDb;
-exports.deleteDb = dsqlEngine.db.deleteDb;
-exports.query = dsqlEngine.db.query;
+// exports.addDb = dsqlEngine.db.addDb;
+// exports.updateDb = dsqlEngine.db.updateDb;
+// exports.deleteDb = dsqlEngine.db.deleteDb;
+// exports.query = dsqlEngine.db.query;
