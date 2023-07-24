@@ -14,7 +14,7 @@ const parseCookies = require("../utils/functions/parseCookies");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
+ * @typedef {object} AuthenticatedUserObject
  * @property {boolean} success - Did the function run successfully?
  * @property {{
  *   id: number,
@@ -38,9 +38,11 @@ const parseCookies = require("../utils/functions/parseCookies");
  */
 
 /**
+ * Authenticate User from request
  * ==============================================================================
- * Main Function
- * ==============================================================================
+ * @description This Function takes in a request object and returns a user object
+ * with the user's data
+ *
  * @param {Object} params - Arg
  * @param {Object} params.request - Http request object
  * @param {String} params.encryptionKey - Encryption Key
@@ -48,7 +50,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {String} params.level - Optional. "Deep" value indicates an extra layer of security
  * @param {String} params.database - Database Name
  *
- * @returns { FunctionReturn }
+ * @returns { AuthenticatedUserObject }
  */
 function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
     try {
