@@ -29,6 +29,8 @@ function logoutUser({ request, response, database }) {
         const authKeyName = cookiesKeys.filter((cookieKey) => cookieKey.match(keyRegexp))[0];
         const csrfName = cookiesKeys.filter((cookieKey) => cookieKey.match(csrfRegexp))[0];
 
+        console.log(authKeyName, csrfName);
+
         if (authKeyName && csrfName) {
             response.setHeader("Set-Cookie", [`${authKeyName}=null;samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=null;samesite=strict;path=/;HttpOnly=true`, `dsqluid=null;samesite=strict;path=/;HttpOnly=true`]);
         } else {

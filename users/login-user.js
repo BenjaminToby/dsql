@@ -14,7 +14,7 @@ const encrypt = require("../functions/encrypt");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
+ * @typedef {object} AuthenticatedUser
  * @property {boolean} success - Did the function run successfully?
  * @property {{
  *   id: number,
@@ -37,13 +37,12 @@ const encrypt = require("../functions/encrypt");
  */
 
 /**
- * ==============================================================================
- * Main Function
+ * Login A user
  * ==============================================================================
  * @async
  *
  * @param {object} params - Single Param object containing params
- * @param {String} params.key - API Key
+ * @param {String} params.key - FULL ACCESS API Key
  * @param {String} params.database - Target Database
  * @param {{
  *  email: string,
@@ -53,7 +52,7 @@ const encrypt = require("../functions/encrypt");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
- * @returns { Promise<FunctionReturn>}
+ * @returns { Promise<AuthenticatedUser>}
  */
 async function loginUser({ key, payload, database, response, encryptionKey, encryptionSalt }) {
     /**

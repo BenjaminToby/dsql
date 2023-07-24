@@ -19,22 +19,23 @@ const https = require("https");
  */
 
 /**
- * ==============================================================================
- * Main Function
+ * @typedef {object} UserDataPayload
+ * @property {!string} first_name - First Name *Required
+ * @property {!string} last_name - Last Name *Required
+ * @property {!string} email - Email *Required
+ * @property {!string} password - Password *Required
+ * @property {string?} username - Username (Optional)
+ */
+
+/**
+ * Add User to Database
  * ==============================================================================
  * @async
  *
- * @param {{
- *  key: string,
- *  database: string
- *  payload: {
- *      first_name: string,
- *      last_name: string,
- *      username: string,
- *      email: string,
- *      password: string,
- *  },
- * }}
+ * @param {object} props - Single object passed
+ * @param {string} props.key - FULL ACCESS API Key
+ * @param {string} props.database - Database Name
+ * @param {UserDataPayload} props.payload - User Data Payload
  *
  * @returns { Promise<FunctionReturn> }
  */
