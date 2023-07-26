@@ -26,17 +26,27 @@ const https = require("https");
  * @param {Object} params - Single object passed
  * @param {string} params.key - API Key
  * @param {string} params.db - Database Name
- * @param {(string | Object)} params.query - SQL Query
+ * @param {string} params.query - SQL Query
+ * @param {string[]} [params.queryValues] - An array of query values if using "?" placeholders
  *
  * @returns { Promise<GetReturn> } - Return Object
  */
-async function get({ key, db, query }) {
+async function get({ key, db, query, queryValues }) {
     /**
      * Make https request
      *
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
+        let path = `/api/query/get?db=${db}&query=${query
+            .replace(/\n|\r|\n\r/g, "")
+            .replace(/ {2,}/g, " ")
+            .replace(/ /g, "+")}`;
+
+        if (queryValues) {
+            path += `&queryValues=${JSON.stringify(queryValues)}`;
+        }
+
         https
             .request(
                 {
@@ -47,10 +57,7 @@ async function get({ key, db, query }) {
                     },
                     port: 443,
                     hostname: "datasquirel.com",
-                    path: `/api/query/get?db=${db}&query=${query
-                        .replace(/\n|\r|\n\r/g, "")
-                        .replace(/ {2,}/g, " ")
-                        .replace(/ /g, "+")}`,
+                    path: path,
                 },
 
                 /**
