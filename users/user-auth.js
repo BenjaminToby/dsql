@@ -50,7 +50,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {String} params.level - Optional. "Deep" value indicates an extra layer of security
  * @param {String} params.database - Database Name
  *
- * @returns {{ success: boolean, payload: AuthenticatedUserObject, msg?: string }}
+ * @returns { AuthenticatedUserObject }
  */
 function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
     try {
