@@ -40,7 +40,7 @@ const https = require("https");
  * @param {Object} params - Single object passed
  * @param {string} params.key - FULL ACCESS API Key
  * @param {string} params.database - Database Name
- * @param {PostDataPayload} params.query - SQL query String or Request Object
+ * @param {PostDataPayload | string} params.query - SQL query String or Request Object
  *
  * @returns { Promise<PostReturn> } - Return Object
  */
