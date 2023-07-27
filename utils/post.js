@@ -20,7 +20,7 @@ const https = require("https");
  * @typedef {object} PostDataPayload
  * @property {"insert" | "update" | "delete"} action - The target action to take
  * @property {string} table - Table name(slug) eg "blog_posts"
- * @property {object} data - Table insert payload object => This must have keys that match
+ * @property {object} [data] - Table insert payload object => This must have keys that match
  * table fields
  * @property {string?} [identifierColumnName] - Table identifier field name => eg. "id" OR "email"
  * @property {string?} [identifierValue] - Corresponding value of the selected field name => This
@@ -124,7 +124,7 @@ async function post({ key, query, database }) {
         httpsRequest.write(reqPayload);
 
         httpsRequest.on("error", (error) => {
-            console.log("HTTPS request ERROR =>", error);
+            console.log("HTTPS request ERROR =>", error.message);
         });
 
         httpsRequest.end();
