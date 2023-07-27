@@ -41,10 +41,11 @@ const https = require("https");
  * @param {string} params.key - FULL ACCESS API Key
  * @param {string} params.database - Database Name
  * @param {PostDataPayload | string} params.query - SQL query String or Request Object
+ * @param {any[]} [params.queryValues] - Query Values if using "?" placeholders
  *
  * @returns { Promise<PostReturn> } - Return Object
  */
-async function post({ key, query, database }) {
+async function post({ key, query, queryValues, database }) {
     /**
      * Make https request
      *
@@ -53,6 +54,7 @@ async function post({ key, query, database }) {
     const httpResponse = await new Promise((resolve, reject) => {
         const reqPayloadString = JSON.stringify({
             query,
+            queryValues,
             database,
         }).replace(/\n|\r|\n\r/gm, "");
 
