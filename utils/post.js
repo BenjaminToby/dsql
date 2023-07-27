@@ -20,8 +20,8 @@ const https = require("https");
  * @typedef {object} PostDataPayload
  * @property {"insert" | "update" | "delete"} action - The target action to take
  * @property {string} table - Table name(slug) eg "blog_posts"
- * @property {string} identifierColumnName - Table identifier field name => eg. "id" OR "email"
- * @property {string} identifierValue - Corresponding value of the selected field name => This
+ * @property {string?} identifierColumnName - Table identifier field name => eg. "id" OR "email"
+ * @property {string?} identifierValue - Corresponding value of the selected field name => This
  * checks identifies a the target row for "update" or "delete". Not needed for "insert"
  * @property {object} data - Table insert payload object => This must have keys that match
  * table fields
