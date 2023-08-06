@@ -3,7 +3,7 @@
 /**
  * Login with Github Function
  * ===============================================================================
- * @description This function uses google identity api to login a user with datasquirel
+ * @description This function uses github api to login a user with datasquirel
  *
  * @async
  *

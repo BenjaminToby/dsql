@@ -23,17 +23,18 @@ const encrypt = require("../functions/encrypt");
  *   username: string,
  *   email: string,
  *   phone: string,
- *   social_id: [string],
+ *   social_id?: string,
  *   image: string,
  *   image_thumbnail: string,
- *   verification_status: [number=0],
- *   social_login: [number],
- *   social_platform: [string],
+ *   verification_status?: number,
+ *   social_login?: number,
+ *   social_platform?: string,
  *   csrf_k: string,
- *   more_data: [string],
+ *   more_data?: string,
  *   logged_in_status: boolean,
  *   date: string,
- * }} payload - Payload
+ * }} payload - Payload of the response
+ * @property {string} [msg] - An optional message
  */
 
 /**
@@ -45,8 +46,10 @@ const encrypt = require("../functions/encrypt");
  * @param {String} params.key - FULL ACCESS API Key
  * @param {String} params.database - Target Database
  * @param {{
- *  email: string,
- *  password: string
+ *  email?: string,
+ *  username?: string,
+ *  password: string,
+ *  additionalFields: any,
  * }} params.payload Login Email/Username and Password
  * @param {Object} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
