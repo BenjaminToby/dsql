@@ -49,15 +49,15 @@ const encrypt = require("../functions/encrypt");
  *  email?: string,
  *  username?: string,
  *  password: string,
- *  additionalFields: any,
  * }} params.payload Login Email/Username and Password
+ * @param {*} params.additionalFields - Additional Fields to be added to the user object
  * @param {Object} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
  * @returns { Promise<AuthenticatedUser>}
  */
-async function loginUser({ key, payload, database, response, encryptionKey, encryptionSalt }) {
+async function loginUser({ key, payload, database, additionalFields, response, encryptionKey, encryptionSalt }) {
     /**
      * Check Encryption Keys
      *
@@ -102,6 +102,7 @@ async function loginUser({ key, payload, database, response, encryptionKey, encr
         const reqPayload = JSON.stringify({
             payload,
             database,
+            additionalFields,
         });
 
         const httpsRequest = https.request(
