@@ -50,7 +50,7 @@ const encrypt = require("../functions/encrypt");
  *  username?: string,
  *  password: string,
  * }} params.payload Login Email/Username and Password
- * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
+ * @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
  * @param {Object} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
