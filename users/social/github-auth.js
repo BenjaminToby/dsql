@@ -39,10 +39,11 @@ const encrypt = require("../../functions/encrypt");
  * @param {object} params.response - HTTPS response object
  * @param {string} params.encryptionKey - Encryption key
  * @param {string} params.encryptionSalt - Encryption salt
+ * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function githubAuth({ key, code, email, database, clientId, clientSecret, response, encryptionKey, encryptionSalt }) {
+async function githubAuth({ key, code, email, database, clientId, clientSecret, response, encryptionKey, encryptionSalt, additionalFields }) {
     /**
      * Check inputs
      *
@@ -121,6 +122,7 @@ async function githubAuth({ key, code, email, database, clientId, clientSecret, 
             clientId,
             clientSecret,
             database,
+            additionalFields,
         });
 
         const httpsRequest = https.request(
