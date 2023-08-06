@@ -35,10 +35,11 @@ const encrypt = require("../../functions/encrypt");
  * @param {object} params.response - HTTPS response object
  * @param {string} params.encryptionKey - Encryption key
  * @param {string} params.encryptionSalt - Encryption salt
+ * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function googleAuth({ key, token, database, clientId, response, encryptionKey, encryptionSalt }) {
+async function googleAuth({ key, token, database, clientId, response, encryptionKey, encryptionSalt, additionalFields }) {
     /**
      * Check inputs
      *
@@ -115,6 +116,7 @@ async function googleAuth({ key, token, database, clientId, response, encryption
             token,
             clientId,
             database,
+            additionalFields,
         });
 
         const httpsRequest = https.request(
