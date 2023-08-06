@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Imports
  */
@@ -5,6 +7,7 @@ const imageInputFileToBase64 = require("./media/imageInputFileToBase64");
 const imageInputToBase64 = require("./media/imageInputToBase64");
 const inputFileToBase64 = require("./media/inputFileToBase64");
 const getAccessToken = require("./auth/google/getAccessToken");
+const getGithubAccessToken = require("./auth/github/getAccessToken");
 const logout = require("./auth/logout");
 
 ////////////////////////////////////////
@@ -26,6 +29,9 @@ const media = {
 const auth = {
     google: {
         getAccessToken: getAccessToken,
+    },
+    github: {
+        getAccessToken: getGithubAccessToken,
     },
     logout: logout,
 };

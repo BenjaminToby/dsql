@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Imports
  */
@@ -12,6 +14,7 @@ const userAuth = require("./users/user-auth");
 const reAuthUser = require("./users/reauth-user");
 const getUser = require("./users/get-user");
 const loginWithGoogle = require("./users/social/google-auth");
+const loginWithGithub = require("./users/social/github-auth");
 const sanitizeSql = require("./utils/functions/sanitizeSql");
 
 ////////////////////////////////////////
@@ -31,6 +34,7 @@ const user = {
     getUser: getUser,
     social: {
         loginWithGoogle: loginWithGoogle,
+        loginWithGithub: loginWithGithub,
     },
 };
 
@@ -53,16 +57,6 @@ const datasquirel = {
 };
 
 module.exports = datasquirel;
-
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-
-exports.get = datasquirel.get;
-exports.post = datasquirel.post;
-exports.media = datasquirel.media;
-exports.user = datasquirel.user;
-exports.sanitizeSql = datasquirel.sanitizeSql;
 
 ////////////////////////////////////////
 ////////////////////////////////////////
