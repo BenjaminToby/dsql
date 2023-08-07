@@ -9,6 +9,7 @@
  * @property {number} social_login - 0 or 1 => is this user a social user(1) or not(0)
  * @property {string} csrf_k - CSRF key
  * @property {boolean} logged_in_status - Is user logged in or not
+ * @property {boolean} [date] - Time of session creation
  */
 
 module.exports = { DATASQUIREL_LoggedInUser };

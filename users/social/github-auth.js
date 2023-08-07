@@ -152,7 +152,17 @@ async function githubAuth({ key, code, email, database, clientId, clientSecret, 
                 });
 
                 response.on("end", function () {
-                    resolve(JSON.parse(str));
+                    try {
+                        resolve(JSON.parse(str));
+                    } catch (error) {
+                        console.log(error.message);
+
+                        resolve({
+                            success: false,
+                            user: null,
+                            msg: "Something went wrong",
+                        });
+                    }
                 });
 
                 response.on("error", (err) => {
