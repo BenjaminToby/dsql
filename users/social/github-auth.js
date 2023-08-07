@@ -155,7 +155,7 @@ async function githubAuth({ key, code, email, database, clientId, clientSecret, 
                     try {
                         resolve(JSON.parse(str));
                     } catch (error) {
-                        console.log(error.message);
+                        console.log(error);
 
                         resolve({
                             success: false,
