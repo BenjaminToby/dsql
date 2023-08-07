@@ -41,6 +41,7 @@ module.exports = function ({ request }) {
     /** @type {string[]} */
     const cookieSplitArray = cookieString.split(";");
 
+    /** @type {*} */
     let cookieObject = {};
 
     cookieSplitArray.forEach((keyValueString) => {
