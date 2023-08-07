@@ -54,7 +54,7 @@ function logoutUser({ request, response, database }) {
         /** ********************************************** */
         /** ********************************************** */
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
 
         return {
             success: false,

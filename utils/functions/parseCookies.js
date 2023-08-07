@@ -1,8 +1,11 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 
 /**
  * Parse request cookies
@@ -13,9 +16,9 @@
  * @async
  *
  * @param {object} params - main params object
- * @param {object} params.request - HTTPS request object
+ * @param {http.IncomingMessage} params.request - HTTPS request object
  *
- * @returns {object|null}
+ * @returns {* | null}
  */
 module.exports = function ({ request }) {
     /**
@@ -28,7 +31,7 @@ module.exports = function ({ request }) {
     ////////////////////////////////////////
     ////////////////////////////////////////
 
-    /** @type {string|null} */
+    /** @type {string | undefined} */
     const cookieString = request.headers.cookie;
 
     if (!cookieString || typeof cookieString !== "string") {

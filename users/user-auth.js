@@ -5,6 +5,7 @@
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const decrypt = require("../functions/decrypt");
 const parseCookies = require("../utils/functions/parseCookies");
 
@@ -19,7 +20,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @typedef {object} AuthenticatedUserObject
  * @property {boolean} success - Did the function run successfully?
  * @property {import("../types/user.td").DATASQUIREL_LoggedInUser | null} payload - Payload
- * @property {string} [msg] - Response Message
+ * @property {string | unknown} [msg] - Response Message
  */
 
 /**
@@ -29,7 +30,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * with the user's data
  *
  * @param {Object} params - Arg
- * @param {Object} params.request - Http request object
+ * @param {http.IncomingMessage} params.request - Http request object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  * @param {String} params.level - Optional. "Deep" value indicates an extra layer of security
@@ -130,7 +131,7 @@ function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
         return {
             success: false,
             payload: null,
-            msg: error.message,
+            msg: error,
         };
     }
 }
