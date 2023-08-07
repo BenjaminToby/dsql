@@ -5,6 +5,7 @@
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 const encrypt = require("../../functions/encrypt");
 
@@ -36,7 +37,7 @@ const encrypt = require("../../functions/encrypt");
  * @param {string} params.database - Target database name(slug)
  * @param {string} params.clientId - Github client id
  * @param {string} params.clientSecret - Github client Secret
- * @param {object} params.response - HTTPS response object
+ * @param {http.ServerResponse} params.response - HTTPS response object
  * @param {string} params.encryptionKey - Encryption key
  * @param {string} params.encryptionSalt - Encryption salt
  * @param {object} [params.additionalFields] - Additional Fields to be added to the user object

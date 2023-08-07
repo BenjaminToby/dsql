@@ -1,8 +1,11 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 const encrypt = require("../../functions/encrypt");
 
@@ -14,10 +17,10 @@ const encrypt = require("../../functions/encrypt");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
+ * @typedef {object | null} FunctionReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {{id: number, first_name: string, last_name: string}|null} user - Returned User
- * @property {number} dsqlUserId - Dsql User Id
+ * @property {import("../../types/user.td").DATASQUIREL_LoggedInUser | null} user - Returned User
+ * @property {number} [dsqlUserId] - Dsql User Id
  * @property {string} [msg] - Response message
  */
 
@@ -32,7 +35,7 @@ const encrypt = require("../../functions/encrypt");
  * @param {string} params.token - Google access token gotten from the client side
  * @param {string} params.database - Target database name(slug)
  * @param {string} params.clientId - Google client id
- * @param {object} params.response - HTTPS response object
+ * @param {http.ServerResponse} params.response - HTTPS response object
  * @param {string} params.encryptionKey - Encryption key
  * @param {string} params.encryptionSalt - Encryption salt
  * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
@@ -109,7 +112,7 @@ async function googleAuth({ key, token, database, clientId, response, encryption
      * Make https request
      *
      * @description make a request to datasquirel.com
-     * @type {{ success: boolean, user: {id: number} | null, msg: string|null } | null} - Https response object
+     * @type {{ success: boolean, user: import("../../types/user.td").DATASQUIREL_LoggedInUser | null, msg?: string, dsqlUserId?: number } | null } - Https response object
      */
     const httpResponse = await new Promise((resolve, reject) => {
         const reqPayload = JSON.stringify({

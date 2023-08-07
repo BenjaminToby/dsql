@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
@@ -16,24 +18,7 @@ const parseCookies = require("../utils/functions/parseCookies");
 /**
  * @typedef {object} AuthenticatedUserObject
  * @property {boolean} success - Did the function run successfully?
- * @property {{
- *   id: number,
- *   first_name: string,
- *   last_name: string,
- *   username: string,
- *   email: string,
- *   phone: string,
- *   social_id: [string],
- *   image: string,
- *   image_thumbnail: string,
- *   verification_status: [number=0],
- *   social_login: [number],
- *   social_platform: [string],
- *   csrf_k: string,
- *   more_data: [string],
- *   logged_in_status: boolean,
- *   date: string,
- * }} payload - Payload
+ * @property {import("../types/user.td").DATASQUIREL_LoggedInUser | null} payload - Payload
  * @property {string} [msg] - Response Message
  */
 

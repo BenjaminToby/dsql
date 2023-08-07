@@ -1,11 +1,14 @@
+// @ts-check
+
+const http = require("http");
 const parseCookies = require("../utils/functions/parseCookies");
 
 /**
  * Logout user
  * ==============================================================================
  * @param {object} params - Single Param object containing params
- * @param {object} params.request - Http request object
- * @param {object} params.response - Http response object
+ * @param {http.IncomingMessage} params.request - Http request object
+ * @param {http.ServerResponse} params.response - Http response object
  * @param {string} [params.database] - Target database name(slug): optional => If you don't
  * include this you will be logged out of all datasquirel websites instead of just the target
  * database

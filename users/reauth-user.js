@@ -1,8 +1,11 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 const encrypt = require("../functions/encrypt");
 
@@ -18,24 +21,7 @@ const userAuth = require("./user-auth");
 /**
  * @typedef {object} FunctionReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {{
- *   id: number,
- *   first_name: string,
- *   last_name: string,
- *   username: string,
- *   email: string,
- *   phone: string,
- *   social_id: [string],
- *   image: string,
- *   image_thumbnail: string,
- *   verification_status: [number=0],
- *   social_login: [number],
- *   social_platform: [string],
- *   csrf_k: string,
- *   more_data: [string],
- *   logged_in_status: boolean,
- *   date: string,
- * }} payload - Payload
+ * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload
  * @property {string} [msg] - Response Message
  * @property {number} [userId] - user ID
  */
@@ -49,8 +35,8 @@ const userAuth = require("./user-auth");
  * @param {object} params - Single Param object containing params
  * @param {String} params.key - API Key
  * @param {String} params.database - Target Database
- * @param {Object} params.response - Http response object
- * @param {Object} params.request - Http request object
+ * @param {http.ServerResponse} params.response - Http response object
+ * @param {http.IncomingMessage} params.request - Http request object
  * @param {string} params.level - Authentication level
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt

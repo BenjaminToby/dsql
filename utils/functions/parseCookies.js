@@ -15,7 +15,7 @@
  * @param {object} params - main params object
  * @param {object} params.request - HTTPS request object
  *
- * @returns {{}|null}
+ * @returns {object|null}
  */
 module.exports = function ({ request }) {
     /**

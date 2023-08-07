@@ -1,8 +1,11 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 const encrypt = require("../functions/encrypt");
 
@@ -16,25 +19,9 @@ const encrypt = require("../functions/encrypt");
 /**
  * @typedef {object} AuthenticatedUser
  * @property {boolean} success - Did the function run successfully?
- * @property {{
- *   id: number,
- *   first_name: string,
- *   last_name: string,
- *   username: string,
- *   email: string,
- *   phone: string,
- *   social_id?: string,
- *   image: string,
- *   image_thumbnail: string,
- *   verification_status?: number,
- *   social_login?: number,
- *   social_platform?: string,
- *   csrf_k: string,
- *   more_data?: string,
- *   logged_in_status: boolean,
- *   date: string,
- * }} payload - Payload of the response
+ * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload of the response
  * @property {string} [msg] - An optional message
+ * @property {number} [userId] - An optional message
  */
 
 /**
@@ -51,7 +38,7 @@ const encrypt = require("../functions/encrypt");
  *  password: string,
  * }} params.payload Login Email/Username and Password
  * @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
- * @param {Object} params.response - Http response object
+ * @param {http.ServerResponse} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
@@ -96,7 +83,7 @@ async function loginUser({ key, payload, database, additionalFields, response, e
      *
      * @description make a request to datasquirel.com
      *
-     * @type {{ success: boolean, payload: DATASQUIREL_LoggedInUser | null }}
+     * @type {{ success: boolean, payload: import("../types/user.td").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
      */
     const httpResponse = await new Promise((resolve, reject) => {
         const reqPayload = JSON.stringify({
@@ -165,7 +152,7 @@ async function loginUser({ key, payload, database, additionalFields, response, e
         const authKeyName = `datasquirel_${userId}_${database}_auth_key`;
         const csrfName = `datasquirel_${userId}_${database}_csrf`;
 
-        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${httpResponse.payload.csrf_k};samesite=strict;path=/;HttpOnly=true`, `dsqluid=${userId};samesite=strict;path=/;HttpOnly=true`]);
+        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${httpResponse.payload?.csrf_k};samesite=strict;path=/;HttpOnly=true`, `dsqluid=${userId};samesite=strict;path=/;HttpOnly=true`]);
     }
 
     /** ********************************************** */
