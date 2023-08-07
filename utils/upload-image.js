@@ -27,8 +27,8 @@ const https = require("https");
  * ==============================================================================
  * @async
  *
- * @param {Object} params - API Key
- * @param {String} params.key - API Key
+ * @param {Object} params - Single Param object containing params
+ * @param {String} params.key - *FULL ACCESS API Key
  * @param {{
  *    imageData: string,
  *    imageName: string,
