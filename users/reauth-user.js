@@ -37,7 +37,7 @@ const userAuth = require("./user-auth");
  * @param {String} params.database - Target Database
  * @param {http.ServerResponse} params.response - Http response object
  * @param {http.IncomingMessage} params.request - Http request object
- * @param {string} params.level - Authentication level
+ * @param {*} params.level - Authentication level
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *
