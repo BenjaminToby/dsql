@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Imports
  */
@@ -42,10 +44,11 @@ const https = require("https");
  * @param {string} params.database - Database Name
  * @param {PostDataPayload | string} params.query - SQL query String or Request Object
  * @param {any[]} [params.queryValues] - Query Values if using "?" placeholders
+ * @param {string} [params.tableName] - Name of the table to query
  *
  * @returns { Promise<PostReturn> } - Return Object
  */
-async function post({ key, query, queryValues, database }) {
+async function post({ key, query, queryValues, database, tableName }) {
     /**
      * Make https request
      *
@@ -56,6 +59,7 @@ async function post({ key, query, queryValues, database }) {
             query,
             queryValues,
             database,
+            tableName,
         }).replace(/\n|\r|\n\r/gm, "");
 
         try {

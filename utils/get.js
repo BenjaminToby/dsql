@@ -28,10 +28,11 @@ const https = require("https");
  * @param {string} params.db - Database Name
  * @param {string} params.query - SQL Query
  * @param {string[]} [params.queryValues] - An array of query values if using "?" placeholders
+ * @param {string} [params.tableName] - Name of the table to query
  *
  * @returns { Promise<GetReturn> } - Return Object
  */
-async function get({ key, db, query, queryValues }) {
+async function get({ key, db, query, queryValues, tableName }) {
     /**
      * Make https request
      *
@@ -44,7 +45,7 @@ async function get({ key, db, query, queryValues }) {
             .replace(/ /g, "+")}`;
 
         if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}`;
+            path += `&queryValues=${JSON.stringify(queryValues)}${tableName ? `&tableName=${tableName}` : ""}}`;
         }
 
         https
