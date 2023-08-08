@@ -24,7 +24,7 @@ module.exports = function getAccessToken({ clientId, redirectUrl, setLoading, sc
      */
     if (setLoading) setLoading(true);
 
-    const scopeString = scopes ? scopes.join("%20") : "user";
+    const scopeString = scopes ? scopes.join("%20") : "read:user";
 
     const extraUriParamsString = extraUriParams
         ? typeof extraUriParams == "string"
