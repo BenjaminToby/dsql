@@ -45,7 +45,7 @@ async function get({ key, db, query, queryValues, tableName }) {
             .replace(/ /g, "+")}`;
 
         if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}${tableName ? `&tableName=${tableName}` : ""}}`;
+            path += `&queryValues=${JSON.stringify(queryValues)}${tableName ? `&tableName=${tableName}` : ""}`;
         }
 
         https

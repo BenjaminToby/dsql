@@ -106,13 +106,13 @@ async function post({ key, query, queryValues, database, tableName }) {
                     try {
                         resolve(JSON.parse(str));
                     } catch (error) {
-                        console.log(error.message);
+                        console.log(error);
                         console.log("Fetched Payload =>", str);
 
                         resolve({
                             success: false,
                             payload: null,
-                            error: error.message,
+                            error: error,
                         });
                     }
                 });
@@ -130,7 +130,7 @@ async function post({ key, query, queryValues, database, tableName }) {
         httpsRequest.write(reqPayload);
 
         httpsRequest.on("error", (error) => {
-            console.log("HTTPS request ERROR =>", error.message);
+            console.log("HTTPS request ERROR =>", error);
         });
 
         httpsRequest.end();
