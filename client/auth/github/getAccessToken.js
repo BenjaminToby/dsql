@@ -11,10 +11,11 @@
  * @param {string} params.clientId - Github app client ID: {@link https://datasquirel.com/docs}
  * @param {string} params.redirectUrl - Github Redirect URL as listed in your oauth app settings: {@link https://datasquirel.com/docs}
  * @param {function(boolean): void} [params.setLoading] - React setState Function: sets whether the google login button is ready or not
+ * @param {string[]} [params.scopes] - React setState Function: sets whether the google login button is ready or not
  *
  * @returns {void} - Return
  */
-module.exports = function getAccessToken({ clientId, redirectUrl, setLoading }) {
+module.exports = function getAccessToken({ clientId, redirectUrl, setLoading, scopes }) {
     /**
      * == Initialize
      *
@@ -22,7 +23,9 @@ module.exports = function getAccessToken({ clientId, redirectUrl, setLoading }) 
      */
     if (setLoading) setLoading(true);
 
-    const fetchUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=user&redirect_uri=${redirectUrl}${window.location.pathname}`;
+    const scopeString = scopes ? scopes.join("%20") : "user";
+
+    const fetchUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scopeString}&redirect_uri=${redirectUrl}${window.location.pathname}`;
     window.location.assign(fetchUrl);
 
     //////////////////////////////////////////////////////////////////////////////////
