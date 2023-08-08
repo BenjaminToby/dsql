@@ -34,7 +34,9 @@ module.exports = function getAccessToken({ clientId, redirectUrl, setLoading, sc
                   .join("&")}`
         : "";
 
-    const fetchUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scopeString}&redirect_uri=${redirectUrl}${window.location.pathname}${extraUriParamsString}`;
+    console.log("extraUriParamsString:", extraUriParamsString);
+
+    const fetchUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scopeString}&redirect_uri=${redirectUrl}${extraUriParamsString}`;
     window.location.assign(fetchUrl);
 
     //////////////////////////////////////////////////////////////////////////////////
