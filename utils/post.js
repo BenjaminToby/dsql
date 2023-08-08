@@ -59,7 +59,7 @@ async function post({ key, query, queryValues, database, tableName }) {
             query,
             queryValues,
             database,
-            tableName,
+            tableName: tableName ? tableName : null,
         }).replace(/\n|\r|\n\r/gm, "");
 
         try {
