@@ -15,6 +15,8 @@ const reAuthUser = require("./users/reauth-user");
 const getUser = require("./users/get-user");
 const loginWithGoogle = require("./users/social/google-auth");
 const loginWithGithub = require("./users/social/github-auth");
+const getToken = require("./users/get-token");
+const validateToken = require("./users/validate-token");
 const sanitizeSql = require("./utils/functions/sanitizeSql");
 
 ////////////////////////////////////////
@@ -32,6 +34,8 @@ const user = {
     reAuthUser: reAuthUser,
     updateUser: updateUser,
     getUser: getUser,
+    getToken: getToken,
+    validateToken: validateToken,
     social: {
         loginWithGoogle: loginWithGoogle,
         loginWithGithub: loginWithGithub,
