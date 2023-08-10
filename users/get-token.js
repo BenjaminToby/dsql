@@ -26,12 +26,11 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {http.IncomingMessage} params.request - Http request object
  * @param {string} params.encryptionKey - Encryption Key
  * @param {string} params.encryptionSalt - Encryption Salt
- * @param {("deep" | "normal")?} [params.level] - Optional. "Deep" value indicates an extra layer of security
  * @param {string} params.database - Database Name
  *
  * @returns {{ key: string | undefined, csrf: string | undefined }}
  */
-function getToken({ request, encryptionKey, encryptionSalt, level, database }) {
+function getToken({ request, encryptionKey, encryptionSalt, database }) {
     try {
         /**
          * Grab the payload
@@ -74,19 +73,6 @@ function getToken({ request, encryptionKey, encryptionSalt, level, database }) {
         let userObject = JSON.parse(userPayload);
 
         if (!userObject.csrf_k) {
-            return { key: undefined, csrf: undefined };
-        }
-
-        /** ********************************************** */
-        /** ********************************************** */
-        /** ********************************************** */
-
-        /**
-         * Grab the payload
-         *
-         * @description Grab the payload
-         */
-        if (level?.match(/deep/i) && !csrf?.match(new RegExp(`${userObject.csrf_k}`))) {
             return { key: undefined, csrf: undefined };
         }
 

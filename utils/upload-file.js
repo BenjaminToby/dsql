@@ -17,7 +17,6 @@ const https = require("https");
  * @property {boolean} success - Did the function run successfully?
  * @property {{
  *   urlPath: string,
- *   urlThumbnailPath: string
  * }} payload - Payload containing the url for the image and its thumbnail
  */
 
@@ -30,10 +29,9 @@ const https = require("https");
  * @param {Object} params - Single Param object containing params
  * @param {String} params.key - *FULL ACCESS API Key
  * @param {{
- *    imageData: string,
- *    imageName: string,
+ *    fileData: string,
+ *    fileName: string,
  *    mimeType?: string,
- *    thumbnailSize?: number,
  *    folder?: string,
  *    isPrivate?: boolean,
  * }} params.payload - Image Data Eg.
@@ -59,7 +57,7 @@ async function uploadImage({ key, payload }) {
                 },
                 port: 443,
                 hostname: "datasquirel.com",
-                path: `/api/query/add-image`,
+                path: `/api/query/add-file`,
             },
 
             /**
