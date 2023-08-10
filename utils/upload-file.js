@@ -18,6 +18,7 @@ const https = require("https");
  * @property {{
  *   urlPath: string,
  * }} payload - Payload containing the url for the image and its thumbnail
+ * @property {string} [msg] - An optional message
  */
 
 /**
@@ -39,58 +40,72 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> } - Return Object
  */
 async function uploadImage({ key, payload }) {
-    /**
-     * Make https request
-     *
-     * @description make a request to datasquirel.com
-     */
-    const httpResponse = await new Promise((resolve, reject) => {
-        const reqPayload = JSON.stringify(payload);
+    try {
+        /**
+         * Make https request
+         *
+         * @description make a request to datasquirel.com
+         */
+        const httpResponse = await new Promise((resolve, reject) => {
+            const reqPayload = JSON.stringify(payload);
 
-        const httpsRequest = https.request(
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Content-Length": Buffer.from(reqPayload).length,
-                    Authorization: key,
+            const httpsRequest = https.request(
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": Buffer.from(reqPayload).length,
+                        Authorization: key,
+                    },
+                    port: 443,
+                    hostname: "datasquirel.com",
+                    path: `/api/query/add-file`,
                 },
-                port: 443,
-                hostname: "datasquirel.com",
-                path: `/api/query/add-file`,
-            },
 
-            /**
-             * Callback Function
-             *
-             * @description https request callback
-             */
-            (response) => {
-                var str = "";
+                /**
+                 * Callback Function
+                 *
+                 * @description https request callback
+                 */
+                (response) => {
+                    var str = "";
 
-                response.on("data", function (chunk) {
-                    str += chunk;
-                });
+                    response.on("data", function (chunk) {
+                        str += chunk;
+                    });
 
-                response.on("end", function () {
-                    resolve(JSON.parse(str));
-                });
+                    response.on("end", function () {
+                        resolve(JSON.parse(str));
+                    });
 
-                response.on("error", (err) => {
-                    reject(err);
-                });
-            }
-        );
+                    response.on("error", (err) => {
+                        reject(err);
+                    });
+                }
+            );
 
-        httpsRequest.write(reqPayload);
-        httpsRequest.end();
-    });
+            httpsRequest.write(reqPayload);
+            httpsRequest.end();
+        });
 
-    /** ********************************************** */
-    /** ********************************************** */
-    /** ********************************************** */
+        /** ********************************************** */
+        /** ********************************************** */
+        /** ********************************************** */
 
-    return httpResponse;
+        return httpResponse;
+    } catch (error) {
+        /** ********************************************** */
+        /** ********************************************** */
+        /** ********************************************** */
+
+        console.log("Error in uploading file: ", error.message);
+
+        return {
+            success: false,
+            payload: null,
+            msg: error.message,
+        };
+    }
 }
 
 /** ********************************************** */
