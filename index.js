@@ -6,6 +6,7 @@
 const get = require("./utils/get");
 const post = require("./utils/post");
 const uploadImage = require("./utils/upload-image");
+const uploadFile = require("./utils/upload-file");
 const createUser = require("./users/add-user");
 const updateUser = require("./users/update-user");
 const loginUser = require("./users/login-user");
@@ -47,6 +48,7 @@ const user = {
  */
 const media = {
     uploadImage: uploadImage,
+    uploadFile: uploadFile,
 };
 
 /**
