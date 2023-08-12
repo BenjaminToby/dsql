@@ -1,9 +1,14 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
 const https = require("https");
+const path = require("path");
+const fs = require("fs");
+const localAddUser = require("../engine/user/add-user");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -20,10 +25,10 @@ const https = require("https");
 
 /**
  * @typedef {object} UserDataPayload
- * @property {!string} first_name - First Name *Required
- * @property {!string} last_name - Last Name *Required
- * @property {!string} email - Email *Required
- * @property {!string} password - Password *Required
+ * @property {string} first_name - First Name *Required
+ * @property {string} last_name - Last Name *Required
+ * @property {string} email - Email *Required
+ * @property {string} password - Password *Required
  * @property {string?} username - Username (Optional)
  */
 
@@ -40,6 +45,32 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> }
  */
 async function addUser({ key, payload, database }) {
+    /**
+     * Check for local DB settings
+     *
+     * @description Look for local db settings in `.env` file and by pass the http request if available
+     */
+    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+
+    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
+        /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
+        let dbSchema;
+
+        try {
+            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
+            dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
+        } catch (error) {}
+
+        console.log("Reading from local database ...");
+
+        if (dbSchema) {
+            return await localAddUser({
+                dbSchema: dbSchema,
+                payload: payload,
+            });
+        }
+    }
+
     /**
      * Make https request
      *

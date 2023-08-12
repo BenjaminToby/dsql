@@ -1,0 +1,132 @@
+{
+    "tableName": "users",
+    "tableFullName": "Users",
+    "fields": [
+        {
+            "fieldName": "id",
+            "dataType": "BIGINT",
+            "notNullValue": true,
+            "primaryKey": true,
+            "autoIncrement": true
+        },
+        {
+            "fieldName": "first_name",
+            "dataType": "VARCHAR(100)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "last_name",
+            "dataType": "VARCHAR(100)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "email",
+            "dataType": "VARCHAR(200)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "phone",
+            "dataType": "VARCHAR(50)"
+        },
+        {
+            "fieldName": "user_type",
+            "dataType": "VARCHAR(20)",
+            "defaultValue": "default"
+        },
+        {
+            "fieldName": "username",
+            "dataType": "VARCHAR(100)",
+            "nullValue": true
+        },
+        {
+            "fieldName": "password",
+            "dataType": "VARCHAR(250)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "image",
+            "dataType": "VARCHAR(250)",
+            "defaultValue": "/images/user_images/user-preset.png"
+        },
+        {
+            "fieldName": "image_thumbnail",
+            "dataType": "VARCHAR(250)",
+            "defaultValue": "/images/user_images/user-preset-thumbnail.png"
+        },
+        {
+            "fieldName": "address",
+            "dataType": "VARCHAR(255)"
+        },
+        {
+            "fieldName": "city",
+            "dataType": "VARCHAR(50)"
+        },
+        {
+            "fieldName": "state",
+            "dataType": "VARCHAR(50)"
+        },
+        {
+            "fieldName": "country",
+            "dataType": "VARCHAR(50)"
+        },
+        {
+            "fieldName": "zip_code",
+            "dataType": "VARCHAR(50)"
+        },
+        {
+            "fieldName": "social_login",
+            "dataType": "TINYINT",
+            "defaultValue": "0"
+        },
+        {
+            "fieldName": "social_platform",
+            "dataType": "VARCHAR(50)",
+            "nullValue": true
+        },
+        {
+            "fieldName": "social_id",
+            "dataType": "VARCHAR(250)",
+            "nullValue": true
+        },
+        {
+            "fieldName": "more_user_data",
+            "dataType": "BIGINT",
+            "defaultValue": "0"
+        },
+        {
+            "fieldName": "verification_status",
+            "dataType": "TINYINT",
+            "defaultValue": "0"
+        },
+        {
+            "fieldName": "date_created",
+            "dataType": "VARCHAR(250)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "date_created_code",
+            "dataType": "BIGINT",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "date_created_timestamp",
+            "dataType": "TIMESTAMP",
+            "defaultValueLiteral": "CURRENT_TIMESTAMP"
+        },
+        {
+            "fieldName": "date_updated",
+            "dataType": "VARCHAR(250)",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "date_updated_code",
+            "dataType": "BIGINT",
+            "notNullValue": true
+        },
+        {
+            "fieldName": "date_updated_timestamp",
+            "dataType": "TIMESTAMP",
+            "defaultValueLiteral": "CURRENT_TIMESTAMP"
+        }
+    ]
+}

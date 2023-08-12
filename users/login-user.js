@@ -79,6 +79,13 @@ async function loginUser({ key, payload, database, additionalFields, response, e
         };
 
     /**
+     * Check for local DB settings
+     *
+     * @description Look for local db settings in `.env` file and by pass the http request if available
+     */
+    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+
+    /**
      * Make https request
      *
      * @description make a request to datasquirel.com

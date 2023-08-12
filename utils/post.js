@@ -4,6 +4,9 @@
  * Imports
  */
 const https = require("https");
+const path = require("path");
+const fs = require("fs");
+const localPost = require("../engine/query/post");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -49,6 +52,34 @@ const https = require("https");
  * @returns { Promise<PostReturn> } - Return Object
  */
 async function post({ key, query, queryValues, database, tableName }) {
+    /**
+     * Check for local DB settings
+     *
+     * @description Look for local db settings in `.env` file and by pass the http request if available
+     */
+    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+
+    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
+        /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
+        let dbSchema;
+
+        try {
+            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
+            dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
+        } catch (error) {}
+
+        console.log("Reading from local database ...");
+
+        return await localPost({
+            dbSchema: dbSchema,
+            options: {
+                query: query,
+                queryValues: queryValues,
+                tableName: tableName,
+            },
+        });
+    }
+
     /**
      * Make https request
      *

@@ -5,7 +5,7 @@ const runQuery = require("./utils/runQuery");
 /**
  * @typedef {Object} LocalGetReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string|null|object)} [payload] - GET request results
+ * @property {*} [payload] - GET request results
  * @property {string} [msg] - Message
  * @property {string} [error] - Error Message
  */

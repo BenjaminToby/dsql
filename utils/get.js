@@ -20,7 +20,7 @@ const localGet = require("../engine/query/get");
 /**
  * @typedef {Object} GetReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string|null|object)} [payload] - GET request results
+ * @property {*} [payload] - GET request results
  * @property {string} [msg] - Message
  * @property {string} [error] - Error Message
  */

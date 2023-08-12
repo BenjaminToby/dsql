@@ -30,7 +30,7 @@
  * @property {string} [tableDescription] - Brief description of table
  * @property {DSQL_FieldSchemaType[]} fields - List of table Fields
  * @property {DSQL_IndexSchemaType[]} [indexes] - List of table indexes, if available
- * @property {DSQL_ChildrenTablesType[]} childrenTables - List of children tables
+ * @property {DSQL_ChildrenTablesType[]} [childrenTables] - List of children tables
  * @property {boolean} [childTable] -If current table is a child clone
  * @property {string} [childTableName] - Table slug of parent table => "blog_posts"
  * @property {string} [childTableDbFullName] - Database full name(slug) including datasquirel data => "datasquirel_user_7_new_database"
