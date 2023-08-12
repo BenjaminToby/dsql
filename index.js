@@ -5,6 +5,7 @@
  */
 const get = require("./utils/get");
 const post = require("./utils/post");
+const getSchema = require("./utils/get-schema");
 
 const uploadImage = require("./utils/upload-image");
 const uploadFile = require("./utils/upload-file");
@@ -66,6 +67,7 @@ const datasquirel = {
     post: post,
     media: media,
     user: user,
+    getSchema: getSchema,
     sanitizeSql: sanitizeSql,
 };
 

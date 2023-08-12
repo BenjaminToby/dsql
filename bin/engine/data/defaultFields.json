@@ -1,0 +1,39 @@
+[
+    {
+        "fieldName": "id",
+        "dataType": "BIGINT",
+        "notNullValue": true,
+        "primaryKey": true,
+        "autoIncrement": true
+    },
+    {
+        "fieldName": "date_created",
+        "dataType": "VARCHAR(250)",
+        "notNullValue": true
+    },
+    {
+        "fieldName": "date_created_code",
+        "dataType": "BIGINT",
+        "notNullValue": true
+    },
+    {
+        "fieldName": "date_created_timestamp",
+        "dataType": "TIMESTAMP",
+        "defaultValueLiteral": "CURRENT_TIMESTAMP"
+    },
+    {
+        "fieldName": "date_updated",
+        "dataType": "VARCHAR(250)",
+        "notNullValue": true
+    },
+    {
+        "fieldName": "date_updated_code",
+        "dataType": "BIGINT",
+        "notNullValue": true
+    },
+    {
+        "fieldName": "date_updated_timestamp",
+        "dataType": "TIMESTAMP",
+        "defaultValueLiteral": "CURRENT_TIMESTAMP"
+    }
+]

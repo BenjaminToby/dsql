@@ -1,7 +1,18 @@
+// @ts-check
+
 const { scryptSync, createCipheriv } = require("crypto");
 const { Buffer } = require("buffer");
 
 const encrypt = ({ data, encryptionKey, encryptionSalt }) => {
+    if (!encryptionKey?.match(/.{8,}/)) {
+        console.log("Encryption key is invalid");
+        return data;
+    }
+    if (!encryptionSalt?.match(/.{8,}/)) {
+        console.log("Encryption salt is invalid");
+        return data;
+    }
+
     const algorithm = "aes-192-cbc";
     const password = encryptionKey;
 

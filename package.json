@@ -1,8 +1,11 @@
 {
     "name": "datasquirel",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
+    "bin": {
+        "dsql-watch": "./bin/dsql"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -23,5 +26,9 @@
     "bugs": {
         "url": "https://github.com/BenjaminToby/dsql/issues"
     },
-    "homepage": "https://datasquirel.com/"
+    "homepage": "https://datasquirel.com/",
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "mysql": "^2.18.1"
+    }
 }

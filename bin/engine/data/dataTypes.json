@@ -1,0 +1,73 @@
+[
+    {
+        "title": "VARCHAR",
+        "name": "VARCHAR",
+        "value": "0-255",
+        "argument": true,
+        "description": "Varchar is simply letters and numbers within the range 0 - 255",
+        "maxValue": 255
+    },
+    {
+        "title": "TINYINT",
+        "name": "TINYINT",
+        "value": "0-100",
+        "description": "TINYINT means Integers: 0 to 100",
+        "maxValue": 127
+    },
+    {
+        "title": "SMALLINT",
+        "name": "SMALLINT",
+        "value": "0-255",
+        "description": "SMALLINT means Integers: 0 to 240933",
+        "maxValue": 32767
+    },
+    {
+        "title": "MEDIUMINT",
+        "name": "MEDIUMINT",
+        "value": "0-255",
+        "description": "MEDIUMINT  means Integers: 0 to 1245568545560",
+        "maxValue": 8388607
+    },
+    {
+        "title": "INT",
+        "name": "INT",
+        "value": "0-255",
+        "description": "INT means Integers: 0 to 12560",
+        "maxValue": 2147483647
+    },
+    {
+        "title": "BIGINT",
+        "name": "BIGINT",
+        "value": "0-255",
+        "description": "BIGINT means Integers: 0 to 1245569056767568545560",
+        "maxValue": 2e63
+    },
+    {
+        "title": "TINYTEXT",
+        "name": "TINYTEXT",
+        "value": "0-255",
+        "description": "Text with 255 max characters",
+        "maxValue": 127
+    },
+    {
+        "title": "TEXT",
+        "name": "TEXT",
+        "value": "0-100",
+        "description": "MEDIUMTEXT is just text with max length 16,777,215",
+        "maxValue": 127
+    },
+    {
+        "title": "MEDIUMTEXT",
+        "name": "MEDIUMTEXT",
+        "value": "0-255",
+        "description": "MEDIUMTEXT is just text with max length 16,777,215",
+        "maxValue": 127
+    },
+    {
+        "title": "LONGTEXT",
+        "name": "LONGTEXT",
+        "value": "0-255",
+        "description": "LONGTEXT is just text with max length 4,294,967,295",
+        "maxValue": 127
+    }
+]

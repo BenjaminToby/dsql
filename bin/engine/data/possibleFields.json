@@ -1,0 +1,17 @@
+{
+    "fieldName": "string",
+    "dataType": "BIGINT",
+    "nullValue": true,
+    "primaryKey": true,
+    "autoIncrement": true,
+    "defaultValue": "CURRENT_TIMESTAMP",
+    "defaultValueLiteral": "CURRENT_TIMESTAMP",
+    "notNullValue": true,
+    "foreignKey": {
+        "foreignKeyName": "Name",
+        "destinationTableName": "Table Name",
+        "destinationTableColumnName": "Column Name",
+        "cascadeDelete": true,
+        "cascadeUpdate": true
+    }
+}

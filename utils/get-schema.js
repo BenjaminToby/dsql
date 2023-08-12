@@ -6,9 +6,6 @@
  * ==============================================================================
  */
 const https = require("https");
-const path = require("path");
-const fs = require("fs");
-const localGet = require("../bin/query/get");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -18,11 +15,9 @@ const localGet = require("../bin/query/get");
 /** ****************************************************************************** */
 
 /**
- * @typedef {Object} GetReturn
+ * @typedef {Object} GetSchemaReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string|null|object)} [payload] - GET request results
- * @property {string} [msg] - Message
- * @property {string} [error] - Error Message
+ * @property {import("../types/database-schema.td").DSQL_DatabaseSchemaType[] | import("../types/database-schema.td").DSQL_DatabaseSchemaType | null} payload - Response payload
  */
 
 /**
@@ -31,58 +26,18 @@ const localGet = require("../bin/query/get");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {string} params.key - API Key
- * @param {string} params.db - Database Name
- * @param {string} params.query - SQL Query
- * @param {string[]} [params.queryValues] - An array of query values if using "?" placeholders
- * @param {string} [params.tableName] - Name of the table to query
+ * @param {string} params.key - `FULL ACCESS` API Key
+ * @param {string} [params.database] - The database schema to get
  *
- * @returns { Promise<GetReturn> } - Return Object
+ * @returns { Promise<GetSchemaReturn> } - Return Object
  */
-async function get({ key, db, query, queryValues, tableName }) {
-    /**
-     * Check for local DB settings
-     *
-     * @description Look for local db settings in `.env` file and by pass the http request if available
-     */
-    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
-
-    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
-        /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
-        let dbSchema;
-
-        try {
-            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
-            dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
-        } catch (error) {}
-
-        console.log("Reading from local database ...");
-
-        return await localGet({
-            dbSchema: dbSchema,
-            options: {
-                query: query,
-                queryValues: queryValues,
-                tableName: tableName,
-            },
-        });
-    }
-
+async function getSchema({ key, database }) {
     /**
      * Make https request
      *
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        let path = `/api/query/get?db=${db}&query=${query
-            .replace(/\n|\r|\n\r/g, "")
-            .replace(/ {2,}/g, " ")
-            .replace(/ /g, "+")}`;
-
-        if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}${tableName ? `&tableName=${tableName}` : ""}`;
-        }
-
         https
             .request(
                 {
@@ -93,7 +48,7 @@ async function get({ key, db, query, queryValues, tableName }) {
                     },
                     port: 443,
                     hostname: "datasquirel.com",
-                    path: path,
+                    path: "/api/query/get-schema" + (database ? `?database=${database}` : ""),
                 },
 
                 /**
@@ -131,4 +86,4 @@ async function get({ key, db, query, queryValues, tableName }) {
 /** ********************************************** */
 /** ********************************************** */
 
-module.exports = get;
+module.exports = getSchema;
