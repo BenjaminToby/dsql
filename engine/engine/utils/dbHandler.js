@@ -15,6 +15,7 @@ const connection = mysql.createConnection({
     password: process.env.DSQL_PASS,
     charset: "utf8mb4",
     port: process.env.DSQL_PORT?.match(/.../) ? parseInt(process.env.DSQL_PORT) : undefined,
+    timeout: 5000,
 });
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -71,36 +72,35 @@ module.exports = async function dbHandler({ query, values, database }) {
      */
     try {
         results = await new Promise((resolve, reject) => {
-            if (connection.state !== "disconnected") {
-                if (values) {
-                    connection.query(query, values, (error, results, fields) => {
-                        if (error) {
-                            console.log("DB handler error:", error.message);
-                            resolve({
-                                error: error.message,
-                            });
-                        } else {
-                            resolve(JSON.parse(JSON.stringify(results)));
-                        }
-                        setTimeout(() => {
-                            endConnection(connection);
-                        }, 500);
-                    });
-                } else {
-                    connection.query(query, (error, results, fields) => {
-                        if (error) {
-                            console.log("DB handler error:", error.message);
-                            resolve({
-                                error: error.message,
-                            });
-                        } else {
-                            resolve(JSON.parse(JSON.stringify(results)));
-                        }
-                        setTimeout(() => {
-                            endConnection(connection);
-                        }, 500);
-                    });
-                }
+            if (values) {
+                connection.query(query, values, (error, results, fields) => {
+                    if (error) {
+                        console.log("DB handler error:", error.message);
+                        resolve({
+                            error: error.message,
+                        });
+                    } else {
+                        resolve(JSON.parse(JSON.stringify(results)));
+                    }
+
+                    // setTimeout(() => {
+                    //     endConnection(connection);
+                    // }, 500);
+                });
+            } else {
+                connection.query(query, (error, results, fields) => {
+                    if (error) {
+                        console.log("DB handler error:", error.message);
+                        resolve({
+                            error: error.message,
+                        });
+                    } else {
+                        resolve(JSON.parse(JSON.stringify(results)));
+                    }
+                    // setTimeout(() => {
+                    //     endConnection(connection);
+                    // }, 500);
+                });
             }
         });
 
