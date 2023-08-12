@@ -1,10 +1,10 @@
 {
     "name": "datasquirel",
-    "version": "1.4.9",
+    "version": "1.5.0",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
-        "dsql-watch": "./bin/dsql"
+        "dsql-watch": "./bin/dsql.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
