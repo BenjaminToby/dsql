@@ -36,10 +36,8 @@ async function createDbFromSchema(dbSchema) {
          *
          * @description Grab Schema
          */
-        console.log("Starting createDbFromSchema ...");
 
         if (!dbSchema || !Array.isArray(dbSchema) || !dbSchema[0]) {
-            console.log("Invalid DB schema data");
             return;
         }
 
@@ -48,16 +46,12 @@ async function createDbFromSchema(dbSchema) {
             const database = dbSchema[i];
             const { dbFullName, tables } = database;
 
-            console.log("Now constructing database =>", database?.dbFullName);
-
             ////////////////////////////////////////
             ////////////////////////////////////////
             ////////////////////////////////////////
 
             /** @type {{ dbFullName: string }[] | null} */
             const dbCheck = await noDatabaseDbHandler({ query: `SELECT SCHEMA_NAME AS dbFullName FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '${dbFullName}'` });
-
-            console.log("DB CHeck =>", dbCheck);
 
             if (dbCheck && dbCheck[0]?.dbFullName) {
                 // Database Exists
