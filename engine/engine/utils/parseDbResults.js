@@ -24,6 +24,9 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
      */
     let parsedResults = [];
 
+    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+    const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
+
     try {
         /**
          * Declare variables
@@ -52,7 +55,7 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
 
                 if (resultFieldSchema?.encrypted) {
                     if (value?.match(/./)) {
-                        result[resultFieldName] = decrypt(value);
+                        result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
                     }
                 }
             }

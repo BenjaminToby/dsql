@@ -33,6 +33,9 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
      *
      * @description Declare "results" variable
      */
+    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+    const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
+
     let result, error, tableSchema;
 
     if (dbSchema) {
@@ -78,6 +81,8 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
                         duplicateColumnName,
                         duplicateColumnValue,
                         tableSchema,
+                        encryptionKey,
+                        encryptionSalt,
                     });
 
                     if (!result?.insertId) {
@@ -96,6 +101,8 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
                         identifierColumnName,
                         identifierValue,
                         tableSchema,
+                        encryptionKey,
+                        encryptionSalt,
                     });
 
                     break;

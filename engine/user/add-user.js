@@ -31,6 +31,10 @@ async function localAddUser({ payload, dbSchema }) {
          * Initialize Variables
          */
         const dbFullName = process.env.DSQL_DB_NAME || "";
+
+        const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+        const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
+
         /**
          * Hash Password
          *
@@ -105,6 +109,8 @@ async function localAddUser({ payload, dbSchema }) {
                 image: "/images/user_images/user-preset.png",
                 image_thumbnail: "/images/user_images/user-preset-thumbnail.png",
             },
+            encryptionKey,
+            encryptionSalt,
         });
 
         if (addUser?.insertId) {

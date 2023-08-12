@@ -24,10 +24,12 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string | number} params.identifierValue - Update row identifier column value
+ * @param {string} params.encryptionKey - Encryption key
+ * @param {string} params.encryptionSalt - Encryption salt
  *
  * @returns {Promise<object|null>}
  */
-async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue }) {
+async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue, encryptionKey, encryptionSalt }) {
     /**
      * Check if data is valid
      */
@@ -46,9 +48,6 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
 
     let updateKeyValueArray = [];
     let updateValues = [];
-
-    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY;
-    const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT;
 
     /**
      * Declare variables

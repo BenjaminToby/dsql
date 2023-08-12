@@ -26,8 +26,8 @@ const updateDbEntry = require("./updateDbEntry");
  * @param {string} [params.duplicateColumnName] - Duplicate column name
  * @param {string} [params.duplicateColumnValue] - Duplicate column value
  * @param {boolean} [params.update] - Update this row if it exists
- * @param {string} [params.encryptionKey] - Update this row if it exists
- * @param {string} [params.encryptionSalt] - Update this row if it exists
+ * @param {string} params.encryptionKey - Update this row if it exists
+ * @param {string} params.encryptionSalt - Update this row if it exists
  *
  * @returns {Promise<object|null>}
  */
@@ -63,6 +63,8 @@ async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, ta
                 tableSchema,
                 identifierColumnName: duplicateColumnName,
                 identifierValue: duplicateColumnValue || "",
+                encryptionKey,
+                encryptionSalt,
             });
         }
     }
