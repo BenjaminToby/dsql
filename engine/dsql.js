@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#! /usr/engine/env node
 // @ts-check
 
 const fs = require("fs");
