@@ -1,10 +1,11 @@
 {
     "name": "datasquirel",
-    "version": "1.5.5",
+    "version": "1.5.6",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
-        "dsql-watch": "./engine/dsql.js"
+        "dsql-watch": "./engine/dsql.js",
+        "dsql-dump": "./engine/dump.js"
     },
     "repository": {
         "type": "git",
