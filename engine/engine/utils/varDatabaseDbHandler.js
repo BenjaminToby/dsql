@@ -44,9 +44,9 @@ module.exports = async function varDatabaseDbHandler({ queryString, queryValuesA
      * @description Fetch data from db if no cache
      */
     try {
-        if (queryString && queryValuesArray && Array.isArray(queryValuesArray) && queryValuesArray[0]) {
+        if (queryString && Array.isArray(queryValuesArray) && queryValuesArray[0]) {
             results = await dbHandler({ query: queryString, values: queryValuesArray, database: database });
-        } else {
+        } else if (queryString && !Array.isArray(queryValuesArray)) {
             results = await dbHandler({ query: queryString, database: database });
         }
 

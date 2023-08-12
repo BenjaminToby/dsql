@@ -30,19 +30,10 @@ const runQuery = require("./utils/runQuery");
  */
 async function localGet({ options, dbSchema }) {
     try {
-        const { query } = options;
+        const { query, queryValues } = options;
 
         /** @type {string | undefined | any } */
         const tableName = options?.tableName ? options.tableName : undefined;
-
-        /** @type {string[] | undefined } */
-        let queryValues;
-
-        if (options?.queryValues && typeof options?.queryValues === "string") {
-            try {
-                queryValues = JSON.parse(options.queryValues);
-            } catch (error) {}
-        }
 
         const dbFullName = process.env.DSQL_DB_NAME || "";
 
