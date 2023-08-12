@@ -72,10 +72,13 @@ module.exports = async function dbHandler({ query, values, database }) {
      */
     try {
         results = await new Promise((resolve, reject) => {
-            if (values) {
+            if (values?.[0]) {
                 connection.query(query, values, (error, results, fields) => {
                     if (error) {
-                        console.log("DB handler error:", error.message);
+                        console.log("DB handler error with values array:", error.message);
+                        console.log("SQL:", error.sql);
+                        console.log("State:", error.sqlState, error.sqlMessage);
+
                         resolve({
                             error: error.message,
                         });
@@ -91,6 +94,9 @@ module.exports = async function dbHandler({ query, values, database }) {
                 connection.query(query, (error, results, fields) => {
                     if (error) {
                         console.log("DB handler error:", error.message);
+                        console.log("SQL:", error.sql);
+                        console.log("State:", error.sqlState, error.sqlMessage);
+
                         resolve({
                             error: error.message,
                         });
