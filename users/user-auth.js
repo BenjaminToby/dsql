@@ -33,7 +33,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {http.IncomingMessage} params.request - Http request object
  * @param {string} params.encryptionKey - Encryption Key
  * @param {string} params.encryptionSalt - Encryption Salt
- * @param {("deep" | "normal")?} [params.level] - Optional. "Deep" value indicates an extra layer of security
+ * @param {("deep" | "normal")} [params.level] - Optional. "Deep" value indicates an extra layer of security
  * @param {string} params.database - Database Name
  *
  * @returns { AuthenticatedUserObject }

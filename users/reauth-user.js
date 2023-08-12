@@ -37,13 +37,14 @@ const userAuth = require("./user-auth");
  * @param {String} params.database - Target Database
  * @param {http.ServerResponse} params.response - Http response object
  * @param {http.IncomingMessage} params.request - Http request object
- * @param {*} params.level - Authentication level
+ * @param {("deep" | "normal")} [params.level] - Authentication level
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
+ *  @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function reauthUser({ key, database, response, request, level, encryptionKey, encryptionSalt }) {
+async function reauthUser({ key, database, response, request, level, encryptionKey, encryptionSalt, additionalFields }) {
     /**
      * Check Encryption Keys
      *
@@ -74,6 +75,7 @@ async function reauthUser({ key, database, response, request, level, encryptionK
         const reqPayload = JSON.stringify({
             existingUser: existingUser.payload,
             database,
+            additionalFields,
         });
 
         const httpsRequest = https.request(
