@@ -12,7 +12,7 @@ const { Buffer } = require("buffer");
  * @returns
  */
 const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
-    if (!encryptedString?.match(/.}/)) {
+    if (!encryptedString?.match(/./)) {
         console.log("Encrypted string is invalid");
         console.log("Encrypted string =>", encryptedString);
         return encryptedString;
