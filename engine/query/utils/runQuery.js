@@ -70,8 +70,6 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
             switch (action.toLowerCase()) {
                 case "insert":
                     result = await addDbEntry({
-                        dbContext: "Dsql User",
-                        paradigm: "Full Access",
                         dbFullName: dbFullName,
                         tableName: table,
                         data: data,
