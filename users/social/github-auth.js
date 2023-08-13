@@ -43,7 +43,7 @@ const localGithubAuth = require("../../engine/user/social/github-auth");
  * @param {http.ServerResponse} params.response - HTTPS response object
  * @param {string} params.encryptionKey - Encryption key
  * @param {string} params.encryptionSalt - Encryption salt
- * @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
+ * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
  *
  * @returns { Promise<FunctionReturn | undefined> }
  */
