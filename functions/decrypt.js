@@ -24,6 +24,8 @@ const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
         return decrypted;
     } catch (error) {
         console.log("Error in decrypting =>", error.message);
+        console.log("encryptionKey =>", encryptionKey);
+        console.log("encryptionSalt =>", encryptionSalt);
         return null;
     }
 };
