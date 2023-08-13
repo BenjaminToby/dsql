@@ -23,6 +23,7 @@ const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
         decrypted += decipher.final("utf8");
         return decrypted;
     } catch (error) {
+        console.log("Error in decrypting =>", error.message);
         return null;
     }
 };
