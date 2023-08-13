@@ -70,7 +70,7 @@ async function localAddUser({ payload, dbSchema }) {
             };
         }
 
-        const fieldsTitles = fields.map((fieldObject) => fieldObject.Field);
+        const fieldsTitles = fields.map((/** @type {*} */ fieldObject) => fieldObject.Field);
 
         let invalidField = null;
 
