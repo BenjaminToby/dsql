@@ -20,7 +20,7 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * "Read only" or "Full Access"? Defaults to "Read Only"
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
- * @param {object} params.data - Data to add
+ * @param {*} params.data - Data to add
  * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string | number} params.identifierValue - Update row identifier column value

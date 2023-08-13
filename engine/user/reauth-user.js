@@ -74,6 +74,7 @@ async function localReauthUser({ existingUser, additionalFields, dbSchema }) {
 
         if (additionalFields && Array.isArray(additionalFields) && additionalFields.length > 0) {
             additionalFields.forEach((key) => {
+                // @ts-ignore
                 userPayload[key] = foundUser?.[0][key];
             });
         }

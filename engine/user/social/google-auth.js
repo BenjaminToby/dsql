@@ -122,6 +122,7 @@ async function localGoogleAuth({ dbSchema, token, clientId, response, additional
 
         if (additionalFields && Object.keys(additionalFields).length > 0) {
             Object.keys(additionalFields).forEach((key) => {
+                // @ts-ignore
                 payloadObject[key] = additionalFields[key];
             });
         }

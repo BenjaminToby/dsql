@@ -96,6 +96,7 @@ async function localGithubAuth({ res, code, email, clientId, clientSecret, addit
 
         if (additionalFields && Object.keys(additionalFields).length > 0) {
             Object.keys(additionalFields).forEach((key) => {
+                // @ts-ignore
                 payload[key] = additionalFields[key];
             });
         }

@@ -1,6 +1,7 @@
 // @ts-check
 
 const decrypt = require("../../../functions/decrypt");
+// @ts-ignore
 const defaultFieldsRegexp = require("./defaultFieldsRegexp");
 
 /**

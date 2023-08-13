@@ -47,6 +47,7 @@ async function localUpdateUser({ payload, dbSchema }) {
 
             reqBodyKeys.forEach((key) => {
                 if (key?.match(/^date_|^id$/)) return;
+                // @ts-ignore
                 finalData[key] = payload[key];
             });
 

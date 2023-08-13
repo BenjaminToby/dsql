@@ -71,7 +71,7 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *      image_thumbnail: string,
  *      username: string,
  *  },
- *  res: object|null,
+ *  res: http.ServerResponse,
  *  invitation?: object|null,
  *  supEmail?: string | null,
  *  additionalFields?: object,
@@ -99,7 +99,6 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
                 user: existingSocialIdUser[0],
                 social_platform,
                 res,
-                invitation,
                 database,
                 additionalFields,
             });
@@ -154,7 +153,6 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
                 user: payload,
                 social_platform,
                 res,
-                invitation,
                 database,
                 additionalFields,
             });
@@ -177,6 +175,7 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
         };
 
         Object.keys(payload).forEach((key) => {
+            // @ts-ignore
             data[key] = payload[key];
         });
 
@@ -236,7 +235,6 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
                 user: newUserQueried[0],
                 social_platform,
                 res,
-                invitation,
                 database,
                 additionalFields,
             });
@@ -303,7 +301,6 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
  * }} params.user - user object
  * @param {string} params.social_platform - Whether its "google" or "facebook" or "github"
  * @param {http.ServerResponse} params.res - Https response object
- * @param {object} params.invitation - A query object if user was invited
  * @param {string|null} params.database - Target Database
  * @param {object} [params.additionalFields] - Additional fields to be added to the user payload
  *
@@ -313,7 +310,7 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
  *  msg?: string
  * }>}
  */
-async function loginSocialUser({ user, social_platform, res, invitation, database, additionalFields }) {
+async function loginSocialUser({ user, social_platform, res, database, additionalFields }) {
     const foundUser = await varDatabaseDbHandler({
         database: database ? database : "datasquirel",
         queryString: `SELECT * FROM users WHERE email='${user.email}' AND social_id='${user.social_id}' AND social_platform='${social_platform}'`,
@@ -350,6 +347,7 @@ async function loginSocialUser({ user, social_platform, res, invitation, databas
 
     if (additionalFields && Object.keys(additionalFields).length > 0) {
         Object.keys(additionalFields).forEach((key) => {
+            // @ts-ignore
             userPayload[key] = foundUser[0][key];
         });
     }
