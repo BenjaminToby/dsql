@@ -11,7 +11,7 @@ const defaultFieldsRegexp = require("./defaultFieldsRegexp");
  * fields
  *
  * @param {object} params - Single object params
- * @param {{}[]} params.unparsedResults - Array of data objects containing Fields(keys)
+ * @param {*[]} params.unparsedResults - Array of data objects containing Fields(keys)
  * and corresponding values of the fields(values)
  * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @returns {Promise<object[]|null>}
@@ -21,6 +21,7 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
      * Declare variables
      *
      * @description Declare "results" variable
+     * @type {*[]}
      */
     let parsedResults = [];
 

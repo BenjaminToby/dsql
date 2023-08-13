@@ -5,7 +5,7 @@ const fs = require("fs");
 const addDbEntry = require("./addDbEntry");
 const updateDbEntry = require("./updateDbEntry");
 const deleteDbEntry = require("./deleteDbEntry");
-const varReadOnlyDatabaseDbHandler = require("../../engine/utils/varReadOnlyDatabaseDbHandler");
+const varDatabaseDbHandler = require("../../engine/utils/varDatabaseDbHandler");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -19,13 +19,13 @@ const varReadOnlyDatabaseDbHandler = require("../../engine/utils/varReadOnlyData
  * ==============================================================================
  * @param {object} params - An object containing the function parameters.
  * @param {string} params.dbFullName - Database full name. Eg. "datasquire_user_2_test"
- * @param {string|object} params.query - Query string or object
+ * @param {*} params.query - Query string or object
  * @param {boolean} [params.readOnly] - Is this operation read only?
  * @param {import("../../../types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
  * @param {string[]} [params.queryValuesArray] - An optional array of query values if "?" is used in the query string
  * @param {string} [params.tableName] - Table Name
  *
- * @return {Promise<object>}
+ * @return {Promise<{result: *, error?: *}>}
  */
 async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArray, tableName }) {
     /**
@@ -53,7 +53,7 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
      */
     try {
         if (typeof query === "string") {
-            result = await varReadOnlyDatabaseDbHandler({
+            result = await varDatabaseDbHandler({
                 queryString: query,
                 queryValuesArray,
                 database: dbFullName,

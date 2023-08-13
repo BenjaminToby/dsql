@@ -6,7 +6,6 @@
 
 const fs = require("fs");
 const mysql = require("mysql");
-const endConnection = require("./endConnection");
 
 const connection = mysql.createConnection({
     host: process.env.DSQL_HOST,
@@ -35,7 +34,7 @@ const connection = mysql.createConnection({
  * @param {object} [params.dbSchema] - Database Schema
  * @param {string} [params.database] - Target Database
  *
- * @returns {Promise<object | null>}
+ * @returns {Promise<*>}
  */
 module.exports = async function dbHandler({ query, values, database }) {
     /**

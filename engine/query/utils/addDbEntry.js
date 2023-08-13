@@ -21,7 +21,7 @@ const updateDbEntry = require("./updateDbEntry");
  * "Read only" or "Full Access"? Defaults to "Read Only"
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
- * @param {object} params.data - Data to add
+ * @param {*} params.data - Data to add
  * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} [params.duplicateColumnName] - Duplicate column name
  * @param {string} [params.duplicateColumnValue] - Duplicate column value
@@ -29,7 +29,7 @@ const updateDbEntry = require("./updateDbEntry");
  * @param {string} params.encryptionKey - Update this row if it exists
  * @param {string} params.encryptionSalt - Update this row if it exists
  *
- * @returns {Promise<object|null>}
+ * @returns {Promise<*>}
  */
 async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, encryptionKey, encryptionSalt }) {
     /**

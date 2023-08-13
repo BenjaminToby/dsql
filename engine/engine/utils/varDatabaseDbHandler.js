@@ -13,7 +13,7 @@ const dbHandler = require("./dbHandler");
  * @param {string[]} [params.queryValuesArray] - Values Array
  * @param {string} params.database - Database name
  * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
- * @returns {Promise<any[]|null>}
+ * @returns {Promise<*>}
  */
 module.exports = async function varDatabaseDbHandler({ queryString, queryValuesArray, database, tableSchema }) {
     /**
@@ -29,6 +29,7 @@ module.exports = async function varDatabaseDbHandler({ queryString, queryValuesA
      * Declare variables
      *
      * @description Declare "results" variable
+     * @type {*}
      */
     let results;
 
