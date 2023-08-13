@@ -1,21 +1,31 @@
+// @ts-check
+
 const { scryptSync, createDecipheriv } = require("crypto");
 const { Buffer } = require("buffer");
 
+/**
+ *
+ * @param {object} param0
+ * @param {string} param0.encryptedString
+ * @param {string} param0.encryptionKey
+ * @param {string} param0.encryptionSalt
+ * @returns
+ */
 const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
     if (!encryptedString?.match(/.}/)) {
         console.log("Encrypted string is invalid");
         console.log("Encrypted string =>", encryptedString);
-        return data;
+        return encryptedString;
     }
 
     if (!encryptionKey?.match(/.{8,}/)) {
         console.log("Decrption key is invalid");
-        return data;
+        return encryptedString;
     }
 
     if (!encryptionSalt?.match(/.{8,}/)) {
         console.log("Decrption salt is invalid");
-        return data;
+        return encryptedString;
     }
 
     const algorithm = "aes-192-cbc";
@@ -33,7 +43,7 @@ const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
         console.log("encryptedString =>", encryptedString);
         console.log("encryptionKey =>", encryptionKey);
         console.log("encryptionSalt =>", encryptionSalt);
-        return data;
+        return encryptedString;
     }
 };
 

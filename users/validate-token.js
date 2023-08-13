@@ -21,7 +21,7 @@ const decrypt = require("../functions/decrypt");
  * @description This Function takes in a encrypted token and returns a user object
  *
  * @param {Object} params - Arg
- * @param {http.IncomingMessage} params.token - Http request object
+ * @param {string} params.token - Encrypted Token
  * @param {string} params.encryptionKey - Encryption Key
  * @param {string} params.encryptionSalt - Encryption Salt
  * @param {("deep" | "normal")?} [params.level] - Optional. "Deep" value indicates an extra layer of security
