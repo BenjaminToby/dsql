@@ -1,3 +1,5 @@
+// @ts-check
+
 const { createHmac } = require("crypto");
 
 /**
@@ -6,7 +8,8 @@ const { createHmac } = require("crypto");
  * @returns {string}
  */
 module.exports = function hashPassword(password) {
-    const hmac = createHmac("sha512", process.env.ENCRYPTION_PASSWORD);
+    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+    const hmac = createHmac("sha512", encryptionKey);
     hmac.update(password);
     let hashed = hmac.digest("base64");
     return hashed;

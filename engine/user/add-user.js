@@ -86,10 +86,13 @@ async function localAddUser({ payload, dbSchema }) {
             return { success: false, payload: `${invalidField} is not a valid field!` };
         }
 
+        const tableSchema = dbSchema.tables.find((tb) => tb?.tableName === "users");
+
         const existingUser = await varDatabaseDbHandler({
             queryString: `SELECT * FROM users WHERE email = ?${payload.username ? "OR username = ?" : ""}}`,
             queryValuesArray: payload.username ? [payload.email, payload.username] : [payload.email],
             database: dbFullName,
+            tableSchema: tableSchema,
         });
 
         if (existingUser && existingUser[0]) {
@@ -111,6 +114,7 @@ async function localAddUser({ payload, dbSchema }) {
             },
             encryptionKey,
             encryptionSalt,
+            tableSchema,
         });
 
         if (addUser?.insertId) {

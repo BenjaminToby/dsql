@@ -1,7 +1,6 @@
 // @ts-check
 
 const fs = require("fs");
-const mysql = require("mysql");
 const parseDbResults = require("./parseDbResults");
 const dbHandler = require("./dbHandler");
 
@@ -22,14 +21,9 @@ module.exports = async function varDatabaseDbHandler({ queryString, queryValuesA
      *
      * @description Create Connection
      */
-    const connection = mysql.createConnection({
-        host: process.env.DSQL_SOCKET_HOST,
-        user: process.env.DSQL_SOCKET_USER,
-        password: process.env.DSQL_SOCKET_PASS || "",
-        database: process.env.DSQL_SOCKET_DB_NAME,
-        charset: "utf8mb4",
-        port: parseInt(process.env.DSQL_SOCKET_DB_NAME || "") || undefined,
-    });
+
+    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+    const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
 
     /**
      * Declare variables

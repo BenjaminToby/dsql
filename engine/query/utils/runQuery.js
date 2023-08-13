@@ -43,9 +43,7 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
             const table = tableName ? tableName : typeof query == "string" ? null : query ? query?.table : null;
             if (!table) throw new Error("No table name provided");
             tableSchema = dbSchema.tables.filter((tb) => tb?.tableName === table)[0];
-        } catch (_err) {
-            // console.log("ERROR getting tableSchema: ", _err.message);
-        }
+        } catch (_err) {}
     }
 
     /**

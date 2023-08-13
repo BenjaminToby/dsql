@@ -1,0 +1,89 @@
+// @ts-check
+
+const hashPassword = require("../../functions/hashPassword");
+const addUsersTableToDb = require("../engine/addUsersTableToDb");
+const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
+const addDbEntry = require("../query/utils/addDbEntry");
+const runQuery = require("../query/utils/runQuery");
+const updateDbEntry = require("../query/utils/updateDbEntry");
+
+/**
+ * @typedef {Object} LocalPostReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {*} [payload] - GET request results
+ * @property {string} [msg] - Message
+ * @property {string} [error] - Error Message
+ */
+
+/**
+ * Make a get request to Datasquirel API
+ * ==============================================================================
+ * @async
+ *
+ * @param {Object} params - Single object passed
+ * @param {*} params.payload - SQL Query
+ * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema - Name of the table to query
+ *
+ * @returns { Promise<LocalPostReturn> } - Return Object
+ */
+async function localUpdateUser({ payload, dbSchema }) {
+    try {
+        /**
+         * User auth
+         *
+         * @description Authenticate user
+         */
+        /**
+         * Initialize Variables
+         */
+        const dbFullName = process.env.DSQL_DB_NAME || "";
+
+        const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+        const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
+
+        const data = (() => {
+            const reqBodyKeys = Object.keys(payload);
+            const finalData = {};
+
+            reqBodyKeys.forEach((key) => {
+                if (key?.match(/^date_|^id$/)) return;
+                finalData[key] = payload[key];
+            });
+
+            return finalData;
+        })();
+
+        const tableSchema = dbSchema.tables.find((tb) => tb?.tableName === "users");
+
+        const updateUser = await updateDbEntry({
+            dbContext: "Dsql User",
+            paradigm: "Full Access",
+            dbFullName: dbFullName,
+            tableName: "users",
+            identifierColumnName: "id",
+            identifierValue: payload.id,
+            data: data,
+            encryptionKey,
+            encryptionSalt,
+            tableSchema,
+        });
+
+        return {
+            success: true,
+            payload: updateUser,
+        };
+    } catch (error) {
+        ////////////////////////////////////////
+        console.log("Error in local add-user Request =>", error.message);
+
+        return {
+            success: false,
+            payload: null,
+            msg: "Something went wrong!",
+        };
+
+        ////////////////////////////////////////
+    }
+}
+
+module.exports = localUpdateUser;

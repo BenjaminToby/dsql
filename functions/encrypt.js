@@ -3,7 +3,19 @@
 const { scryptSync, createCipheriv } = require("crypto");
 const { Buffer } = require("buffer");
 
+/**
+ *
+ * @param {object} param0
+ * @param {string} param0.data
+ * @param {string} param0.encryptionKey
+ * @param {string} param0.encryptionSalt
+ * @returns {string | null}
+ */
 const encrypt = ({ data, encryptionKey, encryptionSalt }) => {
+    if (!data?.match(/./)) {
+        console.log("Encryption string is invalid");
+        return data;
+    }
     if (!encryptionKey?.match(/.{8,}/)) {
         console.log("Encryption key is invalid");
         return data;
@@ -25,7 +37,8 @@ const encrypt = ({ data, encryptionKey, encryptionSalt }) => {
         encrypted += cipher.final("hex");
         return encrypted;
     } catch (error) {
-        return null;
+        console.log("Error in encrypting =>", error.message);
+        return data;
     }
 };
 

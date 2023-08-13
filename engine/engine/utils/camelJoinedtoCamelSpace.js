@@ -10,7 +10,7 @@
  *
  * @returns {string | null}
  */
-module.exports = function camelJoinedtoCamelSpace(text) {
+function camelJoinedtoCamelSpace(text) {
     if (!text?.match(/./)) {
         return "";
     }
@@ -49,4 +49,6 @@ module.exports = function camelJoinedtoCamelSpace(text) {
     } else {
         return null;
     }
-};
+}
+
+module.exports = camelJoinedtoCamelSpace;
