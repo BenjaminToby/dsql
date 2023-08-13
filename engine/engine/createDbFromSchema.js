@@ -243,7 +243,7 @@ async function createDbFromSchema(dbSchema) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Error in createDbFromSchema => ", error.message);
     }
 }

@@ -72,7 +72,7 @@ async function localUpdateUser({ payload, dbSchema }) {
             success: true,
             payload: updateUser,
         };
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         ////////////////////////////////////////
         console.log("Error in local add-user Request =>", error.message);
 

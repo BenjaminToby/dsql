@@ -135,7 +135,7 @@ async function localAddUser({ payload, dbSchema }) {
         }
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         ////////////////////////////////////////
         console.log("Error in local add-user Request =>", error.message);
 

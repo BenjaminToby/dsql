@@ -69,7 +69,7 @@ async function localGet({ options, dbSchema }) {
             return { success: true, payload: results };
 
             ////////////////////////////////////////
-        } catch (error) {
+        } catch (/** @type {*} */ error) {
             ////////////////////////////////////////
 
             console.log("Error in local get Request =>", error.message);
@@ -78,7 +78,7 @@ async function localGet({ options, dbSchema }) {
         }
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         ////////////////////////////////////////
         console.log("Error in local get Request =>", error.message);
 

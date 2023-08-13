@@ -127,7 +127,7 @@ async function updateApiSchemaFromLocalDb() {
         /** ********************************************** */
 
         return httpResponse;
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         return {
             success: false,
             payload: null,

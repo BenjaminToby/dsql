@@ -72,7 +72,7 @@ async function localPost({ options, dbSchema }) {
             };
 
             ////////////////////////////////////////
-        } catch (error) {
+        } catch (/** @type {*} */ error) {
             ////////////////////////////////////////
 
             return {
@@ -83,7 +83,7 @@ async function localPost({ options, dbSchema }) {
         }
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         ////////////////////////////////////////
         console.log("Error in local post Request =>", error.message);
 

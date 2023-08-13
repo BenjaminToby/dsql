@@ -94,7 +94,7 @@ module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidt
             imageName: imageName,
             imageSize: imageSize,
         };
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Image Processing Error! =>", error.message);
 
         return {

@@ -101,7 +101,7 @@ async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, ta
             }
 
             insertValuesArray.push(value);
-        } catch (error) {
+        } catch (/** @type {*} */ error) {
             console.log("DSQL: Error in parsing data keys =>", error.message);
             continue;
         }

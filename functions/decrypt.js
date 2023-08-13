@@ -37,7 +37,7 @@ const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
         let decrypted = decipher.update(encryptedString, "hex", "utf8");
         decrypted += decipher.final("utf8");
         return decrypted;
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Error in decrypting =>", error.message);
         return encryptedString;
     }

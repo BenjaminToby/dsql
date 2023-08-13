@@ -72,7 +72,7 @@ module.exports = async function noDatabaseDbHandler({ query, values }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("ERROR in noDatabaseDbHandler =>", error.message);
     }
 

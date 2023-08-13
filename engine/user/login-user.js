@@ -134,7 +134,7 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
         };
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Error in local login-user Request =>", error.message);
         return {
             success: false,

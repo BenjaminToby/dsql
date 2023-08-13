@@ -79,7 +79,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
         ////////////////////////////////////////
 
         /**
-         * @type {DSQL_MYSQL_SHOW_INDEXES_Type[] | null}
+         * @type {*}
          * @description All indexes from MYSQL db
          */
         const allExistingIndexes = await varDatabaseDbHandler({
@@ -88,7 +88,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
         });
 
         /**
-         * @type {DSQL_MYSQL_SHOW_COLUMNS_Type[] | null}
+         * @type {*}
          * @description All columns from MYSQL db
          */
         const allExistingColumns = await varDatabaseDbHandler({
@@ -158,7 +158,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
                             upToDateTableFieldsArray = userSchemaData[targetDbIndex].tables[targetTableIndex].fields;
 
                             fs.writeFileSync(schemaPath, JSON.stringify(userSchemaData), "utf8");
-                        } catch (error) {
+                        } catch (/** @type {*} */ error) {
                             console.log("Error in updating Table =>", error.message);
                         }
 
@@ -261,7 +261,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
 
         /**
          *  @description All MSQL Foreign Keys
-         * @type {DSQL_MYSQL_FOREIGN_KEYS_Type[] | null}
+         * @type {*}
          */
         const allForeignKeys = await varDatabaseDbHandler({
             queryString: `SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '${dbFullName}' AND TABLE_NAME='${tableName}' AND CONSTRAINT_TYPE='FOREIGN KEY'`,
@@ -443,7 +443,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log('Error in "updateTable" function =>', error.message);
 
         return "Error in Updating Table";

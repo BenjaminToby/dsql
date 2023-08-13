@@ -113,7 +113,7 @@ module.exports = async function dbHandler({ query, values, database }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("DB handler error:", error.message);
 
         results = null;

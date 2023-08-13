@@ -127,7 +127,7 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Error in Running Query =>", error.message);
         result = null;
         error = error.message;

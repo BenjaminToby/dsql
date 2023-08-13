@@ -258,7 +258,7 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("ERROR in 'handleSocialDb.js' backend function =>", error.message);
 
         return {

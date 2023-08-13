@@ -30,7 +30,7 @@ module.exports = async function varReadOnlyDatabaseDbHandler({ queryString, data
         results = await dbHandler({ query: queryString, values: queryValuesArray, database: database });
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         ////////////////////////////////////////
 
         console.log("\x1b[31mvarReadOnlyDatabaseDbHandler ERROR\x1b[0m =>", database, error.message);

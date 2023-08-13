@@ -119,7 +119,7 @@ async function localGithubAuth({ res, code, email, clientId, clientSecret, addit
         return { ...loggedInGithubUser, dsqlUserId: "0" };
 
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("localGithubAuth error", error.message);
 
         return { success: false, msg: "Failed!" };

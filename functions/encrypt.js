@@ -36,7 +36,7 @@ const encrypt = ({ data, encryptionKey, encryptionSalt }) => {
         let encrypted = cipher.update(data, "utf8", "hex");
         encrypted += cipher.final("hex");
         return encrypted;
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("Error in encrypting =>", error.message);
         return data;
     }

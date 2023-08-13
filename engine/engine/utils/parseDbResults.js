@@ -67,7 +67,7 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
          * @description Declare "results" variable
          */
         return parsedResults;
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("ERROR in parseDbResults Function =>", error.message);
         return unparsedResults;
     }

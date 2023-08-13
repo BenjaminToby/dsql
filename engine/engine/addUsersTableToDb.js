@@ -67,7 +67,7 @@ module.exports = async function addUsersTableToDb({ dbSchema }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log(error.message);
     }
 };

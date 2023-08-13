@@ -58,7 +58,7 @@ module.exports = async function inputFileToBase64({ inputFile, allowedRegex }) {
             reader.onload = function () {
                 resolve(reader.result);
             };
-            reader.onerror = function (error) {
+            reader.onerror = function (/** @type {*} */ error) {
                 console.log("Error: ", error.message);
             };
         });
@@ -78,7 +78,7 @@ module.exports = async function inputFileToBase64({ inputFile, allowedRegex }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (error) {
+    } catch (/** @type {*} */ error) {
         console.log("File Processing Error! =>", error.message);
 
         return {
