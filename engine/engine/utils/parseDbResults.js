@@ -53,10 +53,8 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
                     continue;
                 }
 
-                if (resultFieldSchema?.encrypted) {
-                    if (value?.match(/./)) {
-                        result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
-                    }
+                if (resultFieldSchema?.encrypted && value?.match(/./)) {
+                    result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
                 }
             }
 
