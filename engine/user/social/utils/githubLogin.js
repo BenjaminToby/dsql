@@ -7,6 +7,7 @@
  */
 const fs = require("fs");
 const httpsRequest = require("./httpsRequest");
+const dbHandler = require("../../../engine/utils/dbHandler");
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +123,10 @@ async function githubLogin({ code, clientId, clientSecret }) {
         ////////////////////////////////////////////////
 
         if (!gitHubUser?.email) {
-            const existingGithubUser = await global.DB_HANDLER(`SELECT email FROM users WHERE social_login='1' AND social_platform='github' AND social_id='${gitHubUser?.id || ""}'`);
+            const existingGithubUser = await dbHandler({
+                query: `SELECT email FROM users WHERE social_login='1' AND social_platform='github' AND social_id= ?`,
+                values: [gitHubUser?.id || ""],
+            });
 
             if (existingGithubUser && existingGithubUser[0] && gitHubUser) {
                 gitHubUser.email = existingGithubUser[0].email;

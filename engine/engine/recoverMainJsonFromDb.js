@@ -1,13 +1,12 @@
+// @ts-check
+
 const fs = require("fs");
 require("dotenv").config({ path: "./../.env" });
 
 ////////////////////////////////////////
 
-const noDatabaseDbHandler = require("../functions/backend/noDatabaseDbHandler");
-const varDatabaseDbHandler = require("../functions/backend/varDatabaseDbHandler");
-const createTable = require("./utils/createTable");
-const slugToCamelTitle = require("./utils/slugToCamelTitle");
-const updateTable = require("./utils/updateTable");
+const dbHandler = require("./utils/dbHandler");
+const varDatabaseDbHandler = require("./utils/varDatabaseDbHandler");
 
 /** ****************************************************************************** */
 
@@ -31,8 +30,12 @@ async function recoverMainJsonFromDb() {
         return;
     }
 
-    const databases = await global.DB_HANDLER(`SELECT * FROM user_databases WHERE user_id='${userId}'`);
+    const databases = await dbHandler({
+        query: `SELECT * FROM user_databases WHERE user_id = ?`,
+        values: [userId],
+    });
 
+    /** @type {*[]} */
     const dbWrite = [];
 
     for (let i = 0; i < databases.length; i++) {
@@ -44,10 +47,14 @@ async function recoverMainJsonFromDb() {
             dbFullName: db_full_name,
             dbDescription: db_description,
             dbImage: db_image,
+            /** @type {*[]} */
             tables: [],
         };
 
-        const tables = await global.DB_HANDLER(`SELECT * FROM user_database_tables WHERE user_id='${userId}' AND db_id='${id}'`);
+        const tables = await dbHandler({
+            query: `SELECT * FROM user_database_tables WHERE user_id = ? AND db_id = ?`,
+            values: [userId, id],
+        });
 
         for (let j = 0; j < tables.length; j++) {
             const { table_name, table_slug, table_description } = tables[j];
@@ -55,7 +62,9 @@ async function recoverMainJsonFromDb() {
             const tableObject = {
                 tableName: table_slug,
                 tableFullName: table_name,
+                /** @type {*[]} */
                 fields: [],
+                /** @type {*[]} */
                 indexes: [],
             };
 
@@ -64,24 +73,26 @@ async function recoverMainJsonFromDb() {
                 queryString: `SHOW COLUMNS FROM ${table_slug}`,
             });
 
-            for (let k = 0; k < tableFields.length; k++) {
-                const { Field, Type, Null, Default, Key } = tableFields[k];
+            if (tableFields) {
+                for (let k = 0; k < tableFields.length; k++) {
+                    const { Field, Type, Null, Default, Key } = tableFields[k];
 
-                const fieldObject = {
-                    fieldName: Field,
-                    dataType: Type.toUpperCase(),
-                };
+                    const fieldObject = {
+                        fieldName: Field,
+                        dataType: Type.toUpperCase(),
+                    };
 
-                if (Default?.match(/./) && !Default?.match(/timestamp/i)) fieldObject["defaultValue"] = Default;
-                if (Key?.match(/pri/i)) {
-                    fieldObject["primaryKey"] = true;
-                    fieldObject["autoIncrement"] = true;
+                    if (Default?.match(/./) && !Default?.match(/timestamp/i)) fieldObject["defaultValue"] = Default;
+                    if (Key?.match(/pri/i)) {
+                        fieldObject["primaryKey"] = true;
+                        fieldObject["autoIncrement"] = true;
+                    }
+                    if (Default?.match(/timestamp/i)) fieldObject["defaultValueLiteral"] = Default;
+                    if (Null?.match(/yes/i)) fieldObject["nullValue"] = true;
+                    if (Null?.match(/no/i)) fieldObject["notNullValue"] = true;
+
+                    tableObject.fields.push(fieldObject);
                 }
-                if (Default?.match(/timestamp/i)) fieldObject["defaultValueLiteral"] = Default;
-                if (Null?.match(/yes/i)) fieldObject["nullValue"] = true;
-                if (Null?.match(/no/i)) fieldObject["notNullValue"] = true;
-
-                tableObject.fields.push(fieldObject);
             }
 
             dbObject.tables.push(tableObject);
