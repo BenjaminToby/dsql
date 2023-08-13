@@ -72,7 +72,6 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *      username: string,
  *  },
  *  res: http.ServerResponse,
- *  invitation?: object|null,
  *  supEmail?: string | null,
  *  additionalFields?: object,
  * dbSchema: import("../../../../types/database-schema.td").DSQL_DatabaseSchemaType | undefined
@@ -80,7 +79,7 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *
  * @returns {Promise<FunctionReturn>} - Response object
  */
-async function handleSocialDb({ social_id, email, social_platform, payload, res, invitation, supEmail, additionalFields, dbSchema }) {
+async function handleSocialDb({ social_id, email, social_platform, payload, res, supEmail, additionalFields, dbSchema }) {
     const tableSchema = dbSchema?.tables.find((tb) => tb?.tableName === "users");
 
     try {
@@ -127,7 +126,9 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
 
         let existingEmailOnly = await varDatabaseDbHandler({
             database: database ? database : "datasquirel",
-            queryString: `SELECT * FROM users WHERE email='${finalEmail}'`,
+            queryString: `SELECT * FROM users WHERE email = ?`,
+            queryValuesArray: [finalEmail],
+            tableSchema,
         });
 
         if (existingEmailOnly && existingEmailOnly[0]) {
@@ -162,7 +163,7 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
 
-        const socialHashedPassword = await encrypt({
+        const socialHashedPassword = encrypt({
             data: social_id.toString(),
             encryptionKey,
             encryptionSalt,

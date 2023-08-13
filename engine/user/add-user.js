@@ -103,8 +103,6 @@ async function localAddUser({ payload, dbSchema }) {
         }
 
         const addUser = await addDbEntry({
-            dbContext: "Dsql User",
-            paradigm: "Full Access",
             dbFullName: dbFullName,
             tableName: "users",
             data: {

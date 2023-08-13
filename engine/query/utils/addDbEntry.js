@@ -15,9 +15,6 @@ const updateDbEntry = require("./updateDbEntry");
  * @async
  *
  * @param {object} params - An object containing the function parameters.
- * @param {("Master" | "Dsql User")} [params.dbContext] - What is the database context? "Master"
- * or "Dsql User". Defaults to "Master"
- * @param {("Read Only" | "Full Access")} [params.paradigm] - What is the paradigm for "Dsql User"?
  * "Read only" or "Full Access"? Defaults to "Read Only"
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
@@ -31,7 +28,7 @@ const updateDbEntry = require("./updateDbEntry");
  *
  * @returns {Promise<*>}
  */
-async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, encryptionKey, encryptionSalt }) {
+async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, encryptionKey, encryptionSalt }) {
     /**
      * Initialize variables
      */
@@ -55,8 +52,6 @@ async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, ta
             return null;
         } else if (duplicateValue && duplicateValue[0] && update) {
             return await updateDbEntry({
-                dbContext,
-                paradigm,
                 dbFullName,
                 tableName,
                 data,
@@ -90,7 +85,7 @@ async function addDbEntry({ dbContext, paradigm, dbFullName, tableName, data, ta
             if (!value) continue;
 
             if (targetFieldSchema?.encrypted) {
-                value = await encrypt({ data: value, encryptionKey, encryptionSalt });
+                value = encrypt({ data: value, encryptionKey, encryptionSalt });
                 console.log("DSQL: Encrypted value =>", value);
             }
 
