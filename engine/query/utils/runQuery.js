@@ -117,7 +117,12 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
                     break;
 
                 default:
-                    result = null;
+                    console.log("Unhandled Query");
+                    console.log("Query Recieved =>", query);
+                    result = {
+                        result: null,
+                        error: "Unhandled Query",
+                    };
                     break;
             }
         }
