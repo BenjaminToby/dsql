@@ -151,6 +151,7 @@ module.exports = async function dbHandler({ query, values, database, dbSchema, t
     if (results) {
         return results;
     } else {
+        console.log("DSQL DB handler no results received for Query =>", query);
         return null;
     }
 };
