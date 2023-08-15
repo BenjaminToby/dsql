@@ -68,6 +68,7 @@ async function localGet({ options, dbSchema }) {
             });
 
             if (error) throw error;
+            if (!result) throw new Error("No Result received for query => " + query);
             if (result?.error) throw new Error(result.error);
 
             results = result;
