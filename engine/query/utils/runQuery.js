@@ -1,3 +1,13 @@
+/** # MODULE TRACE 
+======================================================================
+ * Detected 4 files that call this module. The files are listed below:
+======================================================================
+ * `require` Statement Found in [get.js](d:\GitHub\dsql\engine\query\get.js)
+ * `require` Statement Found in [post.js](d:\GitHub\dsql\engine\query\post.js)
+ * `require` Statement Found in [add-user.js](d:\GitHub\dsql\engine\user\add-user.js)
+ * `require` Statement Found in [update-user.js](d:\GitHub\dsql\engine\user\update-user.js)
+==== MODULE TRACE END ==== */
+
 // @ts-check
 
 const fs = require("fs");

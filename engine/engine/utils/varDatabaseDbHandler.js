@@ -1,3 +1,18 @@
+/** # MODULE TRACE 
+======================================================================
+ * Detected 9 files that call this module. The files are listed below:
+======================================================================
+ * `require` Statement Found in [createDbFromSchema.js](d:\GitHub\dsql\engine\engine\createDbFromSchema.js)
+ * `require` Statement Found in [updateTable.js](d:\GitHub\dsql\engine\engine\utils\updateTable.js)
+ * `require` Statement Found in [runQuery.js](d:\GitHub\dsql\engine\query\utils\runQuery.js)
+ * `require` Statement Found in [add-user.js](d:\GitHub\dsql\engine\user\add-user.js)
+ * `require` Statement Found in [get-user.js](d:\GitHub\dsql\engine\user\get-user.js)
+ * `require` Statement Found in [login-user.js](d:\GitHub\dsql\engine\user\login-user.js)
+ * `require` Statement Found in [reauth-user.js](d:\GitHub\dsql\engine\user\reauth-user.js)
+ * `require` Statement Found in [handleSocialDb.js](d:\GitHub\dsql\engine\user\social\utils\handleSocialDb.js)
+ * `require` Statement Found in [update-user.js](d:\GitHub\dsql\engine\user\update-user.js)
+==== MODULE TRACE END ==== */
+
 // @ts-check
 
 const fs = require("fs");

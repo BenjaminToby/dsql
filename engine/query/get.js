@@ -1,3 +1,8 @@
+/** # MODULE TRACE 
+======================================================================
+ * No imports found for this Module
+==== MODULE TRACE END ==== */
+
 // @ts-check
 
 const runQuery = require("./utils/runQuery");
@@ -63,7 +68,7 @@ async function localGet({ options, dbSchema }) {
             });
 
             if (error) throw error;
-            if (result.error) throw new Error(result.error);
+            if (result?.error) throw new Error(result.error);
 
             results = result;
             return { success: true, payload: results };
@@ -74,7 +79,11 @@ async function localGet({ options, dbSchema }) {
 
             console.log("Error in local get Request =>", error.message);
 
-            return { success: false, payload: null, error: error.message };
+            return {
+                success: false,
+                payload: null,
+                error: error.message,
+            };
         }
 
         ////////////////////////////////////////

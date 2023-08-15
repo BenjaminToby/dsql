@@ -1,3 +1,17 @@
+/** # MODULE TRACE 
+======================================================================
+ * Detected 8 files that call this module. The files are listed below:
+======================================================================
+ * `require` Statement Found in [noDatabaseDbHandler.js](d:\GitHub\dsql\engine\engine\utils\noDatabaseDbHandler.js)
+ * `require` Statement Found in [varDatabaseDbHandler.js](d:\GitHub\dsql\engine\engine\utils\varDatabaseDbHandler.js)
+ * `require` Statement Found in [addDbEntry.js](d:\GitHub\dsql\engine\query\utils\addDbEntry.js)
+ * `require` Statement Found in [deleteDbEntry.js](d:\GitHub\dsql\engine\query\utils\deleteDbEntry.js)
+ * `require` Statement Found in [runQuery.js](d:\GitHub\dsql\engine\query\utils\runQuery.js)
+ * `require` Statement Found in [updateDbEntry.js](d:\GitHub\dsql\engine\query\utils\updateDbEntry.js)
+ * `require` Statement Found in [githubLogin.js](d:\GitHub\dsql\engine\user\social\utils\githubLogin.js)
+ * `require` Statement Found in [googleLogin.js](d:\GitHub\dsql\engine\user\social\utils\googleLogin.js)
+==== MODULE TRACE END ==== */
+
 // @ts-check
 
 ////////////////////////////////////////
@@ -6,6 +20,7 @@
 
 const fs = require("fs");
 const mysql = require("mysql");
+const parseDbResults = require("./parseDbResults");
 
 const connection = mysql.createConnection({
     host: process.env.DSQL_HOST,
@@ -31,12 +46,13 @@ const connection = mysql.createConnection({
  * @param {object} params - Single Param object containing params
  * @param {string} params.query - Query String
  * @param {(string | number)[]} [params.values] - Values
- * @param {object} [params.dbSchema] - Database Schema
+ * @param {import("../../../types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database Schema
  * @param {string} [params.database] - Target Database
+ * @param {string} [params.tableName] - Target Table Name
  *
  * @returns {Promise<*>}
  */
-module.exports = async function dbHandler({ query, values, database }) {
+module.exports = async function dbHandler({ query, values, database, dbSchema, tableName }) {
     /**
      * Declare variables
      *
@@ -123,6 +139,15 @@ module.exports = async function dbHandler({ query, values, database }) {
      *
      * @description Return results add to cache if "req" param is passed
      */
+    // if (results && dbSchema && tableName) {
+    //     const tableSchema = dbSchema.tables.find((table) => table.tableName === tableName);
+    //     const parsedResults = parseDbResults({
+    //         unparsedResults: results,
+    //         tableSchema: tableSchema,
+    //     });
+
+    //     return parsedResults;
+    // } else
     if (results) {
         return results;
     } else {
