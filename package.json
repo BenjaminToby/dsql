@@ -1,6 +1,6 @@
 {
     "name": "datasquirel",
-    "version": "1.8.2",
+    "version": "1.8.3",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
@@ -27,7 +27,6 @@
     "homepage": "https://datasquirel.com/",
     "dependencies": {
         "dotenv": "^16.3.1",
-        "google-auth-library": "^9.0.0",
         "mysql": "^2.18.1"
     },
     "devDependencies": {

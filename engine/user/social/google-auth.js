@@ -11,9 +11,8 @@ const fs = require("fs");
 const path = require("path");
 const encrypt = require("../../../functions/encrypt");
 const decrypt = require("../../../functions/decrypt");
-
-const { OAuth2Client } = require("google-auth-library");
 const handleSocialDb = require("./utils/handleSocialDb");
+const httpsRequest = require("./utils/httpsRequest");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -60,22 +59,30 @@ async function localGoogleAuth({ dbSchema, token, clientId, response, additional
          * Grab User data
          *
          * @description Grab User data
+         * @type {{ success: boolean, payload: any, msg: string }}
          */
-        const client = new OAuth2Client(clientId);
-
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: clientId,
+        const payloadResponse = await httpsRequest({
+            method: "POST",
+            hostname: "datasquirel.com",
+            path: "/user/grab-google-user-from-token",
+            body: {
+                token: token,
+                clientId: clientId,
+            },
+            headers: {
+                Authorization: process.env.DSQL_API_KEY,
+            },
         });
 
-        if (!ticket?.getPayload()?.email_verified) {
+        const payload = payloadResponse.payload;
+
+        if (!payloadResponse.success || !payload) {
+            console.log("payloadResponse Failed =>", payloadResponse);
             return {
                 success: false,
-                user: null,
+                msg: "User fetch Error",
             };
         }
-
-        const payload = ticket.getPayload();
 
         ////////////////////////////////////////
         ////////////////////////////////////////
