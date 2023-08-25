@@ -74,7 +74,7 @@ async function run() {
 
         schemaData = fetchedDbSchemaObject;
     } else if (fs.existsSync(dbSchemaLocalFilePath)) {
-        schemaData = JSON.parse(fs.readFileSync(dbSchemaLocalFilePath, "utf8"));
+        schemaData = [JSON.parse(fs.readFileSync(dbSchemaLocalFilePath, "utf8"))];
     } else {
         console.log("No source for DB Schema. Please provide a local `dsql.schema.json` file, or provide `DSQL_KEY` and `DSQL_REF_DB_NAME` environment variables.");
         process.exit();
@@ -90,6 +90,7 @@ async function run() {
     }
 
     console.log("Now generating and mapping databases ...");
+    // console.log("Db Schema =>", schemaData);
     // deepcode ignore reDOS: <please specify a reason of ignoring this>
     await createDbFromSchema(schemaData);
     console.log("Databases created Successfully!");
