@@ -44,7 +44,10 @@ async function localAddUser({ payload, dbSchema }) {
             return { success: false, payload: `Password is required to create an account` };
         }
 
-        const hashedPassword = hashPassword(payload.password);
+        const hashedPassword = hashPassword({
+            password: payload.password,
+            encryptionKey,
+        });
         payload.password = hashedPassword;
 
         let fields = await varDatabaseDbHandler({

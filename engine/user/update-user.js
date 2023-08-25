@@ -1,10 +1,5 @@
 // @ts-check
 
-const hashPassword = require("../../functions/hashPassword");
-const addUsersTableToDb = require("../engine/addUsersTableToDb");
-const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
-const addDbEntry = require("../query/utils/addDbEntry");
-const runQuery = require("../query/utils/runQuery");
 const updateDbEntry = require("../query/utils/updateDbEntry");
 
 /**

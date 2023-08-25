@@ -26,6 +26,8 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
         const { email, username, password } = payload;
 
         const dbFullName = process.env.DSQL_DB_NAME || "";
+        const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
+        const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
 
         /**
          * Check input validity
@@ -44,7 +46,10 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
          *
          * @description Password hash
          */
-        let hashedPassword = hashPassword(password);
+        let hashedPassword = hashPassword({
+            password: password,
+            encryptionKey: encryptionKey,
+        });
 
         ////////////////////////////////////////
         ////////////////////////////////////////
