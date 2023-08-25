@@ -43,8 +43,8 @@ const localPost = require("../engine/query/post");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {string} params.key - FULL ACCESS API Key
- * @param {string} params.database - Database Name
+ * @param {string} [params.key] - FULL ACCESS API Key
+ * @param {string} [params.database] - Database Name
  * @param {PostDataPayload | string} params.query - SQL query String or Request Object
  * @param {any[]} [params.queryValues] - Query Values if using "?" placeholders
  * @param {string} [params.tableName] - Name of the table to query
