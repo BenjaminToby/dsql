@@ -354,7 +354,7 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
                     updateText += `MODIFY COLUMN ${fieldEntryText}`;
                     // continue;
                 } else {
-                    updateText += `MODIFY COLUMN ${fieldEntryText}${isColumnReordered ? (prevColumn?.fieldName ? " AFTER `" + prevColumn.fieldName + "`" : nextColumn?.fieldName ? " BEFORE `" + nextColumn.fieldName + "`" : "") : ""}`;
+                    updateText += `MODIFY COLUMN ${fieldEntryText}${isColumnReordered ? (prevColumn?.fieldName ? " AFTER `" + prevColumn.fieldName + "`" : " AFTER `id`") : ""}`;
                     // if (userId) {
                     // } else {
                     //     updateText += `MODIFY COLUMN ${fieldEntryText}`;
@@ -366,12 +366,12 @@ module.exports = async function updateTable({ dbFullName, tableName, tableInfoAr
                  * previous column exists
                  */
                 updateText += `ADD COLUMN ${fieldEntryText} AFTER \`${prevColumn.fieldName}\``;
-            } else if (nextColumn && nextColumn.fieldName) {
+            } else if (!prevColumn && nextColumn && nextColumn.fieldName) {
                 /**
-                 * @description Add new Column BEFORE next column, if
+                 * @description Add new Column before next column, if
                  * next column exists
                  */
-                updateText += `ADD COLUMN ${fieldEntryText} BEFORE \`${nextColumn.fieldName}\``;
+                updateText += `ADD COLUMN ${fieldEntryText} AFTER \`id\``;
             } else {
                 /**
                  * @description Append new column to the end of existing columns
