@@ -11,6 +11,7 @@ require("dotenv").config({
 
 const datasquirel = require("../index");
 const createDbFromSchema = require("./engine/createDbFromSchema");
+const colors = require("../console-colors");
 
 if (!fs.existsSync(path.resolve(process.cwd(), ".env"))) {
     console.log(".env file not found");
@@ -89,30 +90,27 @@ async function run() {
         fs.writeFileSync(dbSchemaLocalFilePath, JSON.stringify(schemaData[0], null, 4), "utf8");
     }
 
-    console.log("Now generating and mapping databases ...");
-    // console.log("Db Schema =>", schemaData);
+    console.log(` - ${colors.FgBlue}Info:${colors.Reset} Now generating and mapping databases ...`);
+
     // deepcode ignore reDOS: <please specify a reason of ignoring this>
     await createDbFromSchema(schemaData);
-    console.log("Databases created Successfully!");
+    console.log(` - ${colors.FgGreen}Success:${colors.Reset} Databases created Successfully!`);
 }
 
 // let timeout;
 
-// if (fs.existsSync(dbSchemaLocalFilePath)) {
-//     fs.watchFile(dbSchemaLocalFilePath, { interval: 1000 }, (curr, prev) => {
-//         clearTimeout(timeout);
-
-//         timeout = setTimeout(() => {
-//             console.log("`dsql.schema.json` file changed. Now syncing databases ...");
-//             run();
-//         }, 5000);
-//     });
-// }
-
 let interval;
-interval = setInterval(() => {
-    console.log("Syncing Databases ...");
-    run();
-}, 20000);
+
+if (fs.existsSync(dbSchemaLocalFilePath) && !DSQL_KEY?.match(/....../)) {
+    fs.watchFile(dbSchemaLocalFilePath, { interval: 1000 }, (curr, prev) => {
+        console.log(` - ${colors.FgBlue}Info:${colors.Reset} Syncing Databases Locally ...`);
+        run();
+    });
+} else if (DSQL_KEY?.match(/....../)) {
+    interval = setInterval(() => {
+        console.log(` - ${colors.FgMagenta}Info:${colors.Reset} Syncing Databases from the cloud ...`);
+        run();
+    }, 20000);
+}
 
 run();
