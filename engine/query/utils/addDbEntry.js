@@ -91,7 +91,7 @@ async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateC
 
             if (targetFieldSchema?.pattern) {
                 const pattern = new RegExp(targetFieldSchema.pattern, targetFieldSchema.patternFlags || "");
-                if (!pattern.test(value)) {
+                if (!value?.toString()?.match(pattern)) {
                     console.log("DSQL: Pattern not matched =>", value);
                     value = "";
                 }

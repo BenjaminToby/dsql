@@ -83,7 +83,7 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
 
             if (targetFieldSchema?.pattern) {
                 const pattern = new RegExp(targetFieldSchema.pattern, targetFieldSchema.patternFlags || "");
-                if (!pattern.test(value)) {
+                if (!value?.toString()?.match(pattern)) {
                     console.log("DSQL: Pattern not matched =>", value);
                     value = "";
                 }
