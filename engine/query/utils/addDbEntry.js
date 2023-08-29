@@ -89,6 +89,22 @@ async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateC
                 console.log("DSQL: Encrypted value =>", value);
             }
 
+            if (targetFieldSchema?.pattern) {
+                const pattern = new RegExp(targetFieldSchema.pattern, targetFieldSchema.patternFlags || "");
+                if (!pattern.test(value)) {
+                    console.log("DSQL: Pattern not matched =>", value);
+                    value = "";
+                }
+            }
+
+            if (typeof value === "string" && !value.match(/./i)) {
+                value = {
+                    toSqlString: function () {
+                        return "NULL";
+                    },
+                };
+            }
+
             insertKeysArray.push("`" + dataKey + "`");
 
             if (typeof value === "object") {

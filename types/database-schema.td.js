@@ -60,6 +60,8 @@
  * @property {string} [defaultValueLiteral] - SQL key word which generates value automatically => "CURRENT_TIMESTAMP"
  * @property {DSQL_ForeignKeyType} [foreignKey] - Field foreign key reference object
  * @property {boolean} [richText] - Rich text field
+ * @property {string | RegExp} [pattern] - Field pattern for validation. Can be a string or a regular expression. Example: "^[a-zA-Z0-9_]*$"
+ * @property {string} [patternFlags] - Field pattern flags for validation. Example: "i"
  */
 
 /**
