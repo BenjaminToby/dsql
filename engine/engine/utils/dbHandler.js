@@ -28,7 +28,9 @@ const connection = mysql.createConnection({
     database: process.env.DSQL_DB_NAME,
     password: process.env.DSQL_PASS,
     charset: "utf8mb4",
-    port: process.env.DSQL_PORT?.match(/.../) ? parseInt(process.env.DSQL_PORT) : undefined,
+    port: process.env.DSQL_PORT?.match(/.../)
+        ? parseInt(process.env.DSQL_PORT)
+        : undefined,
     timeout: 5000,
 });
 
@@ -52,7 +54,13 @@ const connection = mysql.createConnection({
  *
  * @returns {Promise<*>}
  */
-module.exports = async function dbHandler({ query, values, database, dbSchema, tableName }) {
+module.exports = async function dbHandler({
+    query,
+    values,
+    database,
+    dbSchema,
+    tableName,
+}) {
     /**
      * Declare variables
      *
@@ -60,10 +68,15 @@ module.exports = async function dbHandler({ query, values, database, dbSchema, t
      */
     let changeDbError;
 
+    console.log(connection.config);
+
     if (database) {
         connection.changeUser({ database: database }, (error) => {
             if (error) {
-                console.log("DB handler error in switching database:", error.message);
+                console.log(
+                    "DB handler error in switching database:",
+                    error.message
+                );
                 changeDbError = error.message;
             }
         });
@@ -90,7 +103,10 @@ module.exports = async function dbHandler({ query, values, database, dbSchema, t
             if (values?.[0]) {
                 connection.query(query, values, (error, results, fields) => {
                     if (error) {
-                        console.log("DB handler error with values array:", error.message);
+                        console.log(
+                            "DB handler error with values array:",
+                            error.message
+                        );
                         console.log("SQL:", error.sql);
                         console.log("State:", error.sqlState, error.sqlMessage);
 
