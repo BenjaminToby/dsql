@@ -68,8 +68,6 @@ module.exports = async function dbHandler({
      */
     let changeDbError;
 
-    console.log(connection.config);
-
     if (database) {
         connection.changeUser({ database: database }, (error) => {
             if (error) {
