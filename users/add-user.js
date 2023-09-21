@@ -6,6 +6,7 @@
  * ==============================================================================
  */
 const https = require("https");
+const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const localAddUser = require("../engine/user/add-user");
@@ -50,14 +51,34 @@ async function addUser({ key, payload, database }) {
      *
      * @description Look for local db settings in `.env` file and by pass the http request if available
      */
-    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+    const {
+        DSQL_HOST,
+        DSQL_USER,
+        DSQL_PASS,
+        DSQL_DB_NAME,
+        DSQL_KEY,
+        DSQL_REF_DB_NAME,
+        DSQL_FULL_SYNC,
+    } = process.env;
 
-    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
+    if (
+        DSQL_HOST?.match(/./) &&
+        DSQL_USER?.match(/./) &&
+        DSQL_PASS?.match(/./) &&
+        DSQL_DB_NAME?.match(/./)
+    ) {
         /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
-            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
+            const localDbSchemaPath = path.resolve(
+                process.cwd(),
+                "dsql.schema.json"
+            );
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
@@ -82,7 +103,7 @@ async function addUser({ key, payload, database }) {
             database,
         });
 
-        const httpsRequest = https.request(
+        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
             {
                 method: "POST",
                 headers: {
@@ -90,8 +111,8 @@ async function addUser({ key, payload, database }) {
                     "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
-                port: 443,
-                hostname: "datasquirel.com",
+                port: localHostPort || 443,
+                hostname: localHost || "datasquirel.com",
                 path: `/api/user/add-user`,
             },
 

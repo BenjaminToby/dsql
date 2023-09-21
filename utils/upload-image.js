@@ -1,8 +1,11 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 
 /** ****************************************************************************** */
@@ -18,7 +21,7 @@ const https = require("https");
  * @property {{
  *   urlPath: string,
  *   urlThumbnailPath: string
- * }} payload - Payload containing the url for the image and its thumbnail
+ * } | null} payload - Payload containing the url for the image and its thumbnail
  *  @property {string} [msg] - An optional message
  */
 
@@ -42,6 +45,10 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> } - Return Object
  */
 async function uploadImage({ key, payload }) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     try {
         /**
          * Make https request
@@ -51,7 +58,9 @@ async function uploadImage({ key, payload }) {
         const httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify(payload);
 
-            const httpsRequest = https.request(
+            const httpsRequest = (
+                scheme?.match(/^http$/i) ? http : https
+            ).request(
                 {
                     method: "POST",
                     headers: {
@@ -59,8 +68,8 @@ async function uploadImage({ key, payload }) {
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: 443,
-                    hostname: "datasquirel.com",
+                    port: localHostPort || 443,
+                    hostname: localHost || "datasquirel.com",
                     path: `/api/query/add-image`,
                 },
 

@@ -45,7 +45,20 @@ const localGoogleAuth = require("../../engine/user/social/google-auth");
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function googleAuth({ key, token, database, clientId, response, encryptionKey, encryptionSalt, additionalFields }) {
+async function googleAuth({
+    key,
+    token,
+    database,
+    clientId,
+    response,
+    encryptionKey,
+    encryptionSalt,
+    additionalFields,
+}) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     /**
      * Check inputs
      *
@@ -121,14 +134,30 @@ async function googleAuth({ key, token, database, clientId, response, encryption
      *
      * @description Look for local db settings in `.env` file and by pass the http request if available
      */
-    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+    const {
+        DSQL_HOST,
+        DSQL_USER,
+        DSQL_PASS,
+        DSQL_DB_NAME,
+        DSQL_KEY,
+        DSQL_REF_DB_NAME,
+        DSQL_FULL_SYNC,
+    } = process.env;
 
-    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
+    if (
+        DSQL_HOST?.match(/./) &&
+        DSQL_USER?.match(/./) &&
+        DSQL_PASS?.match(/./) &&
+        DSQL_DB_NAME?.match(/./)
+    ) {
         /** @type {import("../../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
-            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
+            const localDbSchemaPath = path.resolve(
+                process.cwd(),
+                "dsql.schema.json"
+            );
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
@@ -162,7 +191,9 @@ async function googleAuth({ key, token, database, clientId, response, encryption
                 additionalFields,
             });
 
-            const httpsRequest = https.request(
+            const httpsRequest = (
+                scheme?.match(/^http$/i) ? http : https
+            ).request(
                 {
                     method: "POST",
                     headers: {
@@ -170,8 +201,8 @@ async function googleAuth({ key, token, database, clientId, response, encryption
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: 443,
-                    hostname: "datasquirel.com",
+                    port: localHostPort || 443,
+                    hostname: localHost || "datasquirel.com",
                     path: `/api/user/google-login`,
                 },
 
@@ -222,7 +253,12 @@ async function googleAuth({ key, token, database, clientId, response, encryption
         const authKeyName = `datasquirel_${dsqlUserId}_${database}_auth_key`;
         const csrfName = `datasquirel_${dsqlUserId}_${database}_csrf`;
 
-        response.setHeader("Set-Cookie", [`${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `${csrfName}=${user.csrf_k};samesite=strict;path=/;HttpOnly=true`, `dsqluid=${dsqlUserId};samesite=strict;path=/;HttpOnly=true`, `datasquirel_social_id=${user.social_id};samesite=strict;path=/`]);
+        response.setHeader("Set-Cookie", [
+            `${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`,
+            `${csrfName}=${user.csrf_k};samesite=strict;path=/;HttpOnly=true`,
+            `dsqluid=${dsqlUserId};samesite=strict;path=/;HttpOnly=true`,
+            `datasquirel_social_id=${user.social_id};samesite=strict;path=/`,
+        ]);
     }
 
     ////////////////////////////////////////

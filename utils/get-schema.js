@@ -5,6 +5,7 @@
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 
 /** ****************************************************************************** */
@@ -32,13 +33,17 @@ const https = require("https");
  * @returns { Promise<GetSchemaReturn> } - Return Object
  */
 async function getSchema({ key, database }) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     /**
      * Make https request
      *
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        https
+        (scheme?.match(/^http$/i) ? http : https)
             .request(
                 {
                     method: "GET",
@@ -46,9 +51,11 @@ async function getSchema({ key, database }) {
                         "Content-Type": "application/json",
                         Authorization: key,
                     },
-                    port: 443,
-                    hostname: "datasquirel.com",
-                    path: "/api/query/get-schema" + (database ? `?database=${database}` : ""),
+                    port: localHostPort || 443,
+                    hostname: localHost || "datasquirel.com",
+                    path:
+                        "/api/query/get-schema" +
+                        (database ? `?database=${database}` : ""),
                 },
 
                 /**

@@ -48,12 +48,22 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function localGoogleAuth({ dbSchema, token, clientId, response, additionalFields }) {
+async function localGoogleAuth({
+    dbSchema,
+    token,
+    clientId,
+    response,
+    additionalFields,
+}) {
     /**
      * Send Response
      *
      * @description Send a boolean response
      */
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     try {
         /**
          * Grab User data
@@ -63,7 +73,7 @@ async function localGoogleAuth({ dbSchema, token, clientId, response, additional
          */
         const payloadResponse = await httpsRequest({
             method: "POST",
-            hostname: "datasquirel.com",
+            hostname: localHost || "datasquirel.com",
             path: "/user/grab-google-user-from-token",
             body: {
                 token: token,
@@ -114,7 +124,8 @@ async function localGoogleAuth({ dbSchema, token, clientId, response, additional
             };
         }
 
-        const { given_name, family_name, email, sub, picture, email_verified } = payload;
+        const { given_name, family_name, email, sub, picture, email_verified } =
+            payload;
 
         const payloadObject = {
             email: email || "",

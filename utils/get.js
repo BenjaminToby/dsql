@@ -5,6 +5,7 @@
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 const path = require("path");
 const fs = require("fs");
@@ -40,19 +41,39 @@ const localGet = require("../engine/query/get");
  * @returns { Promise<GetReturn> } - Return Object
  */
 async function get({ key, db, query, queryValues, tableName }) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     /**
      * Check for local DB settings
      *
      * @description Look for local db settings in `.env` file and by pass the http request if available
      */
-    const { DSQL_HOST, DSQL_USER, DSQL_PASS, DSQL_DB_NAME, DSQL_KEY, DSQL_REF_DB_NAME, DSQL_FULL_SYNC } = process.env;
+    const {
+        DSQL_HOST,
+        DSQL_USER,
+        DSQL_PASS,
+        DSQL_DB_NAME,
+        DSQL_KEY,
+        DSQL_REF_DB_NAME,
+        DSQL_FULL_SYNC,
+    } = process.env;
 
-    if (DSQL_HOST?.match(/./) && DSQL_USER?.match(/./) && DSQL_PASS?.match(/./) && DSQL_DB_NAME?.match(/./)) {
+    if (
+        DSQL_HOST?.match(/./) &&
+        DSQL_USER?.match(/./) &&
+        DSQL_PASS?.match(/./) &&
+        DSQL_DB_NAME?.match(/./)
+    ) {
         /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
-            const localDbSchemaPath = path.resolve(process.cwd(), "dsql.schema.json");
+            const localDbSchemaPath = path.resolve(
+                process.cwd(),
+                "dsql.schema.json"
+            );
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
@@ -80,10 +101,12 @@ async function get({ key, db, query, queryValues, tableName }) {
             .replace(/ /g, "+")}`;
 
         if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}${tableName ? `&tableName=${tableName}` : ""}`;
+            path += `&queryValues=${JSON.stringify(queryValues)}${
+                tableName ? `&tableName=${tableName}` : ""
+            }`;
         }
 
-        https
+        (scheme?.match(/^http$/i) ? http : https)
             .request(
                 {
                     method: "GET",
@@ -91,8 +114,8 @@ async function get({ key, db, query, queryValues, tableName }) {
                         "Content-Type": "application/json",
                         Authorization: key,
                     },
-                    port: 443,
-                    hostname: "datasquirel.com",
+                    port: localHostPort || 443,
+                    hostname: localHost || "datasquirel.com",
                     path: path,
                 },
 

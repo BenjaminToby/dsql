@@ -3,6 +3,7 @@
  * ==============================================================================
  */
 const https = require("https");
+const http = require("http");
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -27,14 +28,18 @@ const https = require("https");
 function httpsRequest({ url, method, hostname, path, href, headers, body }) {
     const reqPayloadString = body ? JSON.stringify(body) : null;
 
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
 
     let requestOptions = {
         method: method,
-        hostname: hostname,
-        port: 443,
+        hostname: localHost || hostname,
+        port: localHostPort || 443,
         headers: {},
     };
 
@@ -44,7 +49,9 @@ function httpsRequest({ url, method, hostname, path, href, headers, body }) {
     if (headers) requestOptions.headers = headers;
     if (body) {
         requestOptions.headers["Content-Type"] = "application/json";
-        requestOptions.headers["Content-Length"] = Buffer.from(reqPayloadString || "").length;
+        requestOptions.headers["Content-Length"] = Buffer.from(
+            reqPayloadString || ""
+        ).length;
     }
 
     ////////////////////////////////////////////////
@@ -52,7 +59,7 @@ function httpsRequest({ url, method, hostname, path, href, headers, body }) {
     ////////////////////////////////////////////////
 
     return new Promise((res, rej) => {
-        const httpsRequest = https.request(
+        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
             /* ====== Request Options object ====== */
             // @ts-ignore
             url ? url : requestOptions,

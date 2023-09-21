@@ -3,6 +3,7 @@
  * Imports
  * ==============================================================================
  */
+const http = require("http");
 const https = require("https");
 
 /** ****************************************************************************** */
@@ -35,6 +36,10 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> } - Image Url
  */
 async function uploadImage({ key, url }) {
+    const scheme = process.env.DSQL_HTTP_SCHEME;
+    const localHost = process.env.DSQL_LOCAL_HOST;
+    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
     try {
         /**
          * Make https request
@@ -44,7 +49,9 @@ async function uploadImage({ key, url }) {
         const httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({ url: url });
 
-            const httpsRequest = https.request(
+            const httpsRequest = (
+                scheme?.match(/^http$/i) ? http : https
+            ).request(
                 {
                     method: "POST",
                     headers: {
@@ -52,8 +59,8 @@ async function uploadImage({ key, url }) {
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: 443,
-                    hostname: "datasquirel.com",
+                    port: localHostPort || 443,
+                    hostname: localHost || "datasquirel.com",
                     path: `/api/query/delete-file`,
                 },
 
