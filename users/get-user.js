@@ -111,8 +111,6 @@ async function getUser({ key, userId, database, fields }) {
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
-        console.log("Reading from local database ...");
-
         if (dbSchema) {
             return await getLocalUser({
                 userId,

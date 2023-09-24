@@ -89,8 +89,6 @@ async function post({ key, query, queryValues, database, tableName }) {
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
-        console.log("Reading from local database ...");
-
         return await localPost({
             dbSchema: dbSchema,
             options: {

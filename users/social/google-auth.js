@@ -161,8 +161,6 @@ async function googleAuth({
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
-        console.log("Reading from local database ...");
-
         if (dbSchema) {
             httpResponse = await localGoogleAuth({
                 dbSchema: dbSchema,

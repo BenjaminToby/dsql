@@ -74,8 +74,6 @@ async function updateUser({ key, payload, database }) {
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
-        console.log("Reading from local database ...");
-
         if (dbSchema) {
             return await localUpdateUser({
                 dbSchema: dbSchema,

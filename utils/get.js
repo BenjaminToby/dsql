@@ -77,8 +77,6 @@ async function get({ key, db, query, queryValues, tableName }) {
             dbSchema = JSON.parse(fs.readFileSync(localDbSchemaPath, "utf8"));
         } catch (error) {}
 
-        console.log("Reading from local database ...");
-
         return await localGet({
             dbSchema: dbSchema,
             options: {
