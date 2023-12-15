@@ -15,13 +15,17 @@
  *
  * @param {{
  *  imageInputFile: { name:string },
- *  maxWidth: number,
- *  imagePreviewNode: HTMLImageElement,
+ *  maxWidth?: number,
+ *  imagePreviewNode?: HTMLImageElement,
  * }} params - Single object passed
  *
  * @returns { Promise<FunctionReturn> } - Return Object
  */
-module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidth, imagePreviewNode }) {
+module.exports = async function imageInputFileToBase64({
+    imageInputFile,
+    maxWidth,
+    imagePreviewNode,
+}) {
     /**
      * Make https request
      *
@@ -58,8 +62,14 @@ module.exports = async function imageInputFileToBase64({ imageInputFile, maxWidt
                 if (MAX_WIDTH) {
                     const scaleSize = MAX_WIDTH / img.naturalWidth;
 
-                    canvas.width = img.naturalWidth < MAX_WIDTH ? img.naturalWidth : MAX_WIDTH;
-                    canvas.height = img.naturalWidth < MAX_WIDTH ? img.naturalHeight : img.naturalHeight * scaleSize;
+                    canvas.width =
+                        img.naturalWidth < MAX_WIDTH
+                            ? img.naturalWidth
+                            : MAX_WIDTH;
+                    canvas.height =
+                        img.naturalWidth < MAX_WIDTH
+                            ? img.naturalHeight
+                            : img.naturalHeight * scaleSize;
                 } else {
                     canvas.width = img.naturalWidth;
                     canvas.height = img.naturalHeight;

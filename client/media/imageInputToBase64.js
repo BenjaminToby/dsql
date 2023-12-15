@@ -14,20 +14,26 @@
  *
  * @param {{
  *  imageInput: HTMLInputElement,
- *  maxWidth: number,
- *  mimeType: [string='image/jpeg']
+ *  maxWidth?: number,
+ *  mimeType?: [string='image/jpeg']
  * }} params - Single object passed
  *
  * @returns { Promise<FunctionReturn> } - Return Object
  */
-module.exports = async function imageInputToBase64({ imageInput, maxWidth, mimeType }) {
+module.exports = async function imageInputToBase64({
+    imageInput,
+    maxWidth,
+    mimeType,
+}) {
     /**
      * Make https request
      *
      * @description make a request to datasquirel.com
      */
     try {
-        let imagePreviewNode = document.querySelector(`[data-imagepreview='image']`);
+        let imagePreviewNode = document.querySelector(
+            `[data-imagepreview='image']`
+        );
         let imageName = imageInput.files[0].name.replace(/\..*/, "");
         let imageDataBase64;
 
@@ -58,8 +64,14 @@ module.exports = async function imageInputToBase64({ imageInput, maxWidth, mimeT
                 if (MAX_WIDTH) {
                     const scaleSize = MAX_WIDTH / img.naturalWidth;
 
-                    canvas.width = img.naturalWidth < MAX_WIDTH ? img.naturalWidth : MAX_WIDTH;
-                    canvas.height = img.naturalWidth < MAX_WIDTH ? img.naturalHeight : img.naturalHeight * scaleSize;
+                    canvas.width =
+                        img.naturalWidth < MAX_WIDTH
+                            ? img.naturalWidth
+                            : MAX_WIDTH;
+                    canvas.height =
+                        img.naturalWidth < MAX_WIDTH
+                            ? img.naturalHeight
+                            : img.naturalHeight * scaleSize;
                 } else {
                     canvas.width = img.naturalWidth;
                     canvas.height = img.naturalHeight;
@@ -71,9 +83,11 @@ module.exports = async function imageInputToBase64({ imageInput, maxWidth, mimeT
                 const srcEncoded = canvas.toDataURL(MIME_TYPE, QUALITY);
 
                 if (imagePreviewNode) {
-                    document.querySelectorAll(`[data-imagepreview='image']`).forEach((img) => {
-                        img.src = srcEncoded;
-                    });
+                    document
+                        .querySelectorAll(`[data-imagepreview='image']`)
+                        .forEach((img) => {
+                            img.src = srcEncoded;
+                        });
                 }
 
                 res(srcEncoded);
