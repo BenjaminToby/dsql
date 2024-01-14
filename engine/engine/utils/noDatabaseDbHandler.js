@@ -10,8 +10,13 @@ const connection = mysql.createConnection({
     user: process.env.DSQL_USER,
     password: process.env.DSQL_PASS,
     charset: "utf8mb4",
-    port: process.env.DSQL_PORT?.match(/.../) ? parseInt(process.env.DSQL_PORT) : undefined,
+    port: process.env.DSQL_PORT?.match(/.../)
+        ? parseInt(process.env.DSQL_PORT)
+        : undefined,
     timeout: 5000,
+    ssl: {
+        ca: fs.readFileSync(process.env.DSQL_SSL_CA_PATH || ""),
+    },
 });
 
 /**

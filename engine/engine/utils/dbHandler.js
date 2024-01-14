@@ -32,6 +32,9 @@ const connection = mysql.createConnection({
         ? parseInt(process.env.DSQL_PORT)
         : undefined,
     timeout: 5000,
+    ssl: {
+        ca: fs.readFileSync(process.env.DSQL_SSL_CA_PATH || ""),
+    },
 });
 
 //////////////////////////////////////////////////////////////////////////////////
