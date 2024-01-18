@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
         : undefined,
     timeout: 5000,
     ssl: {
-        ca: `${SSL_PATH}/ca-cert.pem`,
+        ca: fs.readFileSync(`${SSL_PATH}/ca-cert.pem`),
     },
 });
 
