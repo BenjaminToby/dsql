@@ -33,7 +33,16 @@ const connection = mysql.createConnection({
         : undefined,
     timeout: 5000,
     ssl: {
-        ca: fs.readFileSync(process.env.DSQL_SSL_CA_PATH || ""),
+        ca: (() => {
+            try {
+                if (process.env.DSQL_SSL_CA_PATH) {
+                    return fs.readFileSync(process.env.DSQL_SSL_CA_PATH);
+                }
+                return undefined;
+            } catch (error) {
+                return undefined;
+            }
+        })(),
     },
 });
 
