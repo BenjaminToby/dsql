@@ -1,9 +1,10 @@
 // @ts-check
 
 const fs = require("fs");
-const dbHandler = require("./dbHandler");
 const mysql = require("mysql");
-const endConnection = require("./endConnection");
+const path = require("path");
+
+const SSL_PATH = path.resolve(__dirname, "../../../ssl");
 
 const connection = mysql.createConnection({
     host: process.env.DSQL_HOST,
@@ -15,16 +16,7 @@ const connection = mysql.createConnection({
         : undefined,
     timeout: 5000,
     ssl: {
-        ca: (() => {
-            try {
-                if (process.env.DSQL_SSL_CA_PATH) {
-                    return fs.readFileSync(process.env.DSQL_SSL_CA_PATH);
-                }
-                return undefined;
-            } catch (error) {
-                return undefined;
-            }
-        })(),
+        ca: `${SSL_PATH}/ca-cert.pem`,
     },
 });
 
