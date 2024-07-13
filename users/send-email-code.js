@@ -41,6 +41,11 @@ const localSendEmailCode = require("../engine/user/send-email-code");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
+ * @param {string} params.mail_domain
+ * @param {string} params.mail_username
+ * @param {string} params.mail_password
+ * @param {number} [params.mail_port]
+ * @param {string} [params.sender]
  *
  * @returns { Promise<boolean>}
  */
@@ -51,6 +56,11 @@ async function sendEmailCode({
     encryptionKey,
     encryptionSalt,
     temp_code_field,
+    mail_domain,
+    mail_password,
+    mail_username,
+    mail_port,
+    sender,
 }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;
     const localHost = process.env.DSQL_LOCAL_HOST;
@@ -116,6 +126,11 @@ async function sendEmailCode({
                 email,
                 dbSchema,
                 email_login_field: emailLoginTempCodeFieldName,
+                mail_domain,
+                mail_password,
+                mail_username,
+                mail_port,
+                sender,
             });
         }
     } else {
@@ -131,6 +146,18 @@ async function sendEmailCode({
                 email,
                 database,
                 email_login_field: emailLoginTempCodeFieldName,
+                mail_domain,
+                mail_password,
+                mail_username,
+                mail_port,
+                sender,
+                html: fs.readFileSync(
+                    path.resolve(
+                        __dirname,
+                        "../../engine/user/one-time-code.html"
+                    ),
+                    "utf-8"
+                ),
             });
 
             const httpsRequest = (
