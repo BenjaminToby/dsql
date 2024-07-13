@@ -106,7 +106,7 @@ async function localSendEmailCode({
             }>`;
             mailObject["sender"] = sender || "support@datasquirel.com";
             mailObject["to"] = email;
-            mailObject["subject"] = "One Time Email Login Code";
+            mailObject["subject"] = "One Time Login Code";
             mailObject["html"] = fs
                 .readFileSync(
                     path.resolve(__dirname, "one-time-code.html"),
