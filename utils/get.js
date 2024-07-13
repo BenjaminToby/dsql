@@ -116,7 +116,7 @@ async function get({ key, db, query, queryValues, tableName }) {
             path: encodeURIComponent(path),
         };
 
-        console.log("requestObject =>", requestObject);
+        console.log("scheme =>", scheme);
 
         (scheme?.match(/^http$/i) ? http : https)
             .request(
@@ -135,7 +135,14 @@ async function get({ key, db, query, queryValues, tableName }) {
                     });
 
                     response.on("end", function () {
-                        resolve(JSON.parse(str));
+                        try {
+                            resolve(JSON.parse(str));
+                        } catch (error) {
+                            reject({
+                                error: error.message,
+                                result: str,
+                            });
+                        }
                     });
 
                     response.on("error", (err) => {
