@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const encrypt = require("../functions/encrypt");
 const loginLocalUser = require("../engine/user/login-user");
+const localSendEmailCode = require("../engine/user/send-email-code");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -28,38 +29,27 @@ const loginLocalUser = require("../engine/user/login-user");
  */
 
 /**
- * Login A user
+ * Send Email Code to a User
  * ==============================================================================
  * @async
  *
  * @param {object} params - Single Param object containing params
  * @param {String} params.key - FULL ACCESS API Key
  * @param {String} params.database - Target Database
- * @param {{
- *  email?: string,
- *  username?: string,
- *  password: string,
- * }} params.payload Login Email/Username and Password
- * @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
+ * @param {string} params.email Login Email/Username and Password
  * @param {http.ServerResponse} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
- * @param {boolean} [params.email_login] - Email only Login
- * @param {string} [params.email_login_code] - Email login code
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
  *
- * @returns { Promise<AuthenticatedUser>}
+ * @returns { Promise<boolean>}
  */
-async function loginUser({
+async function sendEmailCode({
     key,
-    payload,
+    email,
     database,
-    additionalFields,
-    response,
     encryptionKey,
     encryptionSalt,
-    email_login,
-    email_login_code,
     temp_code_field,
 }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;
@@ -67,44 +57,22 @@ async function loginUser({
     const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
 
     const defaultTempLoginFieldName = "temp_login_code";
-    const emailLoginTempCodeFieldName = email_login
+    const emailLoginTempCodeFieldName = temp_code_field
         ? temp_code_field
-            ? temp_code_field
-            : defaultTempLoginFieldName
-        : null;
+        : defaultTempLoginFieldName;
 
     /**
      * Check Encryption Keys
      *
      * @description Check Encryption Keys
      */
-    if (!encryptionKey?.match(/./))
-        return {
-            success: false,
-            payload: null,
-            msg: "Encryption Key Required",
-        };
+    if (!encryptionKey?.match(/./)) return false;
 
-    if (!encryptionSalt?.match(/./))
-        return {
-            success: false,
-            payload: null,
-            msg: "Encryption Salt Required",
-        };
+    if (!encryptionSalt?.match(/./)) return false;
 
-    if (encryptionKey.length < 24)
-        return {
-            success: false,
-            payload: null,
-            msg: "Encryption Key must be at least 24 characters",
-        };
+    if (encryptionKey.length < 24) return false;
 
-    if (encryptionSalt.length < 8)
-        return {
-            success: false,
-            payload: null,
-            msg: "Encryption Salt must be at least 8 characters",
-        };
+    if (encryptionSalt.length < 8) return false;
 
     /**
      * Initialize HTTP response variable
@@ -144,12 +112,9 @@ async function loginUser({
         } catch (error) {}
 
         if (dbSchema) {
-            httpResponse = await loginLocalUser({
-                payload,
-                additionalFields,
+            httpResponse = await localSendEmailCode({
+                email,
                 dbSchema,
-                email_login,
-                email_login_code,
                 email_login_field: emailLoginTempCodeFieldName,
             });
         }
@@ -163,11 +128,8 @@ async function loginUser({
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({
-                payload,
+                email,
                 database,
-                additionalFields,
-                email_login,
-                email_login_code,
                 email_login_field: emailLoginTempCodeFieldName,
             });
 
@@ -183,7 +145,7 @@ async function loginUser({
                     },
                     port: localHostPort || 443,
                     hostname: localHost || "datasquirel.com",
-                    path: `/api/user/login-user`,
+                    path: `/api/user/send-email-code`,
                 },
 
                 /**
@@ -223,33 +185,14 @@ async function loginUser({
      * @description make a request to datasquirel.com
      */
     if (httpResponse?.success) {
-        let encryptedPayload = encrypt({
-            data: JSON.stringify(httpResponse.payload),
-            encryptionKey,
-            encryptionSalt,
-        });
-
-        const { userId } = httpResponse;
-
-        const authKeyName = `datasquirel_${userId}_${database}_auth_key`;
-        const csrfName = `datasquirel_${userId}_${database}_csrf`;
-
-        response.setHeader("Set-Cookie", [
-            `${authKeyName}=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`,
-            `${csrfName}=${httpResponse.payload?.csrf_k};samesite=strict;path=/;HttpOnly=true`,
-            `dsqluid=${userId};samesite=strict;path=/;HttpOnly=true`,
-        ]);
+        return true;
+    } else {
+        return false;
     }
-
-    /** ********************************************** */
-    /** ********************************************** */
-    /** ********************************************** */
-
-    return httpResponse;
 }
 
 /** ********************************************** */
 /** ********************************************** */
 /** ********************************************** */
 
-module.exports = loginUser;
+module.exports = sendEmailCode;

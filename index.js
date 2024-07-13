@@ -14,6 +14,7 @@ const deleteFile = require("./utils/delete-file");
 const createUser = require("./users/add-user");
 const updateUser = require("./users/update-user");
 const loginUser = require("./users/login-user");
+const sendEmailCode = require("./users/send-email-code");
 const logoutUser = require("./users/logout-user");
 
 const userAuth = require("./users/user-auth");
@@ -37,6 +38,7 @@ const sanitizeSql = require("./utils/functions/sanitizeSql");
 const user = {
     createUser: createUser,
     loginUser: loginUser,
+    sendEmailCode: sendEmailCode,
     logoutUser: logoutUser,
     userAuth: userAuth,
     reAuthUser: reAuthUser,
