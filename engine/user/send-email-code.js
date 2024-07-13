@@ -104,7 +104,7 @@ async function localSendEmailCode({
             mailObject["from"] = `"Datasquirel SSO" <${
                 sender || "support@datasquirel.com"
             }>`;
-            mailObject["sender"] = sender || "support@summitlending.com";
+            mailObject["sender"] = sender || "support@datasquirel.com";
             mailObject["to"] = email;
             mailObject["subject"] = "One Time Email Login Code";
             mailObject["html"] = fs
