@@ -12,9 +12,9 @@ const path = require("path");
  * @param {string} param0.email
  * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
  * @param {string} param0.email_login_field
- * @param {string} param0.mail_domain
- * @param {string} param0.mail_username
- * @param {string} param0.mail_password
+ * @param {string} [param0.mail_domain]
+ * @param {string} [param0.mail_username]
+ * @param {string} [param0.mail_password]
  * @param {number} [param0.mail_port]
  * @param {string} [param0.sender]
  * @returns

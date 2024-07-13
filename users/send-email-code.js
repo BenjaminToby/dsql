@@ -41,9 +41,9 @@ const localSendEmailCode = require("../engine/user/send-email-code");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
- * @param {string} params.mail_domain
- * @param {string} params.mail_username
- * @param {string} params.mail_password
+ * @param {string} [params.mail_domain]
+ * @param {string} [params.mail_username]
+ * @param {string} [params.mail_password]
  * @param {number} [params.mail_port]
  * @param {string} [params.sender]
  *
