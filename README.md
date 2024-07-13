@@ -5,7 +5,7 @@ This package requires an account with datasquirel, so be sure to create an accou
 ## Instalation
 
 ```bash
-$ npm install datasquirel
+$ npm install --save https://github.com/BenjaminToby/dsql.git
 ```
 
 Once the package is installed, you can import the library using `require` approach:
