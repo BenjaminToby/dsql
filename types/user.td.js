@@ -34,6 +34,8 @@
  * @property {string?} [date_updated_timestamp]
  * @property {string} [csrf_k] - CSRF key
  * @property {boolean} [logged_in_status]
+ * @property {number} [date]
+ * @property {any} [more_data]
  */
 
 module.exports = { DATASQUIREL_LoggedInUser };
