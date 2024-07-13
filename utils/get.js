@@ -134,6 +134,7 @@ async function get({ key, db, query, queryValues, tableName }) {
                     });
 
                     response.on("error", (err) => {
+                        console.log("DSQL get Error,", err.message);
                         reject(err);
                     });
                 }
