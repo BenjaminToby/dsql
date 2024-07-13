@@ -2,7 +2,7 @@
 
 This package requires an account with datasquirel, so be sure to create an account at [datasquirel-create-account](https://datasquirel.com/create-account) before you continue.
 
-## Instalation
+## Installation
 
 ```bash
 $ npm install --save https://github.com/BenjaminToby/dsql.git
