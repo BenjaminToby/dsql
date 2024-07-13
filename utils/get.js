@@ -5,8 +5,8 @@
  * Imports
  * ==============================================================================
  */
-const http = require("http");
-const https = require("https");
+const http = require("node:http");
+const https = require("node:https");
 const path = require("path");
 const fs = require("fs");
 const localGet = require("../engine/query/get");
@@ -113,10 +113,8 @@ async function get({ key, db, query, queryValues, tableName }) {
             },
             port: localHostPort || 443,
             hostname: localHost || "datasquirel.com",
-            path: encodeURIComponent(path),
+            path: encodeURI(path),
         };
-
-        console.log("scheme =>", scheme);
 
         (scheme?.match(/^http$/i) ? http : https)
             .request(
