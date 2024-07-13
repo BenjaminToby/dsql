@@ -114,7 +114,7 @@ async function get({ key, db, query, queryValues, tableName }) {
                     },
                     port: localHostPort || 443,
                     hostname: localHost || "datasquirel.com",
-                    path: path,
+                    path: encodeURIComponent(path),
                 },
 
                 /**

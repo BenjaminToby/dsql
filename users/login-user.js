@@ -44,6 +44,9 @@ const loginLocalUser = require("../engine/user/login-user");
  * @param {http.ServerResponse} params.response - Http response object
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
+ * @param {boolean} [params.email_login] - Email only Login
+ * @param {string} [params.email_login_code] - Email login code
+ * @param {string} [params.temp_code_field] - Database table field name for temporary code
  *
  * @returns { Promise<AuthenticatedUser>}
  */
@@ -55,10 +58,20 @@ async function loginUser({
     response,
     encryptionKey,
     encryptionSalt,
+    email_login,
+    email_login_code,
+    temp_code_field,
 }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;
     const localHost = process.env.DSQL_LOCAL_HOST;
     const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+
+    const defaultTempLoginFieldName = "temp_login_code";
+    const emailLoginTempCodeFieldName = email_login
+        ? temp_code_field
+            ? temp_code_field
+            : defaultTempLoginFieldName
+        : null;
 
     /**
      * Check Encryption Keys
@@ -135,6 +148,9 @@ async function loginUser({
                 payload,
                 additionalFields,
                 dbSchema,
+                email_login,
+                email_login_code,
+                email_login_field: emailLoginTempCodeFieldName,
             });
         }
     } else {
@@ -150,6 +166,9 @@ async function loginUser({
                 payload,
                 database,
                 additionalFields,
+                email_login,
+                email_login_code,
+                email_login_field: emailLoginTempCodeFieldName,
             });
 
             const httpsRequest = (

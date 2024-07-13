@@ -13,9 +13,19 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
  * }} param0.payload
  * @param {string[]} [param0.additionalFields]
  * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
+ * @param {boolean} [param0.email_login]
+ * @param {string} [param0.email_login_code]
+ * @param {string | null} [param0.email_login_field]
  * @returns
  */
-async function loginLocalUser({ payload, additionalFields, dbSchema }) {
+async function loginLocalUser({
+    payload,
+    additionalFields,
+    dbSchema,
+    email_login,
+    email_login_code,
+    email_login_field,
+}) {
     try {
         /**
          * User auth
@@ -23,7 +33,9 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
          * @description Authenticate user
          */
 
-        const { email, username, password } = payload;
+        const email = payload.email;
+        const username = payload.username;
+        const password = payload.password;
 
         const dbFullName = process.env.DSQL_DB_NAME || "";
         const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
@@ -34,7 +46,11 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
          *
          * @description Check input validity
          */
-        if (email?.match(/ /) || username?.match(/ /) || password?.match(/ /)) {
+        if (
+            email?.match(/ /) ||
+            (username && username?.match(/ /)) ||
+            (password && password?.match(/ /))
+        ) {
             return {
                 success: false,
                 msg: "Invalid Email/Password format",
@@ -46,16 +62,20 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
          *
          * @description Password hash
          */
-        let hashedPassword = hashPassword({
-            password: password,
-            encryptionKey: encryptionKey,
-        });
+        let hashedPassword = password
+            ? hashPassword({
+                  password: password,
+                  encryptionKey: encryptionKey,
+              })
+            : null;
 
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        const tableSchema = dbSchema?.tables.find((tb) => tb?.tableName === "users");
+        const tableSchema = dbSchema?.tables.find(
+            (tb) => tb?.tableName === "users"
+        );
 
         let foundUser = await varDatabaseDbHandler({
             queryString: `SELECT * FROM users WHERE email = ? OR username = ?`,
@@ -77,8 +97,17 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
 
         let isPasswordCorrect = false;
 
-        if (foundUser && foundUser[0]) {
+        if (foundUser && foundUser[0] && !email_login) {
             isPasswordCorrect = hashedPassword === foundUser[0].password;
+        } else if (
+            foundUser &&
+            foundUser[0] &&
+            email_login &&
+            email_login_code &&
+            email_login_field
+        ) {
+            const tempCode = foundUser[0][email_login_field];
+            isPasswordCorrect = tempCode === email_login_code;
         }
 
         let socialUserValid = false;
@@ -99,7 +128,10 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        let csrfKey = Math.random().toString(36).substring(2) + "-" + Math.random().toString(36).substring(2);
+        let csrfKey =
+            Math.random().toString(36).substring(2) +
+            "-" +
+            Math.random().toString(36).substring(2);
 
         let userPayload = {
             id: foundUser[0].id,
@@ -120,7 +152,11 @@ async function loginLocalUser({ payload, additionalFields, dbSchema }) {
             date: Date.now(),
         };
 
-        if (additionalFields && Array.isArray(additionalFields) && additionalFields.length > 0) {
+        if (
+            additionalFields &&
+            Array.isArray(additionalFields) &&
+            additionalFields.length > 0
+        ) {
             additionalFields.forEach((key) => {
                 // @ts-ignore
                 userPayload[key] = foundUser?.[0][key];
