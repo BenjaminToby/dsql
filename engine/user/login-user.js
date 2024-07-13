@@ -107,7 +107,17 @@ async function loginLocalUser({
             email_login_field
         ) {
             const tempCode = foundUser[0][email_login_field];
-            isPasswordCorrect = tempCode === email_login_code;
+
+            if (!tempCode) throw new Error("No code Found!");
+
+            const tempCodeArray = tempCode.split("-");
+            const [code, codeDate] = tempCodeArray;
+            const millisecond15mins = 1000 * 60 * 15;
+
+            if (Date.now() - Number(codeDate) > millisecond15mins) {
+                throw new Error("Code Expired");
+            }
+            isPasswordCorrect = code === email_login_code;
         }
 
         let socialUserValid = false;
