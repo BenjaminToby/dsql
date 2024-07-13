@@ -76,13 +76,25 @@ async function sendEmailCode({
      *
      * @description Check Encryption Keys
      */
-    if (!encryptionKey?.match(/./)) return false;
+    if (!encryptionKey?.match(/./)) {
+        console.log("DSQL Error => No Encryption Key Found!");
+        return false;
+    }
 
-    if (!encryptionSalt?.match(/./)) return false;
+    if (!encryptionSalt?.match(/./)) {
+        console.log("DSQL Error => No Encryption Salt Found!");
+        return false;
+    }
 
-    if (encryptionKey.length < 24) return false;
+    if (encryptionKey.length < 24) {
+        console.log("DSQL Error => Encryption key less than 24 characters!");
+        return false;
+    }
 
-    if (encryptionSalt.length < 8) return false;
+    if (encryptionSalt.length < 8) {
+        console.log("DSQL Error => Encryption Salt less than 8 characters!");
+        return false;
+    }
 
     /**
      * Initialize HTTP response variable
@@ -214,6 +226,7 @@ async function sendEmailCode({
     if (httpResponse?.success) {
         return true;
     } else {
+        console.log(httpResponse);
         return false;
     }
 }
