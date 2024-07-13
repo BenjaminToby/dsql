@@ -32,7 +32,7 @@
  * @property {string?} [date_updated]
  * @property {number?} [date_updated_code]
  * @property {string?} [date_updated_timestamp]
- * * @property {string} [csrf_k] - CSRF key
+ * @property {string} [csrf_k] - CSRF key
  * @property {boolean} [logged_in_status]
  */
 
