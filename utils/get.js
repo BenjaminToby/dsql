@@ -104,18 +104,23 @@ async function get({ key, db, query, queryValues, tableName }) {
             }`;
         }
 
+        /** @type {https.RequestOptions} */
+        const requestObject = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: key,
+            },
+            port: localHostPort || 443,
+            hostname: localHost || "datasquirel.com",
+            path: encodeURIComponent(path),
+        };
+
+        console.log("requestObject =>", requestObject);
+
         (scheme?.match(/^http$/i) ? http : https)
             .request(
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: key,
-                    },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
-                    path: encodeURIComponent(path),
-                },
+                requestObject,
 
                 /**
                  * Callback Function
