@@ -154,7 +154,7 @@ async function sendEmailCode({
                 html: fs.readFileSync(
                     path.resolve(
                         __dirname,
-                        "../../engine/user/one-time-code.html"
+                        "../engine/user/one-time-code.html"
                     ),
                     "utf-8"
                 ),
