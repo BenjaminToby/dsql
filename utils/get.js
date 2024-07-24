@@ -135,7 +135,7 @@ async function get({ key, db, query, queryValues, tableName }) {
                     response.on("end", function () {
                         try {
                             resolve(JSON.parse(str));
-                        } catch (error) {
+                        } catch (/** @type {any} */ error) {
                             reject({
                                 error: error.message,
                                 result: str,
