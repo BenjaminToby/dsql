@@ -19,9 +19,19 @@ const localAddUser = require("../engine/user/add-user");
 /** ****************************************************************************** */
 
 /**
+ * @typedef {object} SuccessUserObject
+ * @property {number} id
+ * @property {string} first_name
+ * @property {string} last_name
+ * @property {string} email
+ */
+
+/**
  * @typedef {object} FunctionReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - Payload
+ * @property {SuccessUserObject | null} [payload] - Payload
+ * @property {string} [msg]
+ * @property {any} [sqlResult]
  */
 
 /**
