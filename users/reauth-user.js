@@ -210,6 +210,10 @@ async function reauthUser({
             `${csrfName}=${httpResponse.payload.csrf_k};samesite=strict;path=/;HttpOnly=true`,
             `dsqluid=${userId};samesite=strict;path=/;HttpOnly=true`,
         ]);
+
+        if (token) {
+            httpResponse.token = encryptedPayload;
+        }
     }
 
     /** ********************************************** */
