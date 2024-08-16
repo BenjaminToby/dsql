@@ -27,6 +27,7 @@ const localReauthUser = require("../engine/user/reauth-user");
  * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload
  * @property {string} [msg] - Response Message
  * @property {number} [userId] - user ID
+ * @property {string} [token] - new Token
  */
 
 /**
