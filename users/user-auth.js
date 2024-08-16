@@ -35,10 +35,18 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {string} params.encryptionSalt - Encryption Salt
  * @param {("deep" | "normal")} [params.level] - Optional. "Deep" value indicates an extra layer of security
  * @param {string} params.database - Database Name
+ * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
  * @returns { AuthenticatedUserObject }
  */
-function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
+function userAuth({
+    request,
+    encryptionKey,
+    encryptionSalt,
+    level,
+    database,
+    token,
+}) {
     try {
         /**
          * Grab the payload
@@ -50,7 +58,7 @@ function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
         const authKeyName = `datasquirel_${dsqluid}_${database}_auth_key`;
         const csrfName = `datasquirel_${dsqluid}_${database}_csrf`;
 
-        const key = cookies[authKeyName];
+        const key = token ? token : cookies[authKeyName];
         const csrf = cookies[csrfName];
 
         /**
@@ -101,7 +109,10 @@ function userAuth({ request, encryptionKey, encryptionSalt, level, database }) {
          *
          * @description Grab the payload
          */
-        if (level?.match(/deep/i) && !csrf?.match(new RegExp(`${userObject.csrf_k}`))) {
+        if (
+            level?.match(/deep/i) &&
+            !csrf?.match(new RegExp(`${userObject.csrf_k}`))
+        ) {
             return {
                 success: false,
                 payload: null,

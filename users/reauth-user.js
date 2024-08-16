@@ -44,6 +44,7 @@ const localReauthUser = require("../engine/user/reauth-user");
  * @param {String} params.encryptionKey - Encryption Key
  * @param {String} params.encryptionSalt - Encryption Salt
  *  @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
+ * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
  * @returns { Promise<FunctionReturn> }
  */
@@ -56,6 +57,7 @@ async function reauthUser({
     encryptionKey,
     encryptionSalt,
     additionalFields,
+    token,
 }) {
     /**
      * Check Encryption Keys
@@ -72,6 +74,7 @@ async function reauthUser({
         encryptionSalt,
         level,
         request,
+        token,
     });
 
     if (!existingUser?.payload?.id) {
