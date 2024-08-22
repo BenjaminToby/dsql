@@ -22,18 +22,25 @@ const runQuery = require("../query/utils/runQuery");
  * @param {Object} params - Single object passed
  * @param {import("../../users/add-user").UserDataPayload} params.payload - SQL Query
  * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema - Name of the table to query
+ * @param {string} [params.encryptionKey]
+ * @param {string} [params.encryptionSalt]
  *
  * @returns { Promise<LocalPostReturn> } - Return Object
  */
-async function localAddUser({ payload, dbSchema }) {
+async function localAddUser({
+    payload,
+    dbSchema,
+    encryptionKey,
+    encryptionSalt,
+}) {
     try {
         /**
          * Initialize Variables
          */
         const dbFullName = process.env.DSQL_DB_NAME || "";
 
-        const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
-        const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
+        const encryptionKeyFinal = process.env.DSQL_ENCRYPTION_KEY || "";
+        const encryptionSaltFinal = process.env.DSQL_ENCRYPTION_SALT || "";
 
         /**
          * Hash Password
@@ -41,12 +48,15 @@ async function localAddUser({ payload, dbSchema }) {
          * @description Hash Password
          */
         if (!payload?.password) {
-            return { success: false, payload: `Password is required to create an account` };
+            return {
+                success: false,
+                payload: `Password is required to create an account`,
+            };
         }
 
         const hashedPassword = hashPassword({
             password: payload.password,
-            encryptionKey,
+            encryptionKey: encryptionKeyFinal,
         });
         payload.password = hashedPassword;
 
@@ -73,7 +83,9 @@ async function localAddUser({ payload, dbSchema }) {
             };
         }
 
-        const fieldsTitles = fields.map((/** @type {*} */ fieldObject) => fieldObject.Field);
+        const fieldsTitles = fields.map(
+            (/** @type {*} */ fieldObject) => fieldObject.Field
+        );
 
         let invalidField = null;
 
@@ -86,14 +98,23 @@ async function localAddUser({ payload, dbSchema }) {
         }
 
         if (invalidField) {
-            return { success: false, payload: `${invalidField} is not a valid field!` };
+            return {
+                success: false,
+                payload: `${invalidField} is not a valid field!`,
+            };
         }
 
-        const tableSchema = dbSchema.tables.find((tb) => tb?.tableName === "users");
+        const tableSchema = dbSchema.tables.find(
+            (tb) => tb?.tableName === "users"
+        );
 
         const existingUser = await varDatabaseDbHandler({
-            queryString: `SELECT * FROM users WHERE email = ?${payload.username ? "OR username = ?" : ""}}`,
-            queryValuesArray: payload.username ? [payload.email, payload.username] : [payload.email],
+            queryString: `SELECT * FROM users WHERE email = ?${
+                payload.username ? "OR username = ?" : ""
+            }}`,
+            queryValuesArray: payload.username
+                ? [payload.email, payload.username]
+                : [payload.email],
             database: dbFullName,
             tableSchema: tableSchema,
         });
@@ -111,10 +132,11 @@ async function localAddUser({ payload, dbSchema }) {
             data: {
                 ...payload,
                 image: "/images/user_images/user-preset.png",
-                image_thumbnail: "/images/user_images/user-preset-thumbnail.png",
+                image_thumbnail:
+                    "/images/user_images/user-preset-thumbnail.png",
             },
-            encryptionKey,
-            encryptionSalt,
+            encryptionKey: encryptionKeyFinal,
+            encryptionSalt: encryptionSaltFinal,
             tableSchema,
         });
 

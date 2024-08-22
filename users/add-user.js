@@ -52,10 +52,18 @@ const localAddUser = require("../engine/user/add-user");
  * @param {string} props.key - FULL ACCESS API Key
  * @param {string} props.database - Database Name
  * @param {UserDataPayload} props.payload - User Data Payload
+ * @param {string} props.encryptionKey
+ * @param {string} [props.encryptionSalt]
  *
  * @returns { Promise<FunctionReturn> }
  */
-async function addUser({ key, payload, database }) {
+async function addUser({
+    key,
+    payload,
+    database,
+    encryptionKey,
+    encryptionSalt,
+}) {
     /**
      * Check for local DB settings
      *
@@ -96,6 +104,8 @@ async function addUser({ key, payload, database }) {
             return await localAddUser({
                 dbSchema: dbSchema,
                 payload: payload,
+                encryptionKey,
+                encryptionSalt,
             });
         }
     }
@@ -109,6 +119,7 @@ async function addUser({ key, payload, database }) {
         const reqPayload = JSON.stringify({
             payload,
             database,
+            encryptionKey,
         });
 
         const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
