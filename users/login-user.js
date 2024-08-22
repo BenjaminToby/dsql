@@ -165,6 +165,7 @@ async function loginUser({
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({
+                encryptionKey,
                 payload,
                 database,
                 additionalFields,
