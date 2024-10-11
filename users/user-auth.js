@@ -126,7 +126,7 @@ function userAuth({
             success: true,
             payload: userObject,
         };
-    } catch (error) {
+    } catch (/** @type {any} */ error) {
         /**
          * Return User Object
          *
@@ -135,7 +135,7 @@ function userAuth({
         return {
             success: false,
             payload: null,
-            msg: error,
+            msg: error.message,
         };
     }
 }
