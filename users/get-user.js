@@ -15,23 +15,6 @@ const getLocalUser = require("../engine/user/get-user");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {{
- *   id: number,
- *   first_name: string,
- *   last_name: string,
- *   username: string,
- *   email: string,
- *   phone: string,
- *   social_id: [string],
- *   image: string,
- *   image_thumbnail: string,
- *   verification_status: [number=0],
- * }} payload - Payload
- */
-
-/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -43,7 +26,7 @@ const getLocalUser = require("../engine/user/get-user");
  * @param {number} params.userId - user id
  * @param {string[]} [params.fields] - fields to select
  *
- * @returns { Promise<FunctionReturn>}
+ * @returns { Promise<import("../types/user.td").GetUserFunctionReturn>}
  */
 async function getUser({ key, userId, database, fields }) {
     /**

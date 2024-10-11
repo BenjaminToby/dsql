@@ -22,15 +22,6 @@ const localReauthUser = require("../engine/user/reauth-user");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload
- * @property {string} [msg] - Response Message
- * @property {number} [userId] - user ID
- * @property {string} [token] - new Token
- */
-
-/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -47,7 +38,7 @@ const localReauthUser = require("../engine/user/reauth-user");
  *  @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
  * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
- * @returns { Promise<FunctionReturn> }
+ * @returns { Promise<import("../types/user.td").ReauthUserFunctionReturn> }
  */
 async function reauthUser({
     key,

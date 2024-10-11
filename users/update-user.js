@@ -19,12 +19,6 @@ const localUpdateUser = require("../engine/user/update-user");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} FunctionReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - Payload
- */
-
-/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -35,7 +29,7 @@ const localUpdateUser = require("../engine/user/update-user");
  * @param {String} params.database - Target Database
  * @param {{ id: number } & Object.<string, *>} params.payload - User Object: ID is required
  *
- * @returns { Promise<FunctionReturn>}
+ * @returns { Promise<import("../types/user.td").UpdateUserFunctionReturn>}
  */
 async function updateUser({ key, payload, database }) {
     /**

@@ -1,21 +1,3 @@
-/**
- * Type Definitions
- * ===============================================================================
- */
-
-/**
- * @typedef {object} GoogleIdentityPromptNotification
- * @property {function(): string} getMomentType - Notification moment type
- * @property {function(): string} getDismissedReason - Notification get Dismissed Reason
- * @property {function(): string} getNotDisplayedReason - Notification get Not Displayed Reason
- * @property {function(): string} getSkippedReason - Notification get Skipped Reason
- * @property {function(): boolean} isDismissedMoment - Notification is Dismissed Moment
- * @property {function(): boolean} isDisplayMoment - Notification is Display Moment
- * @property {function(): boolean} isDisplayed - Notification is Displayed
- * @property {function(): boolean} isNotDisplayed - Notification is Not Displayed
- * @property {function(): boolean} isSkippedMoment - Notification is Skipped Moment
- */
-
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +20,12 @@
  *
  * @returns {Promise<boolean>} - Return
  */
-module.exports = async function getAccessToken({ clientId, element, triggerPrompt, readyStateDispatch }) {
+module.exports = async function getAccessToken({
+    clientId,
+    element,
+    triggerPrompt,
+    readyStateDispatch,
+}) {
     /**
      * == Initialize
      *
@@ -91,7 +78,7 @@ module.exports = async function getAccessToken({ clientId, element, triggerPromp
                         /**
                          * Google prompt notification callback
                          * ========================================================
-                         * @param {GoogleIdentityPromptNotification} notification - Notification object
+                         * @param {import("../../../types/user.td").GoogleIdentityPromptNotification} notification - Notification object
                          */
                         (notification) => {
                             notification.isDisplayed();

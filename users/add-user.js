@@ -19,31 +19,6 @@ const localAddUser = require("../engine/user/add-user");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} SuccessUserObject
- * @property {number} id
- * @property {string} first_name
- * @property {string} last_name
- * @property {string} email
- */
-
-/**
- * @typedef {object} FunctionReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {SuccessUserObject | null} [payload] - Payload
- * @property {string} [msg]
- * @property {any} [sqlResult]
- */
-
-/**
- * @typedef {object} UserDataPayload
- * @property {string} first_name - First Name *Required
- * @property {string} last_name - Last Name *Required
- * @property {string} email - Email *Required
- * @property {string} password - Password *Required
- * @property {string?} username - Username (Optional)
- */
-
-/**
  * Add User to Database
  * ==============================================================================
  * @async
@@ -51,11 +26,11 @@ const localAddUser = require("../engine/user/add-user");
  * @param {object} props - Single object passed
  * @param {string} props.key - FULL ACCESS API Key
  * @param {string} props.database - Database Name
- * @param {UserDataPayload} props.payload - User Data Payload
+ * @param {import("../types/user.td").UserDataPayload} props.payload - User Data Payload
  * @param {string} props.encryptionKey
  * @param {string} [props.encryptionSalt]
  *
- * @returns { Promise<FunctionReturn> }
+ * @returns { Promise<import("../types/user.td").AddUserFunctionReturn> }
  */
 async function addUser({
     key,

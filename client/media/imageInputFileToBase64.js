@@ -1,13 +1,4 @@
 /**
- * @typedef {{
- *  imageBase64: string,
- *  imageBase64Full: string,
- *  imageName: string,
- *  imageSize: number,
- * }} FunctionReturn
- */
-
-/**
  * ==============================================================================
  * Main Function
  * ==============================================================================
@@ -19,7 +10,7 @@
  *  imagePreviewNode?: HTMLImageElement,
  * }} params - Single object passed
  *
- * @returns { Promise<FunctionReturn> } - Return Object
+ * @returns { Promise<import("../../types/general.td").ImageInputFileToBase64FunctionReturn> } - Return Object
  */
 module.exports = async function imageInputFileToBase64({
     imageInputFile,

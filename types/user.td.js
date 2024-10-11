@@ -46,4 +46,84 @@
  * @property {number} [userId] - An optional message
  */
 
-module.exports = { DATASQUIREL_LoggedInUser, AuthenticatedUser };
+/**
+ * @typedef {object} SuccessUserObject
+ * @property {number} id
+ * @property {string} first_name
+ * @property {string} last_name
+ * @property {string} email
+ */
+
+/**
+ * @typedef {object} AddUserFunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {SuccessUserObject | null} [payload] - Payload
+ * @property {string} [msg]
+ * @property {any} [sqlResult]
+ */
+
+/**
+ * @typedef {object} GoogleIdentityPromptNotification
+ * @property {function(): string} getMomentType - Notification moment type
+ * @property {function(): string} getDismissedReason - Notification get Dismissed Reason
+ * @property {function(): string} getNotDisplayedReason - Notification get Not Displayed Reason
+ * @property {function(): string} getSkippedReason - Notification get Skipped Reason
+ * @property {function(): boolean} isDismissedMoment - Notification is Dismissed Moment
+ * @property {function(): boolean} isDisplayMoment - Notification is Display Moment
+ * @property {function(): boolean} isDisplayed - Notification is Displayed
+ * @property {function(): boolean} isNotDisplayed - Notification is Not Displayed
+ * @property {function(): boolean} isSkippedMoment - Notification is Skipped Moment
+ */
+
+/**
+ * @typedef {object} UserDataPayload
+ * @property {string} first_name - First Name *Required
+ * @property {string} last_name - Last Name *Required
+ * @property {string} email - Email *Required
+ * @property {string} password - Password *Required
+ * @property {string?} username - Username (Optional)
+ */
+
+/**
+ * @typedef {object} GetUserFunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {{
+ *   id: number,
+ *   first_name: string,
+ *   last_name: string,
+ *   username: string,
+ *   email: string,
+ *   phone: string,
+ *   social_id: [string],
+ *   image: string,
+ *   image_thumbnail: string,
+ *   verification_status: [number=0],
+ * }} payload - Payload
+ */
+
+/**
+ * @typedef {object} ReauthUserFunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload
+ * @property {string} [msg] - Response Message
+ * @property {number} [userId] - user ID
+ * @property {string} [token] - new Token
+ */
+
+/**
+ * @typedef {object} UpdateUserFunctionReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - Payload
+ */
+
+module.exports = {
+    DATASQUIREL_LoggedInUser,
+    AuthenticatedUser,
+    AddUserFunctionReturn,
+    SuccessUserObject,
+    GoogleIdentityPromptNotification,
+    UserDataPayload,
+    GetUserFunctionReturn,
+    ReauthUserFunctionReturn,
+    UpdateUserFunctionReturn,
+};
