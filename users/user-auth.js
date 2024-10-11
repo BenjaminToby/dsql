@@ -17,13 +17,6 @@ const parseCookies = require("../utils/functions/parseCookies");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} AuthenticatedUserObject
- * @property {boolean} success - Did the function run successfully?
- * @property {import("../types/user.td").DATASQUIREL_LoggedInUser | null} payload - Payload
- * @property {string | unknown} [msg] - Response Message
- */
-
-/**
  * Authenticate User from request
  * ==============================================================================
  * @description This Function takes in a request object and returns a user object
@@ -37,7 +30,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {string} params.database - Database Name
  * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
- * @returns { AuthenticatedUserObject }
+ * @returns { import("../types/user.td").AuthenticatedUser }
  */
 function userAuth({
     request,

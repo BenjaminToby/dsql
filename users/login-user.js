@@ -20,14 +20,6 @@ const loginLocalUser = require("../engine/user/login-user");
 /** ****************************************************************************** */
 
 /**
- * @typedef {object} AuthenticatedUser
- * @property {boolean} success - Did the function run successfully?
- * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload of the response
- * @property {string} [msg] - An optional message
- * @property {number} [userId] - An optional message
- */
-
-/**
  * Login A user
  * ==============================================================================
  * @async
@@ -49,7 +41,7 @@ const loginLocalUser = require("../engine/user/login-user");
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
  * @param {boolean} [params.token] - Send access key as part of response body?
  *
- * @returns { Promise<AuthenticatedUser>}
+ * @returns { Promise<import("../types/user.td").AuthenticatedUser>}
  */
 async function loginUser({
     key,

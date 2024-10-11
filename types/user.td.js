@@ -38,4 +38,12 @@
  * @property {any} [more_data]
  */
 
-module.exports = { DATASQUIREL_LoggedInUser };
+/**
+ * @typedef {object} AuthenticatedUser
+ * @property {boolean} success - Did the function run successfully?
+ * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload of the response
+ * @property {string} [msg] - An optional message
+ * @property {number} [userId] - An optional message
+ */
+
+module.exports = { DATASQUIREL_LoggedInUser, AuthenticatedUser };
