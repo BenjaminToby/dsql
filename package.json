@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/BenjaminToby/dsql.git"
+        "url": "git+https://git.tben.me/Moduletrace/datasquirel.git"
     },
     "keywords": [
         "SQL",
@@ -22,7 +22,7 @@
     "author": "Benjamin Toby",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/BenjaminToby/dsql/issues"
+        "url": "https://git.tben.me/Moduletrace/datasquirel/issues"
     },
     "homepage": "https://datasquirel.com/",
     "dependencies": {
