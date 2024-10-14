@@ -137,3 +137,6 @@ tsconfig.tsbuildinfo
 deprecated
 .tmp
 test/
+
+# NPM
+# .npmrc
