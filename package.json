@@ -31,6 +31,7 @@
         "nodemailer": "^6.9.14"
     },
     "devDependencies": {
-        "@types/mysql": "^2.15.21"
+        "@types/mysql": "^2.15.21",
+        "@types/node": "^22.7.5"
     }
 }

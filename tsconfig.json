@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "commonjs",
+        "paths": {
+            "@/*": ["./*"]
+        },
+        "maxNodeModuleJsDepth": 10,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "noEmit": true,
+        "incremental": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
+    },
+    "include": [
+        "engine",
+        "functions",
+        "types",
+        "users",
+        "utils",
+        "package-shared/types"
+    ],
+    "exclude": ["node_modules", "dump"]
+}

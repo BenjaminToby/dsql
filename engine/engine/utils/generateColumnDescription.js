@@ -11,18 +11,30 @@
  * Generate SQL text for Field
  * ==============================================================================
  * @param {object} params - Single object params
- * @param {import("../../../types/database-schema.td").DSQL_FieldSchemaType} params.columnData - Field object
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_FieldSchemaType} params.columnData - Field object
  * @param {boolean} [params.primaryKeySet] - Table Name(slug)
  *
  * @returns {{fieldEntryText: string, newPrimaryKeySet:  boolean}}
  */
-module.exports = function generateColumnDescription({ columnData, primaryKeySet }) {
+module.exports = function generateColumnDescription({
+    columnData,
+    primaryKeySet,
+}) {
     /**
      * Format tableInfoArray
      *
      * @description Format tableInfoArray
      */
-    const { fieldName, dataType, nullValue, primaryKey, autoIncrement, defaultValue, defaultValueLiteral, notNullValue } = columnData;
+    const {
+        fieldName,
+        dataType,
+        nullValue,
+        primaryKey,
+        autoIncrement,
+        defaultValue,
+        defaultValueLiteral,
+        notNullValue,
+    } = columnData;
 
     let fieldEntryText = "";
 

@@ -21,7 +21,7 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
  * @param {*} params.data - Data to add
- * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string | number} params.identifierValue - Update row identifier column value
  * @param {string} params.encryptionKey - Encryption key
@@ -29,7 +29,18 @@ const dbHandler = require("../../engine/utils/dbHandler");
  *
  * @returns {Promise<object|null>}
  */
-async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data, tableSchema, identifierColumnName, identifierValue, encryptionKey, encryptionSalt }) {
+async function updateDbEntry({
+    dbContext,
+    paradigm,
+    dbFullName,
+    tableName,
+    data,
+    tableSchema,
+    identifierColumnName,
+    identifierValue,
+    encryptionKey,
+    encryptionSalt,
+}) {
     /**
      * Check if data is valid
      */
@@ -59,11 +70,23 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
             const dataKey = dataKeys[i];
             let value = data[dataKey];
 
-            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields?.filter((field) => field.fieldName === dataKey) : null;
-            const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
+            const targetFieldSchemaArray = tableSchema
+                ? tableSchema?.fields?.filter(
+                      (field) => field.fieldName === dataKey
+                  )
+                : null;
+            const targetFieldSchema =
+                targetFieldSchemaArray && targetFieldSchemaArray[0]
+                    ? targetFieldSchemaArray[0]
+                    : null;
 
             if (typeof value == "undefined") continue;
-            if (typeof value !== "string" && typeof value !== "number" && !value) continue;
+            if (
+                typeof value !== "string" &&
+                typeof value !== "number" &&
+                !value
+            )
+                continue;
 
             if (targetFieldSchema?.encrypted) {
                 value = encrypt({ data: value, encryptionKey, encryptionSalt });
@@ -82,7 +105,10 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
             }
 
             if (targetFieldSchema?.pattern) {
-                const pattern = new RegExp(targetFieldSchema.pattern, targetFieldSchema.patternFlags || "");
+                const pattern = new RegExp(
+                    targetFieldSchema.pattern,
+                    targetFieldSchema.patternFlags || ""
+                );
                 if (!value?.toString()?.match(pattern)) {
                     console.log("DSQL: Pattern not matched =>", value);
                     value = "";
@@ -108,7 +134,10 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
             ////////////////////////////////////////
             ////////////////////////////////////////
 
-            console.log("DSQL: Error in parsing data keys in update function =>", error.message);
+            console.log(
+                "DSQL: Error in parsing data keys in update function =>",
+                error.message
+            );
             continue;
         }
     }
@@ -122,7 +151,9 @@ async function updateDbEntry({ dbContext, paradigm, dbFullName, tableName, data,
     ////////////////////////////////////////
     ////////////////////////////////////////
 
-    const query = `UPDATE ${tableName} SET ${updateKeyValueArray.join(",")} WHERE \`${identifierColumnName}\`=?`;
+    const query = `UPDATE ${tableName} SET ${updateKeyValueArray.join(
+        ","
+    )} WHERE \`${identifierColumnName}\`=?`;
 
     updateValues.push(identifierValue);
 

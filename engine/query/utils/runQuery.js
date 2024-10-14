@@ -31,13 +31,20 @@ const varDatabaseDbHandler = require("../../engine/utils/varDatabaseDbHandler");
  * @param {string} params.dbFullName - Database full name. Eg. "datasquire_user_2_test"
  * @param {*} params.query - Query string or object
  * @param {boolean} [params.readOnly] - Is this operation read only?
- * @param {import("../../../types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
  * @param {string[]} [params.queryValuesArray] - An optional array of query values if "?" is used in the query string
  * @param {string} [params.tableName] - Table Name
  *
  * @return {Promise<{result: *, error?: *}>}
  */
-async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArray, tableName }) {
+async function runQuery({
+    dbFullName,
+    query,
+    readOnly,
+    dbSchema,
+    queryValuesArray,
+    tableName,
+}) {
     /**
      * Declare variables
      *
@@ -50,9 +57,17 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
 
     if (dbSchema) {
         try {
-            const table = tableName ? tableName : typeof query == "string" ? null : query ? query?.table : null;
+            const table = tableName
+                ? tableName
+                : typeof query == "string"
+                ? null
+                : query
+                ? query?.table
+                : null;
             if (!table) throw new Error("No table name provided");
-            tableSchema = dbSchema.tables.filter((tb) => tb?.tableName === table)[0];
+            tableSchema = dbSchema.tables.filter(
+                (tb) => tb?.tableName === table
+            )[0];
         } catch (_err) {}
     }
 
@@ -75,7 +90,16 @@ async function runQuery({ dbFullName, query, readOnly, dbSchema, queryValuesArra
              *
              * @description Declare "results" variable
              */
-            const { data, action, table, identifierColumnName, identifierValue, update, duplicateColumnName, duplicateColumnValue } = query;
+            const {
+                data,
+                action,
+                table,
+                identifierColumnName,
+                identifierValue,
+                update,
+                duplicateColumnName,
+                duplicateColumnValue,
+            } = query;
 
             switch (action.toLowerCase()) {
                 case "insert":

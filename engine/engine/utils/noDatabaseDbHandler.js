@@ -27,7 +27,7 @@ const connection = mysql.createConnection({
  * @param {string} params.query - Query String
  * @param {string[]} [params.values] - Values
  *
- * @returns {Promise<object[] | null>}
+ * @returns {Promise<any[] | null>}
  */
 module.exports = async function noDatabaseDbHandler({ query, values }) {
     /**

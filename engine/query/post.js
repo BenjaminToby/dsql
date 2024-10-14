@@ -24,7 +24,7 @@ const runQuery = require("./utils/runQuery");
  *
  * @param {Object} params - Single object passed
  * @param {LocalPostQueryObject} params.options - SQL Query
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Name of the table to query
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [params.dbSchema] - Name of the table to query
  *
  * @returns { Promise<LocalPostReturn> } - Return Object
  */
@@ -41,11 +41,17 @@ async function localPost({ options, dbSchema }) {
          *
          * @description Input Validation
          */
-        if (typeof query === "string" && query?.match(/^create |^alter |^drop /i)) {
+        if (
+            typeof query === "string" &&
+            query?.match(/^create |^alter |^drop /i)
+        ) {
             return { success: false, msg: "Wrong Input" };
         }
 
-        if (typeof query === "object" && query?.action?.match(/^create |^alter |^drop /i)) {
+        if (
+            typeof query === "object" &&
+            query?.action?.match(/^create |^alter |^drop /i)
+        ) {
             return { success: false, msg: "Wrong Input" };
         }
 

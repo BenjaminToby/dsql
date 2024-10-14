@@ -14,10 +14,13 @@ const defaultFieldsRegexp = require("./defaultFieldsRegexp");
  * @param {object} params - Single object params
  * @param {*[]} params.unparsedResults - Array of data objects containing Fields(keys)
  * and corresponding values of the fields(values)
- * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("../../../package-shared/types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @returns {Promise<object[]|null>}
  */
-module.exports = async function parseDbResults({ unparsedResults, tableSchema }) {
+module.exports = async function parseDbResults({
+    unparsedResults,
+    tableSchema,
+}) {
     /**
      * Declare variables
      *
@@ -56,7 +59,11 @@ module.exports = async function parseDbResults({ unparsedResults, tableSchema })
                 }
 
                 if (resultFieldSchema?.encrypted && value?.match(/./)) {
-                    result[resultFieldName] = decrypt({ encryptedString: value, encryptionKey, encryptionSalt });
+                    result[resultFieldName] = decrypt({
+                        encryptedString: value,
+                        encryptionKey,
+                        encryptionSalt,
+                    });
                 }
             }
 

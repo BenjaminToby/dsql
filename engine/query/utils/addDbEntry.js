@@ -19,7 +19,7 @@ const updateDbEntry = require("./updateDbEntry");
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
  * @param {*} params.data - Data to add
- * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} [params.duplicateColumnName] - Duplicate column name
  * @param {string} [params.duplicateColumnValue] - Duplicate column value
  * @param {boolean} [params.update] - Update this row if it exists
@@ -28,7 +28,17 @@ const updateDbEntry = require("./updateDbEntry");
  *
  * @returns {Promise<*>}
  */
-async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateColumnName, duplicateColumnValue, update, encryptionKey, encryptionSalt }) {
+async function addDbEntry({
+    dbFullName,
+    tableName,
+    data,
+    tableSchema,
+    duplicateColumnName,
+    duplicateColumnValue,
+    update,
+    encryptionKey,
+    encryptionSalt,
+}) {
     /**
      * Initialize variables
      */
@@ -79,8 +89,15 @@ async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateC
             const dataKey = dataKeys[i];
             let value = data[dataKey];
 
-            const targetFieldSchemaArray = tableSchema ? tableSchema?.fields?.filter((field) => field.fieldName == dataKey) : null;
-            const targetFieldSchema = targetFieldSchemaArray && targetFieldSchemaArray[0] ? targetFieldSchemaArray[0] : null;
+            const targetFieldSchemaArray = tableSchema
+                ? tableSchema?.fields?.filter(
+                      (field) => field.fieldName == dataKey
+                  )
+                : null;
+            const targetFieldSchema =
+                targetFieldSchemaArray && targetFieldSchemaArray[0]
+                    ? targetFieldSchemaArray[0]
+                    : null;
 
             if (!value) continue;
 
@@ -90,7 +107,10 @@ async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateC
             }
 
             if (targetFieldSchema?.pattern) {
-                const pattern = new RegExp(targetFieldSchema.pattern, targetFieldSchema.patternFlags || "");
+                const pattern = new RegExp(
+                    targetFieldSchema.pattern,
+                    targetFieldSchema.patternFlags || ""
+                );
                 if (!value?.toString()?.match(pattern)) {
                     console.log("DSQL: Pattern not matched =>", value);
                     value = "";
@@ -136,7 +156,9 @@ async function addDbEntry({ dbFullName, tableName, data, tableSchema, duplicateC
 
     ////////////////////////////////////////
 
-    const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(",")}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
+    const query = `INSERT INTO \`${tableName}\` (${insertKeysArray.join(
+        ","
+    )}) VALUES (${insertValuesArray.map(() => "?").join(",")})`;
     const queryValuesArray = insertValuesArray;
 
     const newInsert = await dbHandler({

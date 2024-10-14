@@ -29,7 +29,7 @@ const runQuery = require("./utils/runQuery");
  *
  * @param {Object} params - Single object passed
  * @param {LocalQueryObject} params.options - SQL Query
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Name of the table to query
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [params.dbSchema] - Name of the table to query
  *
  * @returns { Promise<LocalGetReturn> } - Return Object
  */
@@ -47,7 +47,13 @@ async function localGet({ options, dbSchema }) {
          *
          * @description Input Validation
          */
-        if (typeof query == "string" && (query.match(/^alter|^delete|information_schema|databases|^create/i) || !query.match(/^select/i))) {
+        if (
+            typeof query == "string" &&
+            (query.match(
+                /^alter|^delete|information_schema|databases|^create/i
+            ) ||
+                !query.match(/^select/i))
+        ) {
             return { success: false, msg: "Wrong Input" };
         }
 
@@ -68,7 +74,8 @@ async function localGet({ options, dbSchema }) {
             });
 
             if (error) throw error;
-            if (!result) throw new Error("No Result received for query => " + query);
+            if (!result)
+                throw new Error("No Result received for query => " + query);
             if (result?.error) throw new Error(result.error);
 
             results = result;

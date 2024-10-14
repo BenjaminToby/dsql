@@ -74,13 +74,24 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *  res: http.ServerResponse,
  *  supEmail?: string | null,
  *  additionalFields?: object,
- * dbSchema: import("../../../../types/database-schema.td").DSQL_DatabaseSchemaType | undefined
+ * dbSchema: import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined
  * }} params - function parameters inside an object
  *
  * @returns {Promise<FunctionReturn>} - Response object
  */
-async function handleSocialDb({ social_id, email, social_platform, payload, res, supEmail, additionalFields, dbSchema }) {
-    const tableSchema = dbSchema?.tables.find((tb) => tb?.tableName === "users");
+async function handleSocialDb({
+    social_id,
+    email,
+    social_platform,
+    payload,
+    res,
+    supEmail,
+    additionalFields,
+    dbSchema,
+}) {
+    const tableSchema = dbSchema?.tables.find(
+        (tb) => tb?.tableName === "users"
+    );
 
     try {
         ////////////////////////////////////////////////
@@ -244,7 +255,10 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
             ////////////////////////////////////////////////
             ////////////////////////////////////////////////
         } else {
-            console.log("Social User Failed to insert in 'handleSocialDb.js' backend function =>", newUser);
+            console.log(
+                "Social User Failed to insert in 'handleSocialDb.js' backend function =>",
+                newUser
+            );
 
             return {
                 success: false,
@@ -258,7 +272,10 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
         ////////////////////////////////////////////////
         ////////////////////////////////////////////////
     } catch (/** @type {*} */ error) {
-        console.log("ERROR in 'handleSocialDb.js' backend function =>", error.message);
+        console.log(
+            "ERROR in 'handleSocialDb.js' backend function =>",
+            error.message
+        );
 
         return {
             success: false,
@@ -311,13 +328,22 @@ async function handleSocialDb({ social_id, email, social_platform, payload, res,
  *  msg?: string
  * }>}
  */
-async function loginSocialUser({ user, social_platform, res, database, additionalFields }) {
+async function loginSocialUser({
+    user,
+    social_platform,
+    res,
+    database,
+    additionalFields,
+}) {
     const foundUser = await varDatabaseDbHandler({
         database: database ? database : "datasquirel",
         queryString: `SELECT * FROM users WHERE email='${user.email}' AND social_id='${user.social_id}' AND social_platform='${social_platform}'`,
     });
 
-    let csrfKey = Math.random().toString(36).substring(2) + "-" + Math.random().toString(36).substring(2);
+    let csrfKey =
+        Math.random().toString(36).substring(2) +
+        "-" +
+        Math.random().toString(36).substring(2);
 
     if (!foundUser?.[0]) {
         return {
@@ -360,7 +386,10 @@ async function loginSocialUser({ user, social_platform, res, database, additiona
     });
 
     if (res?.setHeader) {
-        res.setHeader("Set-Cookie", [`datasquirelAuthKey=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`, `csrf=${csrfKey};samesite=strict;path=/;HttpOnly=true`]);
+        res.setHeader("Set-Cookie", [
+            `datasquirelAuthKey=${encryptedPayload};samesite=strict;path=/;HttpOnly=true;Secure=true`,
+            `csrf=${csrfKey};samesite=strict;path=/;HttpOnly=true`,
+        ]);
     }
 
     ////////////////////////////////////////////////

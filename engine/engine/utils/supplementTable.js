@@ -7,6 +7,12 @@
 /** ****************************************************************************** */
 /** ****************************************************************************** */
 
+/**
+ *
+ * @param {object} param0
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_FieldSchemaType[]} param0.tableInfoArray
+ * @returns
+ */
 module.exports = function supplementTable({ tableInfoArray }) {
     /**
      * Format tableInfoArray
@@ -18,12 +24,16 @@ module.exports = function supplementTable({ tableInfoArray }) {
 
     ////////////////////////////////////////
 
-    let primaryKeyExists = finalTableArray.filter((_field) => _field.primaryKey);
+    let primaryKeyExists = finalTableArray.filter(
+        (_field) => _field.primaryKey
+    );
 
     ////////////////////////////////////////
 
     defaultFields.forEach((field) => {
-        let fieldExists = finalTableArray.filter((_field) => _field.fieldName === field.fieldName);
+        let fieldExists = finalTableArray.filter(
+            (_field) => _field.fieldName === field.fieldName
+        );
 
         if (fieldExists && fieldExists[0]) {
             return;

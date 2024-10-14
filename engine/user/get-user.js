@@ -7,7 +7,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
  * @param {object} param0
  * @param {number} param0.userId
  * @param {string[]} param0.fields
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
  * @returns
  */
 async function getLocalUser({ userId, fields, dbSchema }) {
@@ -19,7 +19,9 @@ async function getLocalUser({ userId, fields, dbSchema }) {
     const sanitizedFields = fields.map((fld) => fld.replace(/[^a-z\_]/g, ""));
     const query = `SELECT ${sanitizedFields.join(",")} FROM users WHERE id = ?`;
 
-    const tableSchema = dbSchema?.tables.find((tb) => tb?.tableName === "users");
+    const tableSchema = dbSchema?.tables.find(
+        (tb) => tb?.tableName === "users"
+    );
 
     let foundUser = await varDatabaseDbHandler({
         queryString: query,

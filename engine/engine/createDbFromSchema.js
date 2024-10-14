@@ -27,7 +27,7 @@ const updateTable = require("./utils/updateTable");
  * runs the "dsql create" command. `NOTE`: there must be a "dsql.schema.json" file
  * in the root of the project for this function to work
  *
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType[]} dbSchema - An array of database schema objects
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} dbSchema - An array of database schema objects
  */
 async function createDbFromSchema(dbSchema) {
     try {
@@ -42,8 +42,13 @@ async function createDbFromSchema(dbSchema) {
         }
 
         for (let i = 0; i < dbSchema.length; i++) {
-            /** @type {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} */
+            /** @type {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
             const database = dbSchema[i];
+
+            if (!database) {
+                continue;
+            }
+
             const { dbFullName, tables } = database;
 
             ////////////////////////////////////////
@@ -51,12 +56,16 @@ async function createDbFromSchema(dbSchema) {
             ////////////////////////////////////////
 
             /** @type {{ dbFullName: string }[] | null} */
-            const dbCheck = await noDatabaseDbHandler({ query: `SELECT SCHEMA_NAME AS dbFullName FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '${dbFullName}'` });
+            const dbCheck = await noDatabaseDbHandler({
+                query: `SELECT SCHEMA_NAME AS dbFullName FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '${dbFullName}'`,
+            });
 
             if (dbCheck && dbCheck[0]?.dbFullName) {
                 // Database Exists
             } else {
-                const newDatabase = await noDatabaseDbHandler({ query: `CREATE DATABASE IF NOT EXISTS \`${dbFullName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` });
+                const newDatabase = await noDatabaseDbHandler({
+                    query: `CREATE DATABASE IF NOT EXISTS \`${dbFullName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_bin`,
+                });
             }
 
             ////////////////////////////////////////
@@ -68,7 +77,9 @@ async function createDbFromSchema(dbSchema) {
              * @type {{ TABLE_NAME: string }[] | null}
              * @description Select All tables in target database
              */
-            const allTables = await noDatabaseDbHandler({ query: `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='${dbFullName}'` });
+            const allTables = await noDatabaseDbHandler({
+                query: `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='${dbFullName}'`,
+            });
 
             let tableDropped;
 
@@ -85,8 +96,16 @@ async function createDbFromSchema(dbSchema) {
                  * in the user schema JSON. If it's not, the table is either deleted
                  * or the table name has been recently changed
                  */
-                if (!tables.filter((_table) => _table.tableName === TABLE_NAME)[0]) {
-                    const oldTableFilteredArray = tables.filter((_table) => _table.tableNameOld && _table.tableNameOld === TABLE_NAME);
+                if (
+                    !tables.filter(
+                        (_table) => _table.tableName === TABLE_NAME
+                    )[0]
+                ) {
+                    const oldTableFilteredArray = tables.filter(
+                        (_table) =>
+                            _table.tableNameOld &&
+                            _table.tableNameOld === TABLE_NAME
+                    );
 
                     /**
                      * @description Check if this table has been recently renamed. Rename
@@ -159,7 +178,11 @@ async function createDbFromSchema(dbSchema) {
                     });
 
                     if (table.childrenTables && table.childrenTables[0]) {
-                        for (let ch = 0; ch < table.childrenTables.length; ch++) {
+                        for (
+                            let ch = 0;
+                            ch < table.childrenTables.length;
+                            ch++
+                        ) {
                             const childTable = table.childrenTables[ch];
 
                             const updateExistingChildTable = await updateTable({
@@ -199,7 +222,12 @@ async function createDbFromSchema(dbSchema) {
                          */
                         if (indexes && indexes[0]) {
                             for (let g = 0; g < indexes.length; g++) {
-                                const { indexType, indexName, indexTableFields, alias } = indexes[g];
+                                const {
+                                    indexType,
+                                    indexName,
+                                    indexTableFields,
+                                    alias,
+                                } = indexes[g];
 
                                 if (!alias?.match(/./)) continue;
 
@@ -207,27 +235,42 @@ async function createDbFromSchema(dbSchema) {
                                  * @type {any[] | null}
                                  * @description All indexes from MYSQL db
                                  */
-                                const allExistingIndexes = await varDatabaseDbHandler({
-                                    queryString: `SHOW INDEXES FROM \`${tableName}\``,
-                                    database: dbFullName,
-                                });
+                                const allExistingIndexes =
+                                    await varDatabaseDbHandler({
+                                        queryString: `SHOW INDEXES FROM \`${tableName}\``,
+                                        database: dbFullName,
+                                    });
 
                                 /**
                                  * @description Check for existing Index in MYSQL db
                                  */
                                 try {
-                                    const existingKeyInDb = allExistingIndexes ? allExistingIndexes.filter((indexObject) => indexObject.Key_name === alias) : null;
-                                    if (!existingKeyInDb?.[0]) throw new Error("This Index Does not Exist");
+                                    const existingKeyInDb = allExistingIndexes
+                                        ? allExistingIndexes.filter(
+                                              (indexObject) =>
+                                                  indexObject.Key_name === alias
+                                          )
+                                        : null;
+                                    if (!existingKeyInDb?.[0])
+                                        throw new Error(
+                                            "This Index Does not Exist"
+                                        );
                                 } catch (error) {
                                     /**
                                      * @description Create new index if determined that it
                                      * doesn't exist in MYSQL db
                                      */
                                     await varDatabaseDbHandler({
-                                        queryString: `CREATE${indexType.match(/fullText/i) ? " FULLTEXT" : ""} INDEX \`${alias}\` ON ${tableName}(${indexTableFields
+                                        queryString: `CREATE${
+                                            indexType.match(/fullText/i)
+                                                ? " FULLTEXT"
+                                                : ""
+                                        } INDEX \`${alias}\` ON ${tableName}(${indexTableFields
                                             .map((nm) => nm.value)
                                             .map((nm) => `\`${nm}\``)
-                                            .join(",")}) COMMENT 'schema_index'`,
+                                            .join(
+                                                ","
+                                            )}) COMMENT 'schema_index'`,
                                         database: dbFullName,
                                     });
                                 }

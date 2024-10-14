@@ -19,13 +19,20 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * "Read only" or "Full Access"? Defaults to "Read Only"
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
- * @param {import("../../../types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string|number} params.identifierValue - Update row identifier column value
  *
  * @returns {Promise<object|null>}
  */
-async function deleteDbEntry({ dbContext, paradigm, dbFullName, tableName, identifierColumnName, identifierValue }) {
+async function deleteDbEntry({
+    dbContext,
+    paradigm,
+    dbFullName,
+    tableName,
+    identifierColumnName,
+    identifierValue,
+}) {
     try {
         /**
          * Check if data is valid

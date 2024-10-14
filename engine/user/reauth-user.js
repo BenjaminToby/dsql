@@ -7,7 +7,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
  * @param {object} param0
  * @param {*} param0.existingUser
  * @param {string[]} [param0.additionalFields]
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
  * @returns
  */
 async function localReauthUser({ existingUser, additionalFields, dbSchema }) {
@@ -24,7 +24,9 @@ async function localReauthUser({ existingUser, additionalFields, dbSchema }) {
          *
          * @description GRAB user
          */
-        const tableSchema = dbSchema?.tables.find((tb) => tb?.tableName === "users");
+        const tableSchema = dbSchema?.tables.find(
+            (tb) => tb?.tableName === "users"
+        );
 
         let foundUser =
             existingUser?.id && existingUser.id.toString().match(/./)
@@ -51,7 +53,10 @@ async function localReauthUser({ existingUser, additionalFields, dbSchema }) {
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        let csrfKey = Math.random().toString(36).substring(2) + "-" + Math.random().toString(36).substring(2);
+        let csrfKey =
+            Math.random().toString(36).substring(2) +
+            "-" +
+            Math.random().toString(36).substring(2);
 
         let userPayload = {
             id: foundUser[0].id,
@@ -72,7 +77,11 @@ async function localReauthUser({ existingUser, additionalFields, dbSchema }) {
             date: Date.now(),
         };
 
-        if (additionalFields && Array.isArray(additionalFields) && additionalFields.length > 0) {
+        if (
+            additionalFields &&
+            Array.isArray(additionalFields) &&
+            additionalFields.length > 0
+        ) {
             additionalFields.forEach((key) => {
                 // @ts-ignore
                 userPayload[key] = foundUser?.[0][key];

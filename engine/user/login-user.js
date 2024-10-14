@@ -5,17 +5,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
 
 /**
  *
- * @param {object} param0
- * @param {{
- *  email?: string,
- *  username?: string,
- *  password: string,
- * }} param0.payload
- * @param {string[]} [param0.additionalFields]
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
- * @param {boolean} [param0.email_login]
- * @param {string} [param0.email_login_code]
- * @param {string | null} [param0.email_login_field]
+ * @param {PackageUserLoginLocalBody} param0
  * @returns
  */
 async function loginLocalUser({

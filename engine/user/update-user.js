@@ -17,7 +17,7 @@ const updateDbEntry = require("../query/utils/updateDbEntry");
  *
  * @param {Object} params - Single object passed
  * @param {*} params.payload - SQL Query
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema - Name of the table to query
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
  *
  * @returns { Promise<LocalPostReturn> } - Return Object
  */
@@ -49,7 +49,13 @@ async function localUpdateUser({ payload, dbSchema }) {
             return finalData;
         })();
 
-        const tableSchema = dbSchema.tables.find((tb) => tb?.tableName === "users");
+        if (!dbSchema) {
+            throw new Error("Db Schema not found!");
+        }
+
+        const tableSchema = dbSchema.tables.find(
+            (tb) => tb?.tableName === "users"
+        );
 
         const updateUser = await updateDbEntry({
             dbContext: "Dsql User",

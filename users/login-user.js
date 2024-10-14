@@ -65,7 +65,7 @@ async function loginUser({
         ? temp_code_field
             ? temp_code_field
             : defaultTempLoginFieldName
-        : null;
+        : undefined;
 
     /**
      * Check Encryption Keys
@@ -126,7 +126,7 @@ async function loginUser({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("../types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
@@ -145,6 +145,7 @@ async function loginUser({
                 email_login,
                 email_login_code,
                 email_login_field: emailLoginTempCodeFieldName,
+                token,
             });
         }
     } else {
@@ -156,7 +157,8 @@ async function loginUser({
          * @type {{ success: boolean, payload: import("../types/user.td").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
          */
         httpResponse = await new Promise((resolve, reject) => {
-            const reqPayload = JSON.stringify({
+            /** @type {PackageUserLoginRequestBody} */
+            const reqPayload = {
                 encryptionKey,
                 payload,
                 database,
@@ -164,7 +166,10 @@ async function loginUser({
                 email_login,
                 email_login_code,
                 email_login_field: emailLoginTempCodeFieldName,
-            });
+                token,
+            };
+
+            const reqPayloadJSON = JSON.stringify(reqPayload);
 
             const httpsRequest = (
                 scheme?.match(/^http$/i) ? http : https
@@ -173,7 +178,7 @@ async function loginUser({
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Content-Length": Buffer.from(reqPayload).length,
+                        "Content-Length": Buffer.from(reqPayloadJSON).length,
                         Authorization: key,
                     },
                     port: localHostPort || 443,
@@ -203,7 +208,7 @@ async function loginUser({
                 }
             );
 
-            httpsRequest.write(reqPayload);
+            httpsRequest.write(reqPayloadJSON);
             httpsRequest.end();
         });
     }

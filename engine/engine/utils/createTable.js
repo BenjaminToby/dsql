@@ -10,7 +10,23 @@ const supplementTable = require("./supplementTable");
 /** ****************************************************************************** */
 /** ****************************************************************************** */
 
-module.exports = async function createTable({ dbFullName, tableName, tableInfoArray, varDatabaseDbHandler, dbSchema }) {
+/**
+ *
+ * @param {object} param0
+ * @param {string} param0.dbFullName
+ * @param {string} param0.tableName
+ * @param {any[]} param0.tableInfoArray
+ * @param {(params: import("./varDatabaseDbHandler").VarDbHandlerParam)=>any} param0.varDatabaseDbHandler
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} [param0.dbSchema]
+ * @returns
+ */
+module.exports = async function createTable({
+    dbFullName,
+    tableName,
+    tableInfoArray,
+    varDatabaseDbHandler,
+    dbSchema,
+}) {
     /**
      * Format tableInfoArray
      *
@@ -36,7 +52,7 @@ module.exports = async function createTable({ dbFullName, tableName, tableInfoAr
 
     for (let i = 0; i < finalTable.length; i++) {
         const column = finalTable[i];
-        const { fieldName, dataType, nullValue, primaryKey, autoIncrement, defaultValue, defaultValueLiteral, foreignKey, updatedField } = column;
+        const { fieldName, foreignKey } = column;
 
         if (foreignKey) {
             foreignKeys.push({
@@ -45,7 +61,10 @@ module.exports = async function createTable({ dbFullName, tableName, tableInfoAr
             });
         }
 
-        let { fieldEntryText, newPrimaryKeySet } = generateColumnDescription({ columnData: column, primaryKeySet: primaryKeySet });
+        let { fieldEntryText, newPrimaryKeySet } = generateColumnDescription({
+            columnData: column,
+            primaryKeySet: primaryKeySet,
+        });
 
         primaryKeySet = newPrimaryKeySet;
 
@@ -74,20 +93,33 @@ module.exports = async function createTable({ dbFullName, tableName, tableInfoAr
 
     if (foreignKeys[0]) {
         foreignKeys.forEach((foreighKey, index, array) => {
-            const { fieldName, destinationTableName, destinationTableColumnName, cascadeDelete, cascadeUpdate, foreignKeyName } = foreighKey;
+            const {
+                fieldName,
+                destinationTableName,
+                destinationTableColumnName,
+                cascadeDelete,
+                cascadeUpdate,
+                foreignKeyName,
+            } = foreighKey;
 
             const comma = (() => {
                 if (index === foreignKeys.length - 1) return "";
                 return ",";
             })();
 
-            createTableQueryArray.push(`    CONSTRAINT \`${foreignKeyName}\` FOREIGN KEY (\`${fieldName}\`) REFERENCES \`${destinationTableName}\`(${destinationTableColumnName})${cascadeDelete ? " ON DELETE CASCADE" : ""}${cascadeUpdate ? " ON UPDATE CASCADE" : ""}${comma}`);
+            createTableQueryArray.push(
+                `    CONSTRAINT \`${foreignKeyName}\` FOREIGN KEY (\`${fieldName}\`) REFERENCES \`${destinationTableName}\`(${destinationTableColumnName})${
+                    cascadeDelete ? " ON DELETE CASCADE" : ""
+                }${cascadeUpdate ? " ON UPDATE CASCADE" : ""}${comma}`
+            );
         });
     }
 
     ////////////////////////////////////////
 
-    createTableQueryArray.push(`) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`);
+    createTableQueryArray.push(
+        `) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;`
+    );
 
     const createTableQuery = createTableQueryArray.join("\n");
 

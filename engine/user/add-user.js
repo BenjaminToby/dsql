@@ -20,8 +20,8 @@ const runQuery = require("../query/utils/runQuery");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {import("../../users/add-user").UserDataPayload} params.payload - SQL Query
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema - Name of the table to query
+ * @param {import("@/types/user.td").UserDataPayload} params.payload - SQL Query
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
  * @param {string} [params.encryptionKey]
  * @param {string} [params.encryptionSalt]
  *
@@ -102,6 +102,10 @@ async function localAddUser({
                 success: false,
                 payload: `${invalidField} is not a valid field!`,
             };
+        }
+
+        if (!dbSchema) {
+            throw new Error("Db Schema not found!");
         }
 
         const tableSchema = dbSchema.tables.find(

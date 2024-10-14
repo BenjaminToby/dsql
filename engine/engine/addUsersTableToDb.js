@@ -22,7 +22,7 @@ const updateApiSchemaFromLocalDb = require("../query/update-api-schema-from-loca
  * ==============================================================================
  *
  * @param {object} params - Single object passed
- * @param {import("../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema - Database Schema Object
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Database Schema Object
  *
  * @returns {Promise<*>} new user auth object payload
  */
@@ -33,7 +33,7 @@ module.exports = async function addUsersTableToDb({ dbSchema }) {
      * @description Initialize
      */
     const database = process.env.DSQL_DB_NAME || "";
-    /** @type {import("../../types/database-schema.td").DSQL_TableSchemaType} */
+    /** @type {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} */
     const userPreset = require("./data/presets/users.json");
 
     try {
@@ -42,15 +42,22 @@ module.exports = async function addUsersTableToDb({ dbSchema }) {
          *
          * @description Fetch user from db
          */
-        const userSchemaMainFilePath = path.resolve(process.cwd(), "dsql.schema.json");
+        const userSchemaMainFilePath = path.resolve(
+            process.cwd(),
+            "dsql.schema.json"
+        );
         let targetDatabase = dbSchema;
 
-        let existingTableIndex = targetDatabase.tables.findIndex((table, index) => {
-            if (table.tableName === "users") {
-                existingTableIndex = index;
-                return true;
+        if (!targetDatabase) throw new Error("Target database not found!");
+
+        let existingTableIndex = targetDatabase.tables.findIndex(
+            (table, index) => {
+                if (table.tableName === "users") {
+                    existingTableIndex = index;
+                    return true;
+                }
             }
-        });
+        );
 
         if (existingTableIndex >= 0) {
             targetDatabase.tables[existingTableIndex] = userPreset;
@@ -58,7 +65,11 @@ module.exports = async function addUsersTableToDb({ dbSchema }) {
             targetDatabase.tables.push(userPreset);
         }
 
-        fs.writeFileSync(`${userSchemaMainFilePath}`, JSON.stringify(dbSchema, null, 4), "utf8");
+        fs.writeFileSync(
+            `${userSchemaMainFilePath}`,
+            JSON.stringify(dbSchema, null, 4),
+            "utf8"
+        );
 
         ////////////////////////////////////////
 

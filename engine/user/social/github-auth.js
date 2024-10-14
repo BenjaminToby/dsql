@@ -36,9 +36,17 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  * @param {string} params.clientId
  * @param {string} params.clientSecret
  * @param {object} [params.additionalFields]
- * @param {import("../../../types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema
+ * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema
  */
-async function localGithubAuth({ res, code, email, clientId, clientSecret, additionalFields, dbSchema }) {
+async function localGithubAuth({
+    res,
+    code,
+    email,
+    clientId,
+    clientSecret,
+    additionalFields,
+    dbSchema,
+}) {
     try {
         /**
          * User auth
@@ -52,7 +60,12 @@ async function localGithubAuth({ res, code, email, clientId, clientSecret, addit
             };
         }
 
-        if (typeof code !== "string" || typeof clientId !== "string" || typeof clientSecret !== "string" || typeof database !== "string") {
+        if (
+            typeof code !== "string" ||
+            typeof clientId !== "string" ||
+            typeof clientSecret !== "string" ||
+            typeof database !== "string"
+        ) {
             return {
                 success: false,
                 msg: "Wrong Parameters",
@@ -81,7 +94,11 @@ async function localGithubAuth({ res, code, email, clientId, clientSecret, addit
 
         const socialId = gitHubUser.name || gitHubUser.id || gitHubUser.login;
         const targetName = gitHubUser.name || gitHubUser.login;
-        const nameArray = targetName?.match(/ /) ? targetName?.split(" ") : targetName?.match(/\-/) ? targetName?.split("-") : [targetName];
+        const nameArray = targetName?.match(/ /)
+            ? targetName?.split(" ")
+            : targetName?.match(/\-/)
+            ? targetName?.split("-")
+            : [targetName];
 
         const payload = {
             email: gitHubUser.email,
