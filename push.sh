@@ -8,6 +8,10 @@ else
     msg="$1"
 fi
 
-cp "$root_dir/package-shared/types/*" "$root_dir/types/"
+cp "$root_dir/package-shared/types/"* "$root_dir/types/" ||
+    {
+        echo "Copy Failed!"
+        exit 1
+    }
 
 git add . && git commit -m "$msg" && git push
