@@ -130,6 +130,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Typescript
+tsconfig.tsbuildinfo
+
 # others
 deprecated
 .tmp
