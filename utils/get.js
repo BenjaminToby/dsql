@@ -101,22 +101,7 @@ async function get({ key, db, query, queryValues, tableName }) {
 
         const queryString = serializeQuery({ query: queryObject });
 
-        // let path = `/api/query/get?db=${db}&query=${query
-        //     .replace(/\n|\r|\n\r/g, "")
-        //     .replace(/ {2,}/g, " ")
-        //     .replace(/ /g, "+")}`;
-
-        console.log("queryString =>", queryString);
-
         let path = `/api/query/get${queryString}`;
-
-        if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}`;
-        }
-
-        if (tableName) {
-            path += `&tableName=${tableName}`;
-        }
 
         /** @type {https.RequestOptions} */
         const requestObject = {

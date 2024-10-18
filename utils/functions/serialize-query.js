@@ -8,6 +8,7 @@ function serializeQuery({ query }) {
     /** @type {string[]} */
     const queryArr = [];
     keys.forEach((key) => {
+        if (!key || !query[key]) return;
         queryArr.push(`${key}=${query[key]}`);
     });
     str += queryArr.join("&");
