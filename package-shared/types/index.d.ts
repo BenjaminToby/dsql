@@ -1,6 +1,6 @@
 import http from "http";
 
-type DSQL_DatabaseFullName = string;
+export type DSQL_DatabaseFullName = string;
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -8,7 +8,7 @@ type DSQL_DatabaseFullName = string;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-interface DSQL_DatabaseSchemaType {
+export interface DSQL_DatabaseSchemaType {
     dbName: string;
     dbSlug: string;
     dbFullName: string;
@@ -21,13 +21,13 @@ interface DSQL_DatabaseSchemaType {
     updateData?: boolean;
 }
 
-interface DSQL_ChildrenDatabaseObject {
+export interface DSQL_ChildrenDatabaseObject {
     dbFullName: string;
 }
 
 ////////////////////////////////////////
 
-interface DSQL_TableSchemaType {
+export interface DSQL_TableSchemaType {
     tableName: string;
     tableFullName: string;
     tableDescription?: string;
@@ -41,7 +41,7 @@ interface DSQL_TableSchemaType {
     tableNameOld?: string;
 }
 
-interface DSQL_ChildrenTablesType {
+export interface DSQL_ChildrenTablesType {
     dbNameFull: string;
     tableName: string;
     tableNameFull?: string;
@@ -49,7 +49,7 @@ interface DSQL_ChildrenTablesType {
 
 ////////////////////////////////////////
 
-interface DSQL_FieldSchemaType {
+export interface DSQL_FieldSchemaType {
     fieldName?: string;
     originName?: string;
     updatedField?: boolean;
@@ -82,7 +82,7 @@ interface DSQL_FieldSchemaType {
     cssFiles?: string[];
 }
 
-interface DSQL_ForeignKeyType {
+export interface DSQL_ForeignKeyType {
     foreignKeyName?: string;
     destinationTableName?: string;
     destinationTableColumnName?: string;
@@ -93,7 +93,7 @@ interface DSQL_ForeignKeyType {
 
 ////////////////////////////////////////
 
-interface DSQL_IndexSchemaType {
+export interface DSQL_IndexSchemaType {
     indexName?: string;
     indexType?: string;
     indexTableFields?: DSQL_IndexTableFieldType[];
@@ -101,12 +101,12 @@ interface DSQL_IndexSchemaType {
     newTempIndex?: boolean;
 }
 
-interface DSQL_IndexTableFieldType {
+export interface DSQL_IndexTableFieldType {
     value: string;
     dataType: string;
 }
 
-interface DSQL_MYSQL_SHOW_INDEXES_Type {
+export interface DSQL_MYSQL_SHOW_INDEXES_Type {
     Key_name: string;
     Table: string;
     Column_name: string;
@@ -119,7 +119,7 @@ interface DSQL_MYSQL_SHOW_INDEXES_Type {
 
 ////////////////////////////////////////
 
-interface DSQL_MYSQL_SHOW_COLUMNS_Type {
+export interface DSQL_MYSQL_SHOW_COLUMNS_Type {
     Field: string;
     Type: string;
     Null: string;
@@ -130,7 +130,7 @@ interface DSQL_MYSQL_SHOW_COLUMNS_Type {
 
 ////////////////////////////////////////
 
-interface DSQL_MYSQL_FOREIGN_KEYS_Type {
+export interface DSQL_MYSQL_FOREIGN_KEYS_Type {
     CONSTRAINT_NAME: string;
     CONSTRAINT_SCHEMA: string;
     TABLE_NAME: string;
@@ -138,7 +138,7 @@ interface DSQL_MYSQL_FOREIGN_KEYS_Type {
 
 ////////////////////////////////////////
 
-interface DSQL_MYSQL_user_databases_Type {
+export interface DSQL_MYSQL_user_databases_Type {
     user_id: number;
     db_full_name: string;
     db_name: string;
@@ -149,7 +149,7 @@ interface DSQL_MYSQL_user_databases_Type {
     active_clone_parent_db: string;
 }
 
-interface PackageUserLoginRequestBody {
+export interface PackageUserLoginRequestBody {
     encryptionKey: string;
     payload: any;
     database: string;
@@ -162,7 +162,7 @@ interface PackageUserLoginRequestBody {
     dbSchema?: DSQL_DatabaseSchemaType;
 }
 
-interface PackageUserLoginLocalBody {
+export interface PackageUserLoginLocalBody {
     payload: any;
     additionalFields?: string[];
     email_login?: boolean;
@@ -184,7 +184,7 @@ type ImageInputFileToBase64FunctionReturn = {
     imageSize: number;
 };
 
-interface GetReqQueryObject {
+export interface GetReqQueryObject {
     db: string;
     query: string;
     queryValues?: string;
@@ -193,13 +193,13 @@ interface GetReqQueryObject {
 
 type SerializeQueryFnType = (param0: SerializeQueryParams) => string;
 
-interface SerializeQueryParams {
+export interface SerializeQueryParams {
     query: any;
 }
 
 // @ts-check
 
-interface DATASQUIREL_LoggedInUser {
+export interface DATASQUIREL_LoggedInUser {
     id?: number;
     first_name: string;
     last_name: string;
@@ -238,28 +238,28 @@ interface DATASQUIREL_LoggedInUser {
     more_data?: any;
 }
 
-interface AuthenticatedUser {
+export interface AuthenticatedUser {
     success: boolean;
     payload: DATASQUIREL_LoggedInUser | null;
     msg?: string;
     userId?: number;
 }
 
-interface SuccessUserObject {
+export interface SuccessUserObject {
     id: number;
     first_name: string;
     last_name: string;
     email: string;
 }
 
-interface AddUserFunctionReturn {
+export interface AddUserFunctionReturn {
     success: boolean;
     payload?: SuccessUserObject | null;
     msg?: string;
     sqlResult?: any;
 }
 
-interface GoogleIdentityPromptNotification {
+export interface GoogleIdentityPromptNotification {
     getMomentType: () => string;
     getDismissedReason: () => string;
     getNotDisplayedReason: () => string;
@@ -271,7 +271,7 @@ interface GoogleIdentityPromptNotification {
     isSkippedMoment: () => boolean;
 }
 
-interface UserDataPayload {
+export interface UserDataPayload {
     first_name: string;
     last_name: string;
     email: string;
@@ -279,7 +279,7 @@ interface UserDataPayload {
     username: string;
 }
 
-interface GetUserFunctionReturn {
+export interface GetUserFunctionReturn {
     success: boolean;
     payload: {
         id: number;
@@ -295,7 +295,7 @@ interface GetUserFunctionReturn {
     };
 }
 
-interface ReauthUserFunctionReturn {
+export interface ReauthUserFunctionReturn {
     success: boolean;
     payload: DATASQUIREL_LoggedInUser | null;
     msg?: string;
@@ -303,12 +303,12 @@ interface ReauthUserFunctionReturn {
     token?: string;
 }
 
-interface UpdateUserFunctionReturn {
+export interface UpdateUserFunctionReturn {
     success: boolean;
     payload?: Object[] | string;
 }
 
-interface GetReturn {
+export interface GetReturn {
     success: boolean;
     payload?: any;
     msg?: string;
