@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @typedef {object} DATASQUIREL_LoggedInUser
  * @property {number} [id]
@@ -41,7 +43,7 @@
 /**
  * @typedef {object} AuthenticatedUser
  * @property {boolean} success - Did the function run successfully?
- * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload of the response
+ * @property {DATASQUIREL_LoggedInUser  | null} payload - Payload of the response
  * @property {string} [msg] - An optional message
  * @property {number} [userId] - An optional message
  */
@@ -97,14 +99,14 @@
  *   social_id: [string],
  *   image: string,
  *   image_thumbnail: string,
- *   verification_status: [number=0],
+ *   verification_status: [number],
  * }} payload - Payload
  */
 
 /**
  * @typedef {object} ReauthUserFunctionReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {import("../types/user.td").DATASQUIREL_LoggedInUser  | null} payload - Payload
+ * @property {DATASQUIREL_LoggedInUser  | null} payload - Payload
  * @property {string} [msg] - Response Message
  * @property {number} [userId] - user ID
  * @property {string} [token] - new Token

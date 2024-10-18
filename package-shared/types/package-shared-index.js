@@ -33,4 +33,6 @@
  * @property {string} [msg] - Message
  * @property {string} [error] - Error Message
  * @property {DSQL_TableSchemaType} [schema] - Error Message
+ *
+ * @exports GetReturn
  */

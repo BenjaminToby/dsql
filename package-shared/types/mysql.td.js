@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @typedef {object} DSQL_MYSQL_SHOW_INDEXES_Type
  * @property {string} Key_name - MYSQL Index Name
@@ -44,5 +46,3 @@
  * @property {number} active_clone - is Database active clone => 0 or 1
  * @property {string} active_clone_parent_db - Database parent db full name => eg. "datasquirel_user_7_wexculture"
  */
-
-////////////////////////////////////////

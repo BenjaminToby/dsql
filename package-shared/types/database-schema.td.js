@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @typedef {string} DSQL_DatabaseFullName - Database full name(slug) including datasquirel data => "datasquirel_user_7_new_database"
  */
