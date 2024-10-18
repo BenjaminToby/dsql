@@ -31,9 +31,9 @@ const schemaPath = path.resolve(process.cwd(), "dsql.schema.json");
  * @param {object} params - Single object params
  * @param {string} params.dbFullName - Database full name => "datasquirel_user_4394_db_name"
  * @param {string} params.tableName - Table Name(slug)
- * @param {import("@/package-shared/types/database-schema.td").DSQL_FieldSchemaType[]} params.tableInfoArray - Table Info Array
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType[]} params.dbSchema - Single post
- * @param {import("@/package-shared/types/database-schema.td").DSQL_IndexSchemaType[]} [params.tableIndexes] - Table Indexes
+ * @param {DSQL_FieldSchemaType[]} params.tableInfoArray - Table Info Array
+ * @param {DSQL_DatabaseSchemaType[]} params.dbSchema - Single post
+ * @param {DSQL_IndexSchemaType[]} [params.tableIndexes] - Table Indexes
  * @param {boolean} [params.clone] - Is this a newly cloned table?
  * @param {number} [params.tableIndex] - The number index of the table in the dbSchema array
  *
@@ -141,7 +141,9 @@ module.exports = async function updateTable({
                      * @description Check if Field name has been updated
                      */
                     if (existingEntry[0].updatedField) {
-                        updatedColumnsArray.push(existingEntry[0].fieldName);
+                        updatedColumnsArray.push(
+                            String(existingEntry[0].fieldName)
+                        );
 
                         const renameColumn = await varDatabaseDbHandler({
                             queryString: `ALTER TABLE ${tableName} RENAME COLUMN \`${existingEntry[0].originName}\` TO \`${existingEntry[0].fieldName}\``,
@@ -293,9 +295,9 @@ module.exports = async function updateTable({
                      */
                     await varDatabaseDbHandler({
                         queryString: `CREATE${
-                            indexType.match(/fullText/i) ? " FULLTEXT" : ""
+                            indexType?.match(/fullText/i) ? " FULLTEXT" : ""
                         } INDEX \`${alias}\` ON ${tableName}(${indexTableFields
-                            .map((nm) => nm.value)
+                            ?.map((nm) => nm.value)
                             .map((nm) => `\`${nm}\``)
                             .join(",")}) COMMENT 'schema_index'`,
                         database: dbFullName,
@@ -375,7 +377,7 @@ module.exports = async function updateTable({
             /**
              * @description Skip default fields
              */
-            if (fieldName.match(/^id$|^date_/)) continue;
+            if (fieldName?.match(/^id$|^date_/)) continue;
             /**
              * @description Skip columns that have been updated recently
              */
@@ -424,7 +426,7 @@ module.exports = async function updateTable({
                 if (
                     Field === fieldName &&
                     !isColumnReordered &&
-                    dataType.toUpperCase() === Type.toUpperCase()
+                    dataType?.toUpperCase() === Type.toUpperCase()
                 ) {
                     updateText += `MODIFY COLUMN ${fieldEntryText}`;
                     // continue;

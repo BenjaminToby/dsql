@@ -65,7 +65,7 @@ const connection = mysql.createConnection({
  * @param {object} params - Single Param object containing params
  * @param {string} params.query - Query String
  * @param {(string | number)[]} [params.values] - Values
- * @param {import("../../../package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database Schema
+ * @param {DSQL_DatabaseSchemaType} [params.dbSchema] - Database Schema
  * @param {string} [params.database] - Target Database
  * @param {string} [params.tableName] - Target Table Name
  *

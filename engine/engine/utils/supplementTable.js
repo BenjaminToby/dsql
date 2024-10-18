@@ -10,7 +10,7 @@
 /**
  *
  * @param {object} param0
- * @param {import("@/package-shared/types/database-schema.td").DSQL_FieldSchemaType[]} param0.tableInfoArray
+ * @param {DSQL_FieldSchemaType[]} param0.tableInfoArray
  * @returns
  */
 module.exports = function supplementTable({ tableInfoArray }) {

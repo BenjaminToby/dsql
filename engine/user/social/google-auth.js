@@ -44,7 +44,7 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  * @param {string} params.clientId - Google client id
  * @param {http.ServerResponse} params.response - HTTPS response object
  * @param {object} [params.additionalFields] - Additional Fields to be added to the user object
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} [params.dbSchema] - Database Schema
+ * @param {DSQL_DatabaseSchemaType} [params.dbSchema] - Database Schema
  *
  * @returns { Promise<FunctionReturn> }
  */

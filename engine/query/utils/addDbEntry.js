@@ -19,7 +19,7 @@ const updateDbEntry = require("./updateDbEntry");
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
  * @param {*} params.data - Data to add
- * @param {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} [params.duplicateColumnName] - Duplicate column name
  * @param {string} [params.duplicateColumnValue] - Duplicate column value
  * @param {boolean} [params.update] - Update this row if it exists

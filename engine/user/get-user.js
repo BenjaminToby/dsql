@@ -7,7 +7,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
  * @param {object} param0
  * @param {number} param0.userId
  * @param {string[]} param0.fields
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
+ * @param {DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
  * @returns
  */
 async function getLocalUser({ userId, fields, dbSchema }) {

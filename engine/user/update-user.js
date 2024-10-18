@@ -17,7 +17,7 @@ const updateDbEntry = require("../query/utils/updateDbEntry");
  *
  * @param {Object} params - Single object passed
  * @param {*} params.payload - SQL Query
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
+ * @param {DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
  *
  * @returns { Promise<LocalPostReturn> } - Return Object
  */

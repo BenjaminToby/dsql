@@ -30,6 +30,7 @@ const encrypt = ({ data, encryptionKey, encryptionSalt }) => {
 
     let key = scryptSync(password, encryptionSalt, 24);
     let iv = Buffer.alloc(16, 0);
+    // @ts-ignore
     const cipher = createCipheriv(algorithm, key, iv);
 
     try {

@@ -11,7 +11,7 @@
  * @property {string} [email_login_field]
  * @property {boolean} [token]
  * @property {boolean} [social]
- * @property {import("./database-schema.td").DSQL_DatabaseSchemaType} [dbSchema]
+ * @property {DSQL_DatabaseSchemaType} [dbSchema]
  */
 
 /**
@@ -23,5 +23,14 @@
  * @property {string} [email_login_field]
  * @property {boolean} [token]
  * @property {boolean} [social]
- * @property {import("./database-schema.td").DSQL_DatabaseSchemaType} [dbSchema]
+ * @property {DSQL_DatabaseSchemaType} [dbSchema]
+ */
+
+/**
+ * @typedef {Object} GetReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {*} [payload] - GET request results
+ * @property {string} [msg] - Message
+ * @property {string} [error] - Error Message
+ * @property {DSQL_TableSchemaType} [schema] - Error Message
  */

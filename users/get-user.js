@@ -83,7 +83,7 @@ async function getUser({ key, userId, database, fields }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {

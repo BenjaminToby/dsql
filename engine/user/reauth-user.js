@@ -7,7 +7,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
  * @param {object} param0
  * @param {*} param0.existingUser
  * @param {string[]} [param0.additionalFields]
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
+ * @param {DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
  * @returns
  */
 async function localReauthUser({ existingUser, additionalFields, dbSchema }) {

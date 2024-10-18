@@ -36,7 +36,7 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  * @param {string} params.clientId
  * @param {string} params.clientSecret
  * @param {object} [params.additionalFields]
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType} params.dbSchema
+ * @param {DSQL_DatabaseSchemaType} params.dbSchema
  */
 async function localGithubAuth({
     res,

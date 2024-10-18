@@ -19,14 +19,6 @@ const localGet = require("../engine/query/get");
 /** ****************************************************************************** */
 
 /**
- * @typedef {Object} GetReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {*} [payload] - GET request results
- * @property {string} [msg] - Message
- * @property {string} [error] - Error Message
- */
-
-/**
  * Make a get request to Datasquirel API
  * ==============================================================================
  * @async
@@ -66,7 +58,7 @@ async function get({ key, db, query, queryValues, tableName }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {

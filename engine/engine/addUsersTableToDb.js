@@ -22,7 +22,7 @@ const updateApiSchemaFromLocalDb = require("../query/update-api-schema-from-loca
  * ==============================================================================
  *
  * @param {object} params - Single object passed
- * @param {import("@/package-shared/types/database-schema.td").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Database Schema Object
+ * @param {DSQL_DatabaseSchemaType | undefined} params.dbSchema - Database Schema Object
  *
  * @returns {Promise<*>} new user auth object payload
  */
@@ -33,7 +33,7 @@ module.exports = async function addUsersTableToDb({ dbSchema }) {
      * @description Initialize
      */
     const database = process.env.DSQL_DB_NAME || "";
-    /** @type {import("@/package-shared/types/database-schema.td").DSQL_TableSchemaType} */
+    /** @type {DSQL_TableSchemaType} */
     const userPreset = require("./data/presets/users.json");
 
     try {

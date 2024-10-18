@@ -11,7 +11,7 @@
  * Generate SQL text for Field
  * ==============================================================================
  * @param {object} params - Single object params
- * @param {import("@/package-shared/types/database-schema.td").DSQL_FieldSchemaType} params.columnData - Field object
+ * @param {DSQL_FieldSchemaType} params.columnData - Field object
  * @param {boolean} [params.primaryKeySet] - Table Name(slug)
  *
  * @returns {{fieldEntryText: string, newPrimaryKeySet:  boolean}}

@@ -31,6 +31,7 @@ const decrypt = ({ encryptedString, encryptionKey, encryptionSalt }) => {
 
     let key = scryptSync(encryptionKey, encryptionSalt, 24);
     let iv = Buffer.alloc(16, 0);
+    // @ts-ignore
     const decipher = createDecipheriv(algorithm, key, iv);
 
     try {
