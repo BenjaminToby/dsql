@@ -9,7 +9,7 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "skipLibCheck": true,
+        // "skipLibCheck": true,
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "noEmit": true,
@@ -18,6 +18,9 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "moduleResolution": "node",
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "outDir": "./dump/tsc",
         "plugins": [
             {
                 "name": "next"

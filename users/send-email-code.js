@@ -114,7 +114,7 @@ async function sendEmailCode({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
@@ -143,7 +143,7 @@ async function sendEmailCode({
          *
          * @description make a request to datasquirel.com
          *
-         * @type {{ success: boolean, payload: DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
+         * @type {{ success: boolean, payload: import("@/package-shared/types").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({

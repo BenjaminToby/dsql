@@ -78,7 +78,7 @@ async function post({ key, query, queryValues, database, tableName }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {

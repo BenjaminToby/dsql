@@ -29,7 +29,7 @@ const runQuery = require("./utils/runQuery");
  *
  * @param {Object} params - Single object passed
  * @param {LocalQueryObject} params.options - SQL Query
- * @param {DSQL_DatabaseSchemaType | undefined} [params.dbSchema] - Name of the table to query
+ * @param {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} [params.dbSchema] - Name of the table to query
  *
  * @returns { Promise<LocalGetReturn> } - Return Object
  */

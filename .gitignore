@@ -141,3 +141,5 @@ test/
 
 # NPM
 # .npmrc
+
+/dump

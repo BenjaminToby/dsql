@@ -38,7 +38,7 @@ const localReauthUser = require("../engine/user/reauth-user");
  *  @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
  * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
- * @returns { Promise<ReauthUserFunctionReturn> }
+ * @returns { Promise<import("@/package-shared/types").ReauthUserFunctionReturn> }
  */
 async function reauthUser({
     key,
@@ -103,7 +103,7 @@ async function reauthUser({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
