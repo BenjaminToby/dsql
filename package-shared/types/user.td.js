@@ -115,15 +115,3 @@
  * @property {boolean} success - Did the function run successfully?
  * @property {(Object[]|string)} [payload=[]] - Payload
  */
-
-module.exports = {
-    DATASQUIREL_LoggedInUser,
-    AuthenticatedUser,
-    AddUserFunctionReturn,
-    SuccessUserObject,
-    GoogleIdentityPromptNotification,
-    UserDataPayload,
-    GetUserFunctionReturn,
-    ReauthUserFunctionReturn,
-    UpdateUserFunctionReturn,
-};

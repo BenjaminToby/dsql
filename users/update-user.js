@@ -29,7 +29,7 @@ const localUpdateUser = require("../engine/user/update-user");
  * @param {String} params.database - Target Database
  * @param {{ id: number } & Object.<string, *>} params.payload - User Object: ID is required
  *
- * @returns { Promise<import("../types/user.td").UpdateUserFunctionReturn>}
+ * @returns { Promise<UpdateUserFunctionReturn>}
  */
 async function updateUser({ key, payload, database }) {
     /**

@@ -26,11 +26,11 @@ const localAddUser = require("../engine/user/add-user");
  * @param {object} props - Single object passed
  * @param {string} props.key - FULL ACCESS API Key
  * @param {string} props.database - Database Name
- * @param {import("../types/user.td").UserDataPayload} props.payload - User Data Payload
+ * @param {UserDataPayload} props.payload - User Data Payload
  * @param {string} props.encryptionKey
  * @param {string} [props.encryptionSalt]
  *
- * @returns { Promise<import("../types/user.td").AddUserFunctionReturn> }
+ * @returns { Promise<AddUserFunctionReturn> }
  */
 async function addUser({
     key,

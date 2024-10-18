@@ -179,7 +179,7 @@ async function googleAuth({
          * Make https request
          *
          * @description make a request to datasquirel.com
-         * @type {{ success: boolean, user: import("../../types/user.td").DATASQUIREL_LoggedInUser | null, msg?: string, dsqlUserId?: number } | null } - Https response object
+         * @type {{ success: boolean, user: DATASQUIREL_LoggedInUser | null, msg?: string, dsqlUserId?: number } | null } - Https response object
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({

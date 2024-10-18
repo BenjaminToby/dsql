@@ -41,7 +41,7 @@ const loginLocalUser = require("../engine/user/login-user");
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
  * @param {boolean} [params.token] - Send access key as part of response body?
  *
- * @returns { Promise<import("../types/user.td").AuthenticatedUser>}
+ * @returns { Promise<AuthenticatedUser>}
  */
 async function loginUser({
     key,
@@ -154,7 +154,7 @@ async function loginUser({
          *
          * @description make a request to datasquirel.com
          *
-         * @type {{ success: boolean, payload: import("../types/user.td").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
+         * @type {{ success: boolean, payload: DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
          */
         httpResponse = await new Promise((resolve, reject) => {
             /** @type {PackageUserLoginRequestBody} */

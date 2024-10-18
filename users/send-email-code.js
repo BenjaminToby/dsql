@@ -143,7 +143,7 @@ async function sendEmailCode({
          *
          * @description make a request to datasquirel.com
          *
-         * @type {{ success: boolean, payload: import("../types/user.td").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
+         * @type {{ success: boolean, payload: DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({

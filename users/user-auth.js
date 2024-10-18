@@ -30,7 +30,7 @@ const parseCookies = require("../utils/functions/parseCookies");
  * @param {string} params.database - Database Name
  * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
- * @returns { import("../types/user.td").AuthenticatedUser }
+ * @returns { AuthenticatedUser }
  */
 function userAuth({
     request,

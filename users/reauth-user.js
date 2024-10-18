@@ -38,7 +38,7 @@ const localReauthUser = require("../engine/user/reauth-user");
  *  @param {string[]} [params.additionalFields] - Additional Fields to be added to the user object
  * @param {string} [params.token] - access token to use instead of getting from cookie header
  *
- * @returns { Promise<import("../types/user.td").ReauthUserFunctionReturn> }
+ * @returns { Promise<ReauthUserFunctionReturn> }
  */
 async function reauthUser({
     key,
