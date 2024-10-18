@@ -10,6 +10,7 @@ const https = require("node:https");
 const path = require("path");
 const fs = require("fs");
 const localGet = require("../engine/query/get");
+const serializeQuery = require("./functions/serialize-query");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -85,15 +86,36 @@ async function get({ key, db, query, queryValues, tableName }) {
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        let path = `/api/query/get?db=${db}&query=${query
-            .replace(/\n|\r|\n\r/g, "")
-            .replace(/ {2,}/g, " ")
-            .replace(/ /g, "+")}`;
+        /** @type {import("@/package-shared/types/general.td").GetReqQueryObject} */
+        const queryObject = {
+            db: String(db),
+            query: String(
+                query
+                    .replace(/\n|\r|\n\r/g, "")
+                    .replace(/ {2,}/g, " ")
+                    .replace(/ /g, "+")
+            ),
+            queryValues: queryValues ? JSON.stringify(queryValues) : undefined,
+            tableName,
+        };
+
+        const queryString = serializeQuery({ query: queryObject });
+
+        // let path = `/api/query/get?db=${db}&query=${query
+        //     .replace(/\n|\r|\n\r/g, "")
+        //     .replace(/ {2,}/g, " ")
+        //     .replace(/ /g, "+")}`;
+
+        console.log("queryString =>", queryString);
+
+        let path = `/api/query/get${queryString}`;
 
         if (queryValues) {
-            path += `&queryValues=${JSON.stringify(queryValues)}${
-                tableName ? `&tableName=${tableName}` : ""
-            }`;
+            path += `&queryValues=${JSON.stringify(queryValues)}`;
+        }
+
+        if (tableName) {
+            path += `&tableName=${tableName}`;
         }
 
         /** @type {https.RequestOptions} */

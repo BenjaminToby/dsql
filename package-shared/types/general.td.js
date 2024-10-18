@@ -1,3 +1,5 @@
+// @ts-check
+
 const http = require("http");
 
 /**
@@ -17,4 +19,19 @@ const http = require("http");
  * }} ImageInputFileToBase64FunctionReturn
  */
 
-module.exports = { Request, Response, ImageInputFileToBase64FunctionReturn };
+/**
+ * @typedef {object} GetReqQueryObject
+ * @property {string} db
+ * @property {string} query
+ * @property {string} [queryValues]
+ * @property {string} [tableName]
+ */
+
+/**
+ * @typedef {(param0: SerializeQueryParams) => string} SerializeQueryFnType
+ */
+
+/**
+ * @typedef {object} SerializeQueryParams
+ * @property {any} query
+ */
