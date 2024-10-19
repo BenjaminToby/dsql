@@ -29,7 +29,7 @@ const localUpdateUser = require("../engine/user/update-user");
  * @param {String} params.database - Target Database
  * @param {{ id: number } & Object.<string, *>} params.payload - User Object: ID is required
  *
- * @returns { Promise<import("@/package-shared/types").UpdateUserFunctionReturn>}
+ * @returns { Promise<import("../package-shared/types").UpdateUserFunctionReturn>}
  */
 async function updateUser({ key, payload, database }) {
     /**
@@ -57,7 +57,7 @@ async function updateUser({ key, payload, database }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {

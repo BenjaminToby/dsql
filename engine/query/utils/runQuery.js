@@ -31,7 +31,7 @@ const varDatabaseDbHandler = require("../../engine/utils/varDatabaseDbHandler");
  * @param {string} params.dbFullName - Database full name. Eg. "datasquire_user_2_test"
  * @param {*} params.query - Query string or object
  * @param {boolean} [params.readOnly] - Is this operation read only?
- * @param {import("@/package-shared/types").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
+ * @param {import("../../../package-shared/types").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
  * @param {string[]} [params.queryValuesArray] - An optional array of query values if "?" is used in the query string
  * @param {string} [params.tableName] - Table Name
  *

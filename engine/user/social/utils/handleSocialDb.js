@@ -74,7 +74,7 @@ const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
  *  res: http.ServerResponse,
  *  supEmail?: string | null,
  *  additionalFields?: object,
- * dbSchema: import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined
+ * dbSchema: import("../../../../package-shared/types").DSQL_DatabaseSchemaType | undefined
  * }} params - function parameters inside an object
  *
  * @returns {Promise<FunctionReturn>} - Response object

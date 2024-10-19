@@ -41,7 +41,7 @@ const loginLocalUser = require("../engine/user/login-user");
  * @param {string} [params.temp_code_field] - Database table field name for temporary code
  * @param {boolean} [params.token] - Send access key as part of response body?
  *
- * @returns { Promise<import("@/package-shared/types").AuthenticatedUser>}
+ * @returns { Promise<import("../package-shared/types").AuthenticatedUser>}
  */
 async function loginUser({
     key,
@@ -126,7 +126,7 @@ async function loginUser({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
@@ -154,10 +154,10 @@ async function loginUser({
          *
          * @description make a request to datasquirel.com
          *
-         * @type {{ success: boolean, payload: import("@/package-shared/types").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
+         * @type {{ success: boolean, payload: import("../package-shared/types").DATASQUIREL_LoggedInUser | null, userId?: number, msg?: string }}
          */
         httpResponse = await new Promise((resolve, reject) => {
-            /** @type {import("@/package-shared/types").PackageUserLoginRequestBody} */
+            /** @type {import("../package-shared/types").PackageUserLoginRequestBody} */
             const reqPayload = {
                 encryptionKey,
                 payload,

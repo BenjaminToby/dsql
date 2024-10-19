@@ -27,7 +27,7 @@ const decrypt = require("../functions/decrypt");
  * @param {("deep" | "normal")?} [params.level] - Optional. "Deep" value indicates an extra layer of security
  * @param {string} params.database - Database Name
  *
- * @returns { import("@/package-shared/types").DATASQUIREL_LoggedInUser | null}
+ * @returns { import("../package-shared/types").DATASQUIREL_LoggedInUser | null}
  */
 function validateToken({ token, encryptionKey, encryptionSalt }) {
     try {

@@ -154,7 +154,7 @@ async function githubAuth({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined | undefined} */
+        /** @type {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined | undefined} */
         let dbSchema;
 
         try {

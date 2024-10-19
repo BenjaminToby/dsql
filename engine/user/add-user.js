@@ -20,8 +20,8 @@ const runQuery = require("../query/utils/runQuery");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {import("@/package-shared/types").UserDataPayload} params.payload - SQL Query
- * @param {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
+ * @param {import("../../package-shared/types").UserDataPayload} params.payload - SQL Query
+ * @param {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} params.dbSchema - Name of the table to query
  * @param {string} [params.encryptionKey]
  * @param {string} [params.encryptionSalt]
  *

@@ -31,7 +31,7 @@ const serializeQuery = require("./functions/serialize-query");
  * @param {string[]} [params.queryValues] - An array of query values if using "?" placeholders
  * @param {string} [params.tableName] - Name of the table to query
  *
- * @returns { Promise<import("@/package-shared/types").GetReturn> } - Return Object
+ * @returns { Promise<import("../package-shared/types").GetReturn> } - Return Object
  */
 async function get({ key, db, query, queryValues, tableName }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;
@@ -59,7 +59,7 @@ async function get({ key, db, query, queryValues, tableName }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
@@ -86,7 +86,7 @@ async function get({ key, db, query, queryValues, tableName }) {
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        /** @type {import("@/package-shared/types").GetReqQueryObject} */
+        /** @type {import("../package-shared/types").GetReqQueryObject} */
         const queryObject = {
             db: String(db),
             query: String(

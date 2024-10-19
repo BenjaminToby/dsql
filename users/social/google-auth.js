@@ -150,7 +150,7 @@ async function googleAuth({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined | undefined} */
+        /** @type {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined | undefined} */
         let dbSchema;
 
         try {
@@ -179,7 +179,7 @@ async function googleAuth({
          * Make https request
          *
          * @description make a request to datasquirel.com
-         * @type {{ success: boolean, user: import("@/package-shared/types").DATASQUIREL_LoggedInUser | null, msg?: string, dsqlUserId?: number } | null } - Https response object
+         * @type {{ success: boolean, user: import("../../package-shared/types").DATASQUIREL_LoggedInUser | null, msg?: string, dsqlUserId?: number } | null } - Https response object
          */
         httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({

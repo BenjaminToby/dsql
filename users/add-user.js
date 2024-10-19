@@ -26,11 +26,11 @@ const localAddUser = require("../engine/user/add-user");
  * @param {object} props - Single object passed
  * @param {string} props.key - FULL ACCESS API Key
  * @param {string} props.database - Database Name
- * @param {import("@/package-shared/types").UserDataPayload} props.payload - User Data Payload
+ * @param {import("../package-shared/types").UserDataPayload} props.payload - User Data Payload
  * @param {string} props.encryptionKey
  * @param {string} [props.encryptionSalt]
  *
- * @returns { Promise<import("@/package-shared/types").AddUserFunctionReturn> }
+ * @returns { Promise<import("../package-shared/types").AddUserFunctionReturn> }
  */
 async function addUser({
     key,
@@ -64,7 +64,7 @@ async function addUser({
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {import("@/package-shared/types").DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {

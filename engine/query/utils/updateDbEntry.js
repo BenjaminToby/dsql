@@ -21,7 +21,7 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
  * @param {*} params.data - Data to add
- * @param {import("@/package-shared/types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("../../../package-shared/types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string | number} params.identifierValue - Update row identifier column value
  * @param {string} params.encryptionKey - Encryption key
