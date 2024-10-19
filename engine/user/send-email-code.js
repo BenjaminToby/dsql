@@ -77,15 +77,6 @@ async function localSendEmailCode({
                 msg: "No user found",
             };
 
-        function generateCode() {
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            let code = "";
-            for (let i = 0; i < 8; i++) {
-                code += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return code;
-        }
-
         if (foundUser && foundUser[0] && email_login_field) {
             const tempCode = generateCode();
 
@@ -148,6 +139,15 @@ async function localSendEmailCode({
             msg: "Failed: " + error.message,
         };
     }
+}
+
+function generateCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return code;
 }
 
 module.exports = localSendEmailCode;

@@ -5,7 +5,7 @@ const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
 
 /**
  *
- * @param {PackageUserLoginLocalBody} param0
+ * @param {import("../../package-shared/types").PackageUserLoginLocalBody} param0
  * @returns
  */
 async function loginLocalUser({
