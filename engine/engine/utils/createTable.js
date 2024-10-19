@@ -17,7 +17,7 @@ const supplementTable = require("./supplementTable");
  * @param {string} param0.tableName
  * @param {any[]} param0.tableInfoArray
  * @param {(params: import("./varDatabaseDbHandler").VarDbHandlerParam)=>any} param0.varDatabaseDbHandler
- * @param {DSQL_DatabaseSchemaType} [param0.dbSchema]
+ * @param {import("../../../package-shared/types").DSQL_DatabaseSchemaType} [param0.dbSchema]
  * @returns
  */
 module.exports = async function createTable({

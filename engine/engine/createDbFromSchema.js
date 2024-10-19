@@ -27,7 +27,7 @@ const updateTable = require("./utils/updateTable");
  * runs the "dsql create" command. `NOTE`: there must be a "dsql.schema.json" file
  * in the root of the project for this function to work
  *
- * @param {DSQL_DatabaseSchemaType | undefined} dbSchema - An array of database schema objects
+ * @param {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} dbSchema - An array of database schema objects
  */
 async function createDbFromSchema(dbSchema) {
     try {
@@ -42,7 +42,7 @@ async function createDbFromSchema(dbSchema) {
         }
 
         for (let i = 0; i < dbSchema.length; i++) {
-            /** @type {DSQL_DatabaseSchemaType | undefined} */
+            /** @type {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
             const database = dbSchema[i];
 
             if (!database) {

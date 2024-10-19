@@ -10,7 +10,7 @@ const path = require("path");
  *
  * @param {object} param0
  * @param {string} param0.email
- * @param {DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
+ * @param {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} [param0.dbSchema]
  * @param {string} param0.email_login_field
  * @param {string} [param0.mail_domain]
  * @param {string} [param0.mail_username]

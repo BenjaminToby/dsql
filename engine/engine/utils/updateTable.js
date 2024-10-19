@@ -31,9 +31,9 @@ const schemaPath = path.resolve(process.cwd(), "dsql.schema.json");
  * @param {object} params - Single object params
  * @param {string} params.dbFullName - Database full name => "datasquirel_user_4394_db_name"
  * @param {string} params.tableName - Table Name(slug)
- * @param {DSQL_FieldSchemaType[]} params.tableInfoArray - Table Info Array
- * @param {DSQL_DatabaseSchemaType[]} params.dbSchema - Single post
- * @param {DSQL_IndexSchemaType[]} [params.tableIndexes] - Table Indexes
+ * @param {import("../../../package-shared/types").DSQL_FieldSchemaType[]} params.tableInfoArray - Table Info Array
+ * @param {import("../../../package-shared/types").DSQL_DatabaseSchemaType[]} params.dbSchema - Single post
+ * @param {import("../../../package-shared/types").DSQL_IndexSchemaType[]} [params.tableIndexes] - Table Indexes
  * @param {boolean} [params.clone] - Is this a newly cloned table?
  * @param {number} [params.tableIndex] - The number index of the table in the dbSchema array
  *
@@ -88,7 +88,7 @@ module.exports = async function updateTable({
         ////////////////////////////////////////
 
         /**
-         * @type {DSQL_MYSQL_SHOW_INDEXES_Type[]}
+         * @type {import("../../../package-shared/types").DSQL_MYSQL_SHOW_INDEXES_Type[]}
          * @description All indexes from MYSQL db
          */
         const allExistingIndexes = await varDatabaseDbHandler({
@@ -97,7 +97,7 @@ module.exports = async function updateTable({
         });
 
         /**
-         * @type {DSQL_MYSQL_SHOW_COLUMNS_Type[]}
+         * @type {import("../../../package-shared/types").DSQL_MYSQL_SHOW_COLUMNS_Type[]}
          * @description All columns from MYSQL db
          */
         const allExistingColumns = await varDatabaseDbHandler({
