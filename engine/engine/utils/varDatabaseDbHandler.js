@@ -24,7 +24,7 @@ const dbHandler = require("./dbHandler");
  * @property {string} queryString - SQL string
  * @property {string[]} [queryValuesArray] - Values Array
  * @property {string} database - Database name
- * @property {DSQL_TableSchemaType} [tableSchema] - Table schema
+ * @property {import("../../../package-shared/types").DSQL_TableSchemaType} [tableSchema] - Table schema
  */
 
 /**
