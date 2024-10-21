@@ -17,28 +17,6 @@ const localPost = require("../engine/query/post");
 /** ****************************************************************************** */
 
 /**
- * @typedef {Object} PostReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
- */
-
-/**
- * @typedef {object} PostDataPayload
- * @property {"insert" | "update" | "delete"} action - The target action to take
- * @property {string} table - Table name(slug) eg "blog_posts"
- * @property {object} [data] - Table insert payload object => This must have keys that match
- * table fields
- * @property {string?} [identifierColumnName] - Table identifier field name => eg. "id" OR "email"
- * @property {string?} [identifierValue] - Corresponding value of the selected field name => This
- * checks identifies a the target row for "update" or "delete". Not needed for "insert"
- * @property {string?} [duplicateColumnName] - Duplicate column name to check for
- * @property {string?} [duplicateColumnValue] - Duplicate column value to match. If no "update" param
- * provided, function will return null
- * @property {boolean?} [update] - Should the "insert" action update the existing entry if indeed
- * the entry with "duplicateColumnValue" exists?
- */
-
-/**
  * Make a post request to Datasquirel API
  * ==============================================================================
  * @async
@@ -46,11 +24,11 @@ const localPost = require("../engine/query/post");
  * @param {Object} params - Single object passed
  * @param {string} [params.key] - FULL ACCESS API Key
  * @param {string} [params.database] - Database Name
- * @param {PostDataPayload | string} params.query - SQL query String or Request Object
+ * @param {import("../package-shared/types").PostDataPayload | string} params.query - SQL query String or Request Object
  * @param {any[]} [params.queryValues] - Query Values if using "?" placeholders
  * @param {string} [params.tableName] - Name of the table to query
  *
- * @returns { Promise<PostReturn> } - Return Object
+ * @returns { Promise<import("../package-shared/types").PostReturn> } - Return Object
  */
 async function post({ key, query, queryValues, database, tableName }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;

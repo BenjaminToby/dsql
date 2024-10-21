@@ -7,14 +7,6 @@ const addDbEntry = require("../query/utils/addDbEntry");
 const runQuery = require("../query/utils/runQuery");
 
 /**
- * @typedef {Object} LocalPostReturn
- * @property {boolean} success - Did the function run successfully?
- * @property {*} [payload] - GET request results
- * @property {string} [msg] - Message
- * @property {string} [error] - Error Message
- */
-
-/**
  * Make a get request to Datasquirel API
  * ==============================================================================
  * @async
@@ -25,7 +17,7 @@ const runQuery = require("../query/utils/runQuery");
  * @param {string} [params.encryptionKey]
  * @param {string} [params.encryptionSalt]
  *
- * @returns { Promise<LocalPostReturn> } - Return Object
+ * @returns { Promise<import("../../package-shared/types").AddUserFunctionReturn> } - Return Object
  */
 async function localAddUser({
     payload,
@@ -50,7 +42,7 @@ async function localAddUser({
         if (!payload?.password) {
             return {
                 success: false,
-                payload: `Password is required to create an account`,
+                msg: `Password is required to create an account`,
             };
         }
 
@@ -79,7 +71,7 @@ async function localAddUser({
         if (!fields) {
             return {
                 success: false,
-                payload: "Could not create users table",
+                msg: "Could not create users table",
             };
         }
 
@@ -100,7 +92,7 @@ async function localAddUser({
         if (invalidField) {
             return {
                 success: false,
-                payload: `${invalidField} is not a valid field!`,
+                msg: `${invalidField} is not a valid field!`,
             };
         }
 
@@ -126,7 +118,7 @@ async function localAddUser({
         if (existingUser && existingUser[0]) {
             return {
                 success: false,
-                payload: "User Already Exists",
+                msg: "User Already Exists",
             };
         }
 
@@ -157,7 +149,7 @@ async function localAddUser({
         } else {
             return {
                 success: false,
-                payload: "Could not create user",
+                msg: "Could not create user",
             };
         }
 
@@ -168,7 +160,6 @@ async function localAddUser({
 
         return {
             success: false,
-            payload: null,
             msg: "Something went wrong!",
         };
 

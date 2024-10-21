@@ -1,6 +1,6 @@
 {
     "name": "datasquirel",
-    "version": "2.2.6",
+    "version": "2.2.7",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
