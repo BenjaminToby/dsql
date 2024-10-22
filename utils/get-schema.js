@@ -47,9 +47,6 @@ async function getSchema({ key, database, field, table }) {
             .map((k) => `${k}=${queryObject[k]}`)
             .join("&");
 
-        console.log(queryObject);
-        console.log(query);
-
         (scheme?.match(/^http$/i) ? http : https)
             .request(
                 {
