@@ -18,7 +18,7 @@ const https = require("https");
 /**
  * @typedef {Object} GetSchemaReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {import("../package-shared/types").DSQL_DatabaseSchemaType | null} payload - Response payload
+ * @property {import("../package-shared/types").DSQL_DatabaseSchemaType | import("../package-shared/types").DSQL_TableSchemaType | import("../package-shared/types").DSQL_FieldSchemaType | null} payload - Response payload
  */
 
 /**
