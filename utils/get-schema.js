@@ -22,17 +22,12 @@ const https = require("https");
  */
 
 /**
- * Make a get request to Datasquirel API
- * ==============================================================================
- * @async
- *
- * @param {Object} params - Single object passed
- * @param {string} params.key - `FULL ACCESS` API Key
- * @param {string} [params.database] - The database schema to get
+ * # Get Schema for Database, table, or field *
+ * @param {import("../package-shared/types").GetSchemaAPIParam} params
  *
  * @returns { Promise<GetSchemaReturn> } - Return Object
  */
-async function getSchema({ key, database }) {
+async function getSchema({ key, database, field, table }) {
     const scheme = process.env.DSQL_HTTP_SCHEME;
     const localHost = process.env.DSQL_LOCAL_HOST;
     const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
@@ -43,6 +38,15 @@ async function getSchema({ key, database }) {
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
+        /** @type {import("../package-shared/types").GetSchemaRequestQuery} */
+        const queryObject = { database, field, table };
+        let query = Object.keys(queryObject)
+            // @ts-ignore
+            .filter((k) => queryObject[k])
+            // @ts-ignore
+            .map((k) => `${k}=${queryObject[k]}`)
+            .join("&");
+
         (scheme?.match(/^http$/i) ? http : https)
             .request(
                 {
@@ -55,7 +59,7 @@ async function getSchema({ key, database }) {
                     hostname: localHost || "datasquirel.com",
                     path:
                         "/api/query/get-schema" +
-                        (database ? `?database=${database}` : ""),
+                        (query?.match(/./) ? `?${query}` : ""),
                 },
 
                 /**

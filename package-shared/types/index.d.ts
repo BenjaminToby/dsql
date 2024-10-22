@@ -316,42 +316,14 @@ export interface GetReturn {
     schema?: DSQL_TableSchemaType;
 }
 
-interface PostReturn {
-    success: boolean;
-    payload?: PostInsertReturn | Object[] | string;
+interface GetSchemaRequestQuery {
+    database?: string;
+    table?: string;
+    field?: string;
 }
 
-interface PostInsertReturn {
-    fieldCount: number;
-    affectedRows: number;
-    insertId: number;
-    serverStatus: number;
-    warningCount: number;
-    message: string;
-    protocol41: boolean;
-    changedRows: number;
+interface GetSchemaAPICredentialsParam {
+    key: string;
 }
 
-interface PostDataPayload {
-    action: "insert" | "update" | "delete";
-    table: string;
-    data?: object;
-    identifierColumnName?: string;
-    identifierValue?: string;
-    duplicateColumnName?: string;
-    duplicateColumnValue?: string;
-    update?: boolean;
-}
-
-interface LocalPostReturn {
-    success: boolean;
-    payload?: PostInsertReturn | Object[] | string;
-    msg?: string;
-    error?: string;
-}
-
-interface LocalPostQueryObject {
-    query: string | import("../../package-shared/types").PostDataPayload;
-    tableName?: string;
-    queryValues?: string[];
-}
+type GetSchemaAPIParam = GetSchemaRequestQuery & GetSchemaAPICredentialsParam;

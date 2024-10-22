@@ -355,50 +355,17 @@ const http = require("http");
  */
 
 /**
- * @typedef {Object} PostReturn
- * @property {boolean} success - Did the function run successfully?
- * @property { PostInsertReturn | Object[] | string } [payload] - The Y Coordinate
+ * @typedef {object} GetSchemaRequestQuery
+ * @property {string} [database] - Db Name. eg `test_database`
+ * @property {string} [table] - Table Name (slug) e.g `test_table`
+ * @property {string} [field]
  */
 
 /**
- * @typedef {object} PostInsertReturn
- * @property {number} fieldCount
- * @property {number} affectedRows
- * @property {number} insertId
- * @property {number} serverStatus
- * @property {number} warningCount
- * @property {string} message
- * @property {boolean} protocol41
- * @property {number} changedRows
+ * @typedef {object} GetSchemaAPICredentialsParam
+ * @property {string} key - API FULL ACCESS Key
  */
 
 /**
- * @typedef {object} PostDataPayload
- * @property {"insert" | "update" | "delete"} action - The target action to take
- * @property {string} table - Table name(slug) eg "blog_posts"
- * @property {object} [data] - Table insert payload object => This must have keys that match
- * table fields
- * @property {string?} [identifierColumnName] - Table identifier field name => eg. "id" OR "email"
- * @property {string?} [identifierValue] - Corresponding value of the selected field name => This
- * checks identifies a the target row for "update" or "delete". Not needed for "insert"
- * @property {string?} [duplicateColumnName] - Duplicate column name to check for
- * @property {string?} [duplicateColumnValue] - Duplicate column value to match. If no "update" param
- * provided, function will return null
- * @property {boolean?} [update] - Should the "insert" action update the existing entry if indeed
- * the entry with "duplicateColumnValue" exists?
- */
-
-/**
- * @typedef {Object} LocalPostReturn
- * @property {boolean} success - Did the function run successfully?
- * @property { PostInsertReturn | Object[] | string } [payload] - GET request results
- * @property {string} [msg] - Message
- * @property {string} [error] - Error Message
- */
-
-/**
- * @typedef {Object} LocalPostQueryObject
- * @property {string | import("../../package-shared/types").PostDataPayload} query - Table Name
- * @property {string} [tableName] - Table Name
- * @property {string[]} [queryValues] - GET request results
+ * @typedef {GetSchemaRequestQuery & GetSchemaAPICredentialsParam} GetSchemaAPIParam
  */
