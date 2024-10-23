@@ -68,6 +68,7 @@ async function run() {
             process.exit();
         }
 
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType} */ // @ts-ignore
         let fetchedDbSchemaObject = dbSchemaDataResponse.payload;
         if (DSQL_DB_NAME) fetchedDbSchemaObject.dbFullName = DSQL_DB_NAME;
 

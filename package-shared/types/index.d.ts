@@ -327,3 +327,32 @@ interface GetSchemaAPICredentialsParam {
 }
 
 type GetSchemaAPIParam = GetSchemaRequestQuery & GetSchemaAPICredentialsParam;
+
+interface PostReturn {
+    success: boolean;
+    payload?: Object[] | string;
+}
+
+interface PostDataPayload {
+    action: "insert" | "update" | "delete";
+    table: string;
+    data?: object;
+    identifierColumnName?: string;
+    identifierValue?: string;
+    duplicateColumnName?: string;
+    duplicateColumnValue?: string;
+    update?: boolean;
+}
+
+interface LocalPostReturn {
+    success: boolean;
+    payload?: any;
+    msg?: string;
+    error?: string;
+}
+
+interface LocalPostQueryObject {
+    query: string | PostDataPayload;
+    tableName?: string;
+    queryValues?: string[];
+}

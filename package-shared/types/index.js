@@ -245,22 +245,22 @@ const http = require("http");
  * @property {string} [country]
  * @property {string} [zip_code]
  * @property {number} [social_login]
- * @property {string?} [social_platform]
- * @property {string?} [social_id]
+ * @property {string} [social_platform]
+ * @property {string} [social_id]
  * @property {string} [more_user_data]
  * @property {number} [verification_status]
- * @property {number?} [loan_officer_id]
+ * @property {number} [loan_officer_id]
  * @property {number} [is_admin]
  * @property {number} [admin_level]
  * @property {string} [admin_permissions]
- * @property {string?} uuid
- * @property {string?} [temp_login_code]
- * @property {string?} [date_created]
- * @property {number?} [date_created_code]
- * @property {string?} [date_created_timestamp]
- * @property {string?} [date_updated]
- * @property {number?} [date_updated_code]
- * @property {string?} [date_updated_timestamp]
+ * @property {string} uuid
+ * @property {string} [temp_login_code]
+ * @property {string} [date_created]
+ * @property {number} [date_created_code]
+ * @property {string} [date_created_timestamp]
+ * @property {string} [date_updated]
+ * @property {number} [date_updated_code]
+ * @property {string} [date_updated_timestamp]
  * @property {string} [csrf_k] - CSRF key
  * @property {boolean} [logged_in_status]
  * @property {number} [date]
@@ -310,7 +310,7 @@ const http = require("http");
  * @property {string} last_name - Last Name *Required
  * @property {string} email - Email *Required
  * @property {string} password - Password *Required
- * @property {string?} username - Username (Optional)
+ * @property {string} username - Username (Optional)
  */
 
 /**
@@ -368,4 +368,41 @@ const http = require("http");
 
 /**
  * @typedef {GetSchemaRequestQuery & GetSchemaAPICredentialsParam} GetSchemaAPIParam
+ */
+
+/**
+ * @typedef {Object} PostReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
+ */
+
+/**
+ * @typedef {object} PostDataPayload
+ * @property {"insert" | "update" | "delete"} action - The target action to take
+ * @property {string} table - Table name(slug) eg "blog_posts"
+ * @property {object} [data] - Table insert payload object => This must have keys that match
+ * table fields
+ * @property {string} [identifierColumnName] - Table identifier field name => eg. "id" OR "email"
+ * @property {string} [identifierValue] - Corresponding value of the selected field name => This
+ * checks identifies a the target row for "update" or "delete". Not needed for "insert"
+ * @property {string} [duplicateColumnName] - Duplicate column name to check for
+ * @property {string} [duplicateColumnValue] - Duplicate column value to match. If no "update" param
+ * provided, function will return null
+ * @property {boolean} [update] - Should the "insert" action update the existing entry if indeed
+ * the entry with "duplicateColumnValue" exists?
+ */
+
+/**
+ * @typedef {Object} LocalPostReturn
+ * @property {boolean} success - Did the function run successfully?
+ * @property {*} [payload] - GET request results
+ * @property {string} [msg] - Message
+ * @property {string} [error] - Error Message
+ */
+
+/**
+ * @typedef {Object} LocalPostQueryObject
+ * @property {PostDataPayload | string} query - Table Name
+ * @property {string} [tableName] - Table Name
+ * @property {string[]} [queryValues] - GET request results
  */
