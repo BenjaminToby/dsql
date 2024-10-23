@@ -373,7 +373,7 @@ const http = require("http");
 /**
  * @typedef {Object} PostReturn
  * @property {boolean} success - Did the function run successfully?
- * @property {(Object[]|string)} [payload=[]] - The Y Coordinate
+ * @property {PostInsertReturn | Object[] | string} [payload] - The Y Coordinate
  */
 
 /**
@@ -405,4 +405,16 @@ const http = require("http");
  * @property {PostDataPayload | string} query - Table Name
  * @property {string} [tableName] - Table Name
  * @property {string[]} [queryValues] - GET request results
+ */
+
+/**
+ * @typedef {object} PostInsertReturn
+ * @property {number} fieldCount
+ * @property {number} affectedRows
+ * @property {number} insertId
+ * @property {number} serverStatus
+ * @property {number} warningCount
+ * @property {string} message
+ * @property {boolean} protocol41
+ * @property {number} changedRows
  */

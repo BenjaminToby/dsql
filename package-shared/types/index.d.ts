@@ -316,24 +316,25 @@ export interface GetReturn {
     schema?: DSQL_TableSchemaType;
 }
 
-interface GetSchemaRequestQuery {
+export interface GetSchemaRequestQuery {
     database?: string;
     table?: string;
     field?: string;
 }
 
-interface GetSchemaAPICredentialsParam {
+export interface GetSchemaAPICredentialsParam {
     key: string;
 }
 
-type GetSchemaAPIParam = GetSchemaRequestQuery & GetSchemaAPICredentialsParam;
+export type GetSchemaAPIParam = GetSchemaRequestQuery &
+    GetSchemaAPICredentialsParam;
 
-interface PostReturn {
+export interface PostReturn {
     success: boolean;
-    payload?: Object[] | string;
+    payload?: Object[] | string | PostInsertReturn;
 }
 
-interface PostDataPayload {
+export interface PostDataPayload {
     action: "insert" | "update" | "delete";
     table: string;
     data?: object;
@@ -344,15 +345,26 @@ interface PostDataPayload {
     update?: boolean;
 }
 
-interface LocalPostReturn {
+export interface LocalPostReturn {
     success: boolean;
     payload?: any;
     msg?: string;
     error?: string;
 }
 
-interface LocalPostQueryObject {
+export interface LocalPostQueryObject {
     query: string | PostDataPayload;
     tableName?: string;
     queryValues?: string[];
+}
+
+export interface PostInsertReturn {
+    fieldCount: number;
+    affectedRows: number;
+    insertId: number;
+    serverStatus: number;
+    warningCount: number;
+    message: string;
+    protocol41: boolean;
+    changedRows: number;
 }
