@@ -271,13 +271,15 @@ export interface GoogleIdentityPromptNotification {
     isSkippedMoment: () => boolean;
 }
 
-export interface UserDataPayload {
+export type UserDataPayload = {
     first_name: string;
     last_name: string;
     email: string;
     password: string;
     username: string;
-}
+} & {
+    [key: string]: any;
+};
 
 export interface GetUserFunctionReturn {
     success: boolean;

@@ -305,12 +305,20 @@ const http = require("http");
  */
 
 /**
- * @typedef {object} UserDataPayload
+ * @typedef {UserDataPayloadBase & UserDataPayloadSupplement} UserDataPayload
+ */
+
+/**
+ * @typedef {object} UserDataPayloadBase
  * @property {string} first_name - First Name *Required
  * @property {string} last_name - Last Name *Required
  * @property {string} email - Email *Required
  * @property {string} password - Password *Required
  * @property {string} username - Username (Optional)
+ */
+
+/**
+ * @typedef {Object.<string, any>} UserDataPayloadSupplement
  */
 
 /**
