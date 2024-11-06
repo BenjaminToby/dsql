@@ -1092,7 +1092,7 @@ export type CheckApiCredentialsFn = (
     param: CheckApiCredentialsFnParam
 ) => ApiKeyObject | null | undefined;
 export type CheckApiCredentialsFnParam = {
-    key: string;
+    key?: string;
     database?: string;
     table?: string;
 };

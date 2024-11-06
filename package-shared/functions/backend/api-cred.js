@@ -5,6 +5,8 @@ const decrypt = require("./decrypt");
 
 /** @type {import("../../types").CheckApiCredentialsFn} */
 const grabApiCred = ({ key, database, table }) => {
+    if (!key) return null;
+
     try {
         const allowedKeysPath = process.env.DSQL_API_KEYS_PATH;
 

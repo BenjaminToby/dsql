@@ -3,15 +3,6 @@
 const fs = require("fs");
 const path = require("path");
 
-// const mysql = require("mysql");
-
-// const NO_DB = mysql.createConnection({
-//     host: process.env.DSQL_DB_HOST,
-//     user: process.env.DSQL_DB_USERNAME,
-//     password: process.env.DSQL_DB_PASSWORD,
-//     charset: "utf8mb4",
-// });
-
 const mysql = require("serverless-mysql");
 
 const SSL_DIR =

@@ -2,7 +2,7 @@
 
 const { IncomingMessage } = require("http");
 const decrypt = require("./decrypt");
-const parseCookies = require("../../../utils/functions/parseCookies");
+const parseCookies = require("../../utils/backend/parseCookies");
 
 /**
  * @async
