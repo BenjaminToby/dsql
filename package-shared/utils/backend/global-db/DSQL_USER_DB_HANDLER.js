@@ -5,7 +5,8 @@ const path = require("path");
 
 const mysql = require("serverless-mysql");
 
-const SSL_DIR = "/app/ssl";
+const SSL_DIR =
+    process.env.DSQL_SSL_DIR || path.resolve(__dirname, "../../../../ssl");
 
 let DSQL_USER = mysql({
     config: {

@@ -116,3 +116,29 @@ const postData = await datasquirel.uploadImage({
     },
 });
 ```
+
+### Local Querying
+
+You can query directly from an SQL database if you provide these environment variables in your `.env` file:
+
+```conf
+DSQL_DB_HOST=
+DSQL_DB_PORT=
+DSQL_DB_USERNAME=
+DSQL_DB_PASSWORD=
+DSQL_DB_NAME=
+DSQL_SSL_DIR=
+```
+
+The ssl directory **_must_** contain a file named `ca-cert.pem`. `DSQL_DB_PORT` defaults to **3306** if not provided.
+
+### Remote Querying
+
+You can query from a self hosted installation of datasquirel. Just add these environment variables:
+
+```conf
+DSQL_API_REMOTE_HOST=
+DSQL_API_REMOTE_HOST_PORT=
+```
+
+If these aren't provided it defaults to `datasquirel.com`.

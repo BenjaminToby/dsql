@@ -6,7 +6,8 @@ const serverError = require("./serverError");
 const mysql = require("serverless-mysql");
 const path = require("path");
 
-const SSL_DIR = "/app/ssl";
+const SSL_DIR =
+    process.env.DSQL_SSL_DIR || path.resolve(__dirname, "../../../ssl");
 
 const connection = mysql({
     config: {

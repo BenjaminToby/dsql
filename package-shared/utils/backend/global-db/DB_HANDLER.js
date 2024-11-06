@@ -4,7 +4,8 @@ const fs = require("fs");
 const path = require("path");
 
 const mysql = require("serverless-mysql");
-const SSL_DIR = "/app/ssl";
+const SSL_DIR =
+    process.env.DSQL_SSL_DIR || path.resolve(__dirname, "../../../../ssl");
 
 const MASTER = mysql({
     config: {
@@ -12,7 +13,9 @@ const MASTER = mysql({
         user: process.env.DSQL_DB_USERNAME,
         password: process.env.DSQL_DB_PASSWORD,
         database: process.env.DSQL_DB_NAME,
-        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined,
+        port: process.env.DSQL_DB_PORT
+            ? Number(process.env.DSQL_DB_PORT)
+            : undefined,
         charset: "utf8mb4",
         ssl: {
             ca: fs.readFileSync(`${SSL_DIR}/ca-cert.pem`),
