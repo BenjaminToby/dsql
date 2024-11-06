@@ -8,10 +8,10 @@ const runQuery = require("../../package-shared/functions/backend/db/runQuery");
  * @async
  *
  * @param {Object} params - Single object passed
- * @param {import("../../package-shared/types").LocalPostQueryObject} params.options - SQL Query
- * @param {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} [params.dbSchema] - Name of the table to query
+ * @param {import("../../package-shared/types").LocalPostQueryObject} params.options
+ * @param {import("../../package-shared/types").DSQL_DatabaseSchemaType | undefined} [params.dbSchema]
  *
- * @returns { Promise<import("../../package-shared/types").LocalPostReturn> } - Return Object
+ * @returns { Promise<import("../../package-shared/types").LocalPostReturn> }
  */
 async function localPost({ options, dbSchema }) {
     try {
@@ -62,28 +62,19 @@ async function localPost({ options, dbSchema }) {
                 payload: result,
                 error: error,
             };
-
-            ////////////////////////////////////////
         } catch (/** @type {*} */ error) {
-            ////////////////////////////////////////
-
             return {
                 success: false,
                 error: error.message,
             };
         }
-
-        ////////////////////////////////////////
     } catch (/** @type {*} */ error) {
-        ////////////////////////////////////////
         console.log("Error in local post Request =>", error.message);
 
         return {
             success: false,
             msg: "Something went wrong!",
         };
-
-        ////////////////////////////////////////
     }
 }
 

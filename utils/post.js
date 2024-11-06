@@ -46,20 +46,13 @@ async function post({ key, query, queryValues, database, tableName }) {
      *
      * @description Look for local db settings in `.env` file and by pass the http request if available
      */
-    const {
-        DSQL_HOST,
-        DSQL_USER,
-        DSQL_PASS,
-        DSQL_DB_NAME,
-        DSQL_KEY,
-        DSQL_REF_DB_NAME,
-        DSQL_FULL_SYNC,
-    } = process.env;
+    const { DSQL_DB_HOST, DSQL_DB_USERNAME, DSQL_DB_PASSWORD, DSQL_DB_NAME } =
+        process.env;
 
     if (
-        DSQL_HOST?.match(/./) &&
-        DSQL_USER?.match(/./) &&
-        DSQL_PASS?.match(/./) &&
+        DSQL_DB_HOST?.match(/./) &&
+        DSQL_DB_USERNAME?.match(/./) &&
+        DSQL_DB_PASSWORD?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
         /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
