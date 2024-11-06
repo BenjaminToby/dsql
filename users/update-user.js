@@ -27,7 +27,7 @@ const localUpdateUser = require("../engine/user/update-user");
  * @param {object} params - API Key
  * @param {String} params.key - API Key
  * @param {String} params.database - Target Database
- * @param {{ id: number } & Object.<string, *>} params.payload - User Object: ID is required
+ * @param {{ id: number } & Object.<string, any>} params.payload - User Object: ID is required
  *
  * @returns { Promise<import("../package-shared/types").UpdateUserFunctionReturn>}
  */

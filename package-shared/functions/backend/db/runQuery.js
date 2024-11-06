@@ -1,21 +1,25 @@
 /** # MODULE TRACE 
 ======================================================================
- * Detected 4 files that call this module. The files are listed below:
+ * Detected 3 files that call this module. The files are listed below:
 ======================================================================
- * `require` Statement Found in [get.js](d:\GitHub\dsql\engine\query\get.js)
- * `require` Statement Found in [post.js](d:\GitHub\dsql\engine\query\post.js)
- * `require` Statement Found in [add-user.js](d:\GitHub\dsql\engine\user\add-user.js)
- * `require` Statement Found in [update-user.js](d:\GitHub\dsql\engine\user\update-user.js)
+ * `import` Statement Found in [get.js] => file:///d:\GitHub\datasquirel\pages\api\query\get.js
+ * `import` Statement Found in [post.js] => file:///d:\GitHub\datasquirel\pages\api\query\post.js
+ * `import` Statement Found in [add-user.js] => file:///d:\GitHub\datasquirel\pages\api\user\add-user.js
 ==== MODULE TRACE END ==== */
 
 // @ts-check
 
 const fs = require("fs");
 
+const fullAccessDbHandler = require("../fullAccessDbHandler");
+const varReadOnlyDatabaseDbHandler = require("../varReadOnlyDatabaseDbHandler");
+const serverError = require("../serverError");
+
 const addDbEntry = require("./addDbEntry");
 const updateDbEntry = require("./updateDbEntry");
 const deleteDbEntry = require("./deleteDbEntry");
-const varDatabaseDbHandler = require("../../engine/utils/varDatabaseDbHandler");
+const DB_HANDLER = require("../../../utils/backend/global-db/DB_HANDLER");
+const parseDbResults = require("../parseDbResults");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -29,13 +33,14 @@ const varDatabaseDbHandler = require("../../engine/utils/varDatabaseDbHandler");
  * ==============================================================================
  * @param {object} params - An object containing the function parameters.
  * @param {string} params.dbFullName - Database full name. Eg. "datasquire_user_2_test"
- * @param {*} params.query - Query string or object
+ * @param {string | any} params.query - Query string or object
  * @param {boolean} [params.readOnly] - Is this operation read only?
- * @param {import("../../../package-shared/types").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
+ * @param {boolean} [params.local] - Is this operation read only?
+ * @param {import("../../../types").DSQL_DatabaseSchemaType} [params.dbSchema] - Database schema
  * @param {string[]} [params.queryValuesArray] - An optional array of query values if "?" is used in the query string
  * @param {string} [params.tableName] - Table Name
  *
- * @return {Promise<{result: *, error?: *}>}
+ * @return {Promise<any>}
  */
 async function runQuery({
     dbFullName,
@@ -44,16 +49,20 @@ async function runQuery({
     dbSchema,
     queryValuesArray,
     tableName,
+    local,
 }) {
     /**
      * Declare variables
      *
      * @description Declare "results" variable
      */
-    const encryptionKey = process.env.DSQL_ENCRYPTION_KEY || "";
-    const encryptionSalt = process.env.DSQL_ENCRYPTION_SALT || "";
 
-    let result, error, tableSchema;
+    /** @type {any} */
+    let result;
+    /** @type {any} */
+    let error;
+    /** @type {import("../../../types").DSQL_TableSchemaType | undefined} */
+    let tableSchema;
 
     if (dbSchema) {
         try {
@@ -68,7 +77,9 @@ async function runQuery({
             tableSchema = dbSchema.tables.filter(
                 (tb) => tb?.tableName === table
             )[0];
-        } catch (_err) {}
+        } catch (_err) {
+            // console.log("ERROR getting tableSchema: ", _err.message);
+        }
     }
 
     /**
@@ -78,12 +89,29 @@ async function runQuery({
      */
     try {
         if (typeof query === "string") {
-            result = await varDatabaseDbHandler({
-                queryString: query,
-                queryValuesArray,
-                database: dbFullName,
-                tableSchema,
-            });
+            if (local) {
+                const rawResults = await DB_HANDLER(query, queryValuesArray);
+                result = tableSchema
+                    ? parseDbResults({
+                          unparsedResults: rawResults,
+                          tableSchema,
+                      })
+                    : rawResults;
+            } else if (readOnly) {
+                result = await varReadOnlyDatabaseDbHandler({
+                    queryString: query,
+                    queryValuesArray,
+                    database: dbFullName,
+                    tableSchema,
+                });
+            } else {
+                result = await fullAccessDbHandler({
+                    queryString: query,
+                    queryValuesArray,
+                    database: dbFullName,
+                    tableSchema,
+                });
+            }
         } else if (typeof query === "object") {
             /**
              * Declare variables
@@ -104,6 +132,8 @@ async function runQuery({
             switch (action.toLowerCase()) {
                 case "insert":
                     result = await addDbEntry({
+                        dbContext: local ? "Master" : "Dsql User",
+                        paradigm: "Full Access",
                         dbFullName: dbFullName,
                         tableName: table,
                         data: data,
@@ -111,8 +141,6 @@ async function runQuery({
                         duplicateColumnName,
                         duplicateColumnValue,
                         tableSchema,
-                        encryptionKey,
-                        encryptionSalt,
                     });
 
                     if (!result?.insertId) {
@@ -123,7 +151,7 @@ async function runQuery({
 
                 case "update":
                     result = await updateDbEntry({
-                        dbContext: "Dsql User",
+                        dbContext: local ? "Master" : "Dsql User",
                         paradigm: "Full Access",
                         dbFullName: dbFullName,
                         tableName: table,
@@ -131,15 +159,13 @@ async function runQuery({
                         identifierColumnName,
                         identifierValue,
                         tableSchema,
-                        encryptionKey,
-                        encryptionSalt,
                     });
 
                     break;
 
                 case "delete":
                     result = await deleteDbEntry({
-                        dbContext: "Dsql User",
+                        dbContext: local ? "Master" : "Dsql User",
                         paradigm: "Full Access",
                         dbFullName: dbFullName,
                         tableName: table,
@@ -151,12 +177,7 @@ async function runQuery({
                     break;
 
                 default:
-                    console.log("Unhandled Query");
-                    console.log("Query Recieved =>", query);
-                    result = {
-                        result: null,
-                        error: "Unhandled Query",
-                    };
+                    result = null;
                     break;
             }
         }
@@ -164,14 +185,12 @@ async function runQuery({
         ////////////////////////////////////////
         ////////////////////////////////////////
         ////////////////////////////////////////
-    } catch (/** @type {*} */ error) {
-        console.log("Error in Running Query =>", error.message);
-        console.log("Query Recieved =>", query);
-
-        result = {
-            result: null,
-            error: "Error in running Query => " + error.message,
-        };
+    } catch (/** @type {any} */ error) {
+        serverError({
+            component: "functions/backend/runQuery",
+            message: error.message,
+        });
+        result = null;
         error = error.message;
     }
 

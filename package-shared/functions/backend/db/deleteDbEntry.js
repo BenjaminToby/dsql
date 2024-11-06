@@ -1,6 +1,7 @@
 // @ts-check
 
-const dbHandler = require("../../engine/utils/dbHandler");
+const DB_HANDLER = require("../../../utils/backend/global-db/DB_HANDLER");
+const DSQL_USER_DB_HANDLER = require("../../../utils/backend/global-db/DSQL_USER_DB_HANDLER");
 
 /**
  * Imports: Handle imports
@@ -19,7 +20,7 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * "Read only" or "Full Access"? Defaults to "Read Only"
  * @param {string} params.dbFullName - Database full name
  * @param {string} params.tableName - Table name
- * @param {import("../../../package-shared/types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {import("../../../types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string|number} params.identifierValue - Update row identifier column value
  *
@@ -37,6 +38,14 @@ async function deleteDbEntry({
         /**
          * Check if data is valid
          */
+        const isMaster = dbContext?.match(/dsql.user/i)
+            ? false
+            : dbFullName && !dbFullName.match(/^datasquirel$/)
+            ? false
+            : true;
+
+        /** @type { (a1:any, a2?:any) => any } */
+        const dbHandler = isMaster ? DB_HANDLER : DSQL_USER_DB_HANDLER;
 
         ////////////////////////////////////////
         ////////////////////////////////////////
@@ -49,11 +58,14 @@ async function deleteDbEntry({
          */
         const query = `DELETE FROM ${tableName} WHERE \`${identifierColumnName}\`=?`;
 
-        const deletedEntry = await dbHandler({
-            query: query,
-            database: dbFullName,
-            values: [identifierValue],
-        });
+        const deletedEntry = isMaster
+            ? await dbHandler(query, [identifierValue])
+            : await dbHandler({
+                  paradigm,
+                  queryString: query,
+                  database: dbFullName,
+                  queryValues: [identifierValue],
+              });
 
         ////////////////////////////////////////
         ////////////////////////////////////////

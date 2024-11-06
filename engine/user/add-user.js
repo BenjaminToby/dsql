@@ -1,10 +1,9 @@
 // @ts-check
 
 const hashPassword = require("../../functions/hashPassword");
+const addDbEntry = require("../../package-shared/functions/backend/db/addDbEntry");
 const addUsersTableToDb = require("../engine/addUsersTableToDb");
 const varDatabaseDbHandler = require("../engine/utils/varDatabaseDbHandler");
-const addDbEntry = require("../query/utils/addDbEntry");
-const runQuery = require("../query/utils/runQuery");
 
 /**
  * Make a get request to Datasquirel API

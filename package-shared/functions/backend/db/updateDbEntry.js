@@ -1,11 +1,13 @@
 // @ts-check
 
-const encrypt = require("../../../functions/encrypt");
-const dbHandler = require("../../engine/utils/dbHandler");
-
 /**
  * Imports: Handle imports
  */
+const encrypt = require("../encrypt");
+const sanitizeHtml = require("sanitize-html");
+const sanitizeHtmlOptions = require("../html/sanitizeHtmlOptions");
+const DB_HANDLER = require("../../../utils/backend/global-db/DB_HANDLER");
+const DSQL_USER_DB_HANDLER = require("../../../utils/backend/global-db/DSQL_USER_DB_HANDLER");
 
 /**
  * Update DB Function
@@ -18,14 +20,14 @@ const dbHandler = require("../../engine/utils/dbHandler");
  * or "Dsql User". Defaults to "Master"
  * @param {("Read Only" | "Full Access")} [params.paradigm] - What is the paradigm for "Dsql User"?
  * "Read only" or "Full Access"? Defaults to "Read Only"
- * @param {string} params.dbFullName - Database full name
+ * @param {string} [params.dbFullName] - Database full name
  * @param {string} params.tableName - Table name
- * @param {*} params.data - Data to add
- * @param {import("../../../package-shared/types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
+ * @param {string} [params.encryptionKey]
+ * @param {string} [params.encryptionSalt]
+ * @param {any} params.data - Data to add
+ * @param {import("../../../types").DSQL_TableSchemaType} [params.tableSchema] - Table schema
  * @param {string} params.identifierColumnName - Update row identifier column name
  * @param {string | number} params.identifierValue - Update row identifier column value
- * @param {string} params.encryptionKey - Encryption key
- * @param {string} params.encryptionSalt - Encryption salt
  *
  * @returns {Promise<object|null>}
  */
@@ -46,6 +48,15 @@ async function updateDbEntry({
      */
     if (!data || !Object.keys(data).length) return null;
 
+    const isMaster = dbContext?.match(/dsql.user/i)
+        ? false
+        : dbFullName && !dbFullName.match(/^datasquirel$/)
+        ? false
+        : true;
+
+    /** @type {(a1:any, a2?:any)=> any } */
+    const dbHandler = isMaster ? DB_HANDLER : DSQL_USER_DB_HANDLER;
+
     ////////////////////////////////////////
     ////////////////////////////////////////
     ////////////////////////////////////////
@@ -60,14 +71,10 @@ async function updateDbEntry({
     let updateKeyValueArray = [];
     let updateValues = [];
 
-    /**
-     * Declare variables
-     *
-     * @description Declare "results" variable
-     */
     for (let i = 0; i < dataKeys.length; i++) {
         try {
             const dataKey = dataKeys[i];
+            // @ts-ignore
             let value = data[dataKey];
 
             const targetFieldSchemaArray = tableSchema
@@ -80,20 +87,29 @@ async function updateDbEntry({
                     ? targetFieldSchemaArray[0]
                     : null;
 
-            if (typeof value == "undefined") continue;
-            if (
-                typeof value !== "string" &&
-                typeof value !== "number" &&
-                !value
-            )
-                continue;
+            if (value == null || value == undefined) continue;
+
+            if (targetFieldSchema?.richText) {
+                value = sanitizeHtml(value, sanitizeHtmlOptions);
+            }
 
             if (targetFieldSchema?.encrypted) {
-                value = encrypt({ data: value, encryptionKey, encryptionSalt });
+                value = encrypt(value, encryptionKey, encryptionSalt);
             }
 
             if (typeof value === "object") {
                 value = JSON.stringify(value);
+            }
+
+            if (targetFieldSchema?.pattern) {
+                const pattern = new RegExp(
+                    targetFieldSchema.pattern,
+                    targetFieldSchema.patternFlags || ""
+                );
+                if (!pattern.test(value)) {
+                    console.log("DSQL: Pattern not matched =>", value);
+                    value = "";
+                }
             }
 
             if (typeof value === "string" && value.match(/^null$/i)) {
@@ -104,17 +120,6 @@ async function updateDbEntry({
                 };
             }
 
-            if (targetFieldSchema?.pattern) {
-                const pattern = new RegExp(
-                    targetFieldSchema.pattern,
-                    targetFieldSchema.patternFlags || ""
-                );
-                if (!value?.toString()?.match(pattern)) {
-                    console.log("DSQL: Pattern not matched =>", value);
-                    value = "";
-                }
-            }
-
             if (typeof value === "string" && !value.match(/./i)) {
                 value = {
                     toSqlString: function () {
@@ -123,14 +128,17 @@ async function updateDbEntry({
                 };
             }
 
-            if (!value && typeof value == "number" && value != 0) continue;
-
             updateKeyValueArray.push(`\`${dataKey}\`=?`);
-            updateValues.push(value);
+
+            if (typeof value == "number") {
+                updateValues.push(String(value));
+            } else {
+                updateValues.push(value);
+            }
 
             ////////////////////////////////////////
             ////////////////////////////////////////
-        } catch (/** @type {*} */ error) {
+        } catch (/** @type {any} */ error) {
             ////////////////////////////////////////
             ////////////////////////////////////////
 
@@ -157,11 +165,14 @@ async function updateDbEntry({
 
     updateValues.push(identifierValue);
 
-    const updatedEntry = await dbHandler({
-        database: dbFullName,
-        query: query,
-        values: updateValues,
-    });
+    const updatedEntry = isMaster
+        ? await dbHandler(query, updateValues)
+        : await dbHandler({
+              paradigm,
+              database: dbFullName,
+              queryString: query,
+              queryValues: updateValues,
+          });
 
     ////////////////////////////////////////
     ////////////////////////////////////////

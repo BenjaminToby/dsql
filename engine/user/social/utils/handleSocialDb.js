@@ -8,8 +8,8 @@
 const fs = require("fs");
 const http = require("http");
 const varDatabaseDbHandler = require("../../../engine/utils/varDatabaseDbHandler");
-const addDbEntry = require("../../../query/utils/addDbEntry");
 const encrypt = require("../../../../functions/encrypt");
+const addDbEntry = require("../../../../package-shared/functions/backend/db/addDbEntry");
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

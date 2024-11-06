@@ -1,6 +1,6 @@
 // @ts-check
 
-const runQuery = require("./utils/runQuery");
+const runQuery = require("../../package-shared/functions/backend/db/runQuery");
 
 /**
  * Make a get request to Datasquirel API
@@ -52,6 +52,7 @@ async function localPost({ options, dbSchema }) {
                 dbSchema: dbSchema,
                 queryValuesArray: queryValues,
                 tableName,
+                local: true,
             });
 
             if (error) throw error;

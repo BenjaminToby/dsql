@@ -3,9 +3,9 @@
  * No imports found for this Module
 ==== MODULE TRACE END ==== */
 
-// @ts-check
+const runQuery = require("../../package-shared/functions/backend/db/runQuery");
 
-const runQuery = require("./utils/runQuery");
+// @ts-check
 
 /**
  * @typedef {Object} LocalGetReturn
@@ -39,7 +39,6 @@ async function localGet({ options, dbSchema }) {
 
         /** @type {string | undefined | any } */
         const tableName = options?.tableName ? options.tableName : undefined;
-
         const dbFullName = process.env.DSQL_DB_NAME || "";
 
         /**
@@ -71,6 +70,7 @@ async function localGet({ options, dbSchema }) {
                 queryValuesArray: queryValues,
                 dbSchema,
                 tableName,
+                local: true,
             });
 
             if (error) throw error;

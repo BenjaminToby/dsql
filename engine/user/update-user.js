@@ -1,6 +1,6 @@
 // @ts-check
 
-const updateDbEntry = require("../query/utils/updateDbEntry");
+const updateDbEntry = require("../../package-shared/functions/backend/db/updateDbEntry");
 
 /**
  * @typedef {Object} LocalPostReturn
