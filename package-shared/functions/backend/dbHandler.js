@@ -4,10 +4,7 @@ const fs = require("fs");
 const serverError = require("./serverError");
 
 const mysql = require("serverless-mysql");
-const path = require("path");
-
-const SSL_DIR =
-    process.env.DSQL_SSL_DIR || path.resolve(__dirname, "../../../ssl");
+const grabDbSSL = require("../../utils/backend/grabDbSSL");
 
 const connection = mysql({
     config: {
@@ -16,9 +13,7 @@ const connection = mysql({
         password: process.env.DSQL_DB_PASSWORD,
         database: process.env.DSQL_DB_NAME,
         charset: "utf8mb4",
-        ssl: {
-            ca: fs.readFileSync(`${SSL_DIR}/ca-cert.pem`),
-        },
+        ssl: grabDbSSL(),
     },
 });
 

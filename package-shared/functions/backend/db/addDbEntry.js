@@ -138,6 +138,13 @@ async function addDbEntry({
 
             if (value == null || value == undefined) continue;
 
+            if (
+                targetFieldSchema?.dataType?.match(/int$/i) &&
+                typeof value == "string" &&
+                !value?.match(/./)
+            )
+                continue;
+
             if (targetFieldSchema?.encrypted) {
                 value = encrypt(value, encryptionKey, encryptionSalt);
                 console.log("DSQL: Encrypted value =>", value);

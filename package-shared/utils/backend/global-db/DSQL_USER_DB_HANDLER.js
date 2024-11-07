@@ -4,9 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 const mysql = require("serverless-mysql");
-
-const SSL_DIR =
-    process.env.DSQL_SSL_DIR || path.resolve(__dirname, "../../../../ssl");
+const grabDbSSL = require("../grabDbSSL");
 
 let DSQL_USER = mysql({
     config: {
@@ -14,9 +12,7 @@ let DSQL_USER = mysql({
         user: process.env.DSQL_DB_READ_ONLY_USERNAME,
         password: process.env.DSQL_DB_READ_ONLY_PASSWORD,
         charset: "utf8mb4",
-        ssl: {
-            ca: fs.readFileSync(`${SSL_DIR}/ca-cert.pem`),
-        },
+        ssl: grabDbSSL(),
     },
 });
 
@@ -48,9 +44,7 @@ function DSQL_USER_DB_HANDLER({
                             user: process.env.DSQL_DB_FULL_ACCESS_USERNAME,
                             password: process.env.DSQL_DB_FULL_ACCESS_PASSWORD,
                             database: database,
-                            ssl: {
-                                ca: fs.readFileSync(`${SSL_DIR}/ca-cert.pem`),
-                            },
+                            ssl: grabDbSSL(),
                         },
                     });
                 } else {
@@ -60,9 +54,7 @@ function DSQL_USER_DB_HANDLER({
                             user: process.env.DSQL_DB_READ_ONLY_USERNAME,
                             password: process.env.DSQL_DB_READ_ONLY_PASSWORD,
                             database: database,
-                            ssl: {
-                                ca: fs.readFileSync(`${SSL_DIR}/ca-cert.pem`),
-                            },
+                            ssl: grabDbSSL(),
                         },
                     });
                 }
