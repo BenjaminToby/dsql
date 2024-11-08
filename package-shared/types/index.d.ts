@@ -1158,6 +1158,7 @@ export type ServerQueryQueryObject = {
         value: string | string[];
         operator?: "AND" | "OR";
         equality?: "EQUAL" | "LIKE";
+        tableName?: string;
     };
 };
 

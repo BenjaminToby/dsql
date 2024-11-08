@@ -8,9 +8,9 @@ const fs = require("fs");
 module.exports = function grabDbSSL() {
     const SSL_DIR = process.env.DSQL_SSL_DIR;
     if (!SSL_DIR?.match(/./)) {
-        console.log(
-            "No SSL certificate provided. Query will run in normal mode. To add SSL add an env path dir `DSQL_SSL_DIR` with a file named `ca-cert.pem`"
-        );
+        // console.log(
+        //     "No SSL certificate provided. Query will run in normal mode. To add SSL add an env path dir `DSQL_SSL_DIR` with a file named `ca-cert.pem`"
+        // );
         return undefined;
     }
 

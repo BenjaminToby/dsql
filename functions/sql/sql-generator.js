@@ -18,7 +18,17 @@ function sqlGenerator({ tableName, genObject }) {
         const queryObj = finalQuery?.[field];
         if (!queryObj) return;
 
-        let str = `${field}=?`;
+        const finalFieldName = (() => {
+            if (queryObj?.tableName) {
+                return `${queryObj.tableName}.${field}`;
+            }
+            if (genObject.join) {
+                return `${tableName}.${field}`;
+            }
+            return field;
+        })();
+
+        let str = `${finalFieldName}=?`;
 
         if (
             typeof queryObj.value == "string" ||
@@ -26,7 +36,7 @@ function sqlGenerator({ tableName, genObject }) {
         ) {
             const valueParsed = String(queryObj.value);
             if (queryObj.equality == "LIKE") {
-                str = `LOWER(${field}) LIKE LOWER('%${valueParsed}%')`;
+                str = `LOWER(${finalFieldName}) LIKE LOWER('%${valueParsed}%')`;
             } else {
                 sqlSearhValues.push(valueParsed);
             }
@@ -37,10 +47,10 @@ function sqlGenerator({ tableName, genObject }) {
                 const valueParsed = val;
                 if (queryObj.equality == "LIKE") {
                     strArray.push(
-                        `LOWER(${field}) LIKE LOWER('%${valueParsed}%')`
+                        `LOWER(${finalFieldName}) LIKE LOWER('%${valueParsed}%')`
                     );
                 } else {
-                    strArray.push(`${field} = ?`);
+                    strArray.push(`${finalFieldName} = ?`);
                     sqlSearhValues.push(valueParsed);
                 }
             });
@@ -148,12 +158,7 @@ function sqlGenerator({ tableName, genObject }) {
 
     if (sqlSearhString) {
         const stringOperator = genObject?.searchOperator || "AND";
-        queryString += ` WHERE ${sqlSearhString
-            .map((str) => {
-                if (genObject.join) return `${tableName}.${str}`;
-                return str;
-            })
-            .join(` ${stringOperator} `)} `;
+        queryString += ` WHERE ${sqlSearhString.join(` ${stringOperator} `)} `;
     }
 
     if (genObject.order)
