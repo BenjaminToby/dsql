@@ -148,7 +148,12 @@ function sqlGenerator({ tableName, genObject }) {
 
     if (sqlSearhString) {
         const stringOperator = genObject?.searchOperator || "AND";
-        queryString += ` WHERE ${sqlSearhString.join(` ${stringOperator} `)} `;
+        queryString += ` WHERE ${sqlSearhString
+            .map((str) => {
+                if (genObject.join) return `${tableName}.${str}`;
+                return str;
+            })
+            .join(` ${stringOperator} `)} `;
     }
 
     if (genObject.order)
