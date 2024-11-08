@@ -1,6 +1,6 @@
 {
     "name": "datasquirel",
-    "version": "2.5.0",
+    "version": "2.5.1",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
@@ -9,7 +9,7 @@
     },
     "scripts": {
         "compile": "tsc --declaration --allowJs --emitDeclarationOnly --resolveJsonModule index.js",
-        "compile-tsc": "rm -rf dist && tsc --declaration --allowJs --outDir dist --emitDeclarationOnly --resolveJsonModule index.js && cat ./dist/index.d.ts > ./index.d.ts"
+        "compile:full": "rm -rf dist && tsc --declaration --allowJs --outDir dist --emitDeclarationOnly --resolveJsonModule index.js && cat ./dist/index.d.ts > ./index.d.ts"
     },
     "repository": {
         "type": "git",

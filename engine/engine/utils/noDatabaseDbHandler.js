@@ -3,8 +3,7 @@
 const fs = require("fs");
 const mysql = require("mysql");
 const path = require("path");
-
-const SSL_PATH = path.resolve(__dirname, "../../../ssl");
+const grabDbSSL = require("../../../package-shared/utils/backend/grabDbSSL");
 
 const connection = mysql.createConnection({
     host: process.env.DSQL_HOST,
@@ -15,9 +14,7 @@ const connection = mysql.createConnection({
         ? parseInt(process.env.DSQL_PORT)
         : undefined,
     timeout: 5000,
-    ssl: {
-        ca: fs.readFileSync(`${SSL_PATH}/ca-cert.pem`),
-    },
+    ssl: grabDbSSL(),
 });
 
 /**
