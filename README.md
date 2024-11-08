@@ -7,7 +7,7 @@ This package requires an account with [datasquirel](https://datasquirel.com/crea
 First add the npm registry to your .npmrc file:
 
 ```bash
-@moduletrace:registry=https://git.tben.me/api/packages/tben/npm/
+@moduletrace:registry=https://git.tben.me/api/packages/moduletrace/npm/
 ```
 
 After setting up the registry you can install the package by running
