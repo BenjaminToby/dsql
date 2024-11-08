@@ -1134,3 +1134,77 @@ export type FetchApiReturn = {
     msg?: string;
     [key: string]: any;
 };
+
+export type ServerQueryParam = {
+    selectFields?: string[];
+    query?: ServerQueryQueryObject;
+    limit?: number;
+    order?: {
+        field: string;
+        strategy: "ASC" | "DESC";
+    };
+    searchOperator?: "AND" | "OR";
+    searchEquality?: "EQUAL" | "LIKE";
+    addUserId?: {
+        fieldName: string;
+    };
+    join?: ServerQueryParamsJoin[];
+} & {
+    [key: string]: any;
+};
+
+export type ServerQueryQueryObject = {
+    [key: string]: {
+        value: string | string[];
+        operator?: "AND" | "OR";
+        equality?: "EQUAL" | "LIKE";
+    };
+};
+
+export type FetchDataParams = {
+    path: string;
+    method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
+    body?: object | string;
+    query?: AuthFetchQuery;
+};
+
+export type AuthFetchQuery = ServerQueryParam & {
+    [key: string]: string | number | { [key: string]: any };
+};
+
+export type ServerQueryParamsJoin = {
+    joinType: "INNER JOIN" | "JOIN" | "LEFT JOIN" | "RIGHT JOIN";
+    tableName: string;
+    match?:
+        | ServerQueryParamsJoinMatchObject
+        | ServerQueryParamsJoinMatchObject[];
+    selectFields?: (
+        | string
+        | {
+              field: string;
+              alias?: string;
+          }
+    )[];
+};
+
+export type ServerQueryParamsJoinMatchObject = {
+    /** Field name from the **Root Table** */
+    source: string | ServerQueryParamsJoinMatchSourceTargetObject;
+    /** Field name from the **Join Table** */
+    target: string | ServerQueryParamsJoinMatchSourceTargetObject;
+};
+
+export type ServerQueryParamsJoinMatchSourceTargetObject = {
+    tableName: string;
+    fieldName: string;
+};
+
+export type SqlGeneratorFn = (Param0: {
+    genObject?: ServerQueryParam;
+    tableName: string;
+}) =>
+    | {
+          string: string;
+          values: string[];
+      }
+    | undefined;

@@ -24,6 +24,9 @@ export namespace user {
 import getSchema = require("./utils/get-schema");
 import sanitizeSql = require("./utils/functions/sanitizeSql");
 import datasquirelClient = require("./client");
+export namespace sql {
+    export { sqlGenerator };
+}
 import uploadImage = require("./utils/upload-image");
 import uploadFile = require("./utils/upload-file");
 import deleteFile = require("./utils/delete-file");
@@ -39,4 +42,5 @@ import getToken = require("./users/get-token");
 import validateToken = require("./users/validate-token");
 import loginWithGoogle = require("./users/social/google-auth");
 import loginWithGithub = require("./users/social/github-auth");
+import sqlGenerator = require("./functions/sql/sql-generator");
 export { get, post, getSchema, sanitizeSql, datasquirelClient as client };

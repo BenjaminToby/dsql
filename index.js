@@ -28,6 +28,7 @@ const validateToken = require("./users/validate-token");
 
 const sanitizeSql = require("./utils/functions/sanitizeSql");
 const datasquirelClient = require("./client");
+const sqlGenerator = require("./functions/sql/sql-generator");
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -63,16 +64,24 @@ const media = {
 };
 
 /**
+ * SQL Utils
+ */
+const sql = {
+    sqlGenerator,
+};
+
+/**
  * Main Export
  */
 const datasquirel = {
-    get: get,
-    post: post,
-    media: media,
-    user: user,
-    getSchema: getSchema,
-    sanitizeSql: sanitizeSql,
+    get,
+    post,
+    media,
+    user,
+    getSchema,
+    sanitizeSql,
     client: datasquirelClient,
+    sql,
 };
 
 module.exports = datasquirel;
