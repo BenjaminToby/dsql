@@ -1100,10 +1100,10 @@ export type CheckApiCredentialsFnParam = {
 export type FetchApiFn = (
     url: string,
     options?: FetchApiOptions,
-    csrf?: boolean
+    contentType?: "json" | "text" | "html" | "blob" | "file"
 ) => Promise<any>;
 
-type FetchApiOptions = {
+export type FetchApiOptions = RequestInit & {
     method:
         | "POST"
         | "GET"
@@ -1117,12 +1117,15 @@ type FetchApiOptions = {
         | "patch";
     body?: object | string;
     headers?: FetchHeader;
+    query?: { [key: string]: any };
 };
 
 export type AuthCsrfHeaderName = "x-csrf-auth";
 
 type FetchHeader = HeadersInit & {
     [key in AuthCsrfHeaderName]?: string | null;
+} & {
+    [key: string]: any;
 };
 
 export type FetchApiReturn = {

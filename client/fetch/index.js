@@ -1,27 +1,30 @@
+// @ts-check
+
+const _ = require("lodash");
+
 /** @type {import("../../package-shared/types").FetchApiFn} */
-async function clientFetch() {
+async function clientFetch(url, options, contentType) {
     let data;
+    let finalUrl = url;
 
     if (typeof options === "string") {
         try {
             let fetchData;
-            const csrfValue = localStorage.getItem("csrf");
 
             switch (options) {
                 case "post":
-                    fetchData = await fetch(url, {
+                    fetchData = await fetch(finalUrl, {
                         method: options,
                         headers: {
                             "Content-Type": "application/json",
-                            "x-csrf-auth": csrf ? csrfValue : "",
                         },
                     });
-                    data = fetchData.json();
+                    data = await fetchData.json();
                     break;
 
                 default:
-                    fetchData = await fetch(url);
-                    data = fetchData.json();
+                    fetchData = await fetch(finalUrl);
+                    data = await fetchData.json();
                     break;
             }
         } catch (/** @type {any} */ error) {
@@ -32,7 +35,25 @@ async function clientFetch() {
         try {
             let fetchData;
 
-            const csrfValue = localStorage.getItem("csrf");
+            if (options.query) {
+                let pathSuffix = "";
+                pathSuffix += "?";
+                const queryString = Object.keys(options.query)
+                    ?.map((queryKey) => {
+                        if (!options.query?.[queryKey]) return undefined;
+                        if (typeof options.query[queryKey] == "object") {
+                            return `${queryKey}=${JSON.stringify(
+                                options.query[queryKey]
+                            )}`;
+                        }
+                        return `${queryKey}=${options.query[queryKey]}`;
+                    })
+                    .filter((prt) => prt)
+                    .join("&");
+                pathSuffix += queryString;
+                finalUrl += pathSuffix;
+                delete options.query;
+            }
 
             if (options.body && typeof options.body === "object") {
                 let oldOptionsBody = _.cloneDeep(options.body);
@@ -40,29 +61,27 @@ async function clientFetch() {
             }
 
             if (options.headers) {
-                options.headers["x-csrf-auth"] = csrf ? csrfValue : "";
-
+                /** @type {any} */
                 const finalOptions = { ...options };
-                fetchData = await fetch(url, finalOptions);
+
+                fetchData = await fetch(finalUrl, finalOptions);
             } else {
-                fetchData = await fetch(url, {
+                fetchData = await fetch(finalUrl, {
                     ...options,
                     headers: {
                         "Content-Type": "application/json",
-                        "x-csrf-auth": csrf ? csrfValue : "",
                     },
                 });
             }
-
-            data = fetchData.json();
+            data = await fetchData.json();
         } catch (/** @type {any} */ error) {
             console.log("FetchAPI error #2:", error.message);
             data = null;
         }
     } else {
         try {
-            let fetchData = await fetch(url);
-            data = fetchData.json();
+            let fetchData = await fetch(finalUrl);
+            data = await fetchData.json();
         } catch (/** @type {any} */ error) {
             console.log("FetchAPI error #3:", error.message);
             data = null;
