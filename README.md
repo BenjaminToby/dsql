@@ -1,17 +1,31 @@
 # Datasquirel
 
-This package requires an account with datasquirel, so be sure to create an account at [datasquirel-create-account](https://datasquirel.com/create-account) before you continue.
+This package requires an account with [datasquirel](https://datasquirel.com/create-account), or a self hosted instance of the datasquirel web admin with your URL. You can also use the SQL query aspect if you provide needed credentials for a database connection, however in this instance the static files feature is disabled.
 
 ## Installation
 
+First add the npm registry to your .npmrc file:
+
 ```bash
-$ npm install --save https://github.com/BenjaminToby/dsql.git
+@moduletrace:registry=https://git.tben.me/api/packages/tben/npm/
+```
+
+After setting up the registry you can install the package by running
+
+```bash
+npm install @moduletrace/datasquirel
 ```
 
 Once the package is installed, you can import the library using `require` approach:
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
+```
+
+Or you can use ES6 module imports:
+
+```js
+import datasquirel from "@moduletrace/datasquirel";
 ```
 
 ## Usage
@@ -21,7 +35,7 @@ const datasquirel = require("datasquirel");
 This method requires a readonly key or fullaccess API key gotten from [datasquirel](https://datasquirel.com/). It uses a basic https get request paired with some query params.
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const getData = await datasquirel.get({
     key: "aldhkf89asdflksdafh908asdfjkhasdf", // Readonly API Key
@@ -37,7 +51,7 @@ Datasquirel uses all conventional SQL query commands. However you can only use t
 This method requires a fullaccess API key gotten from [datasquirel](https://datasquirel.com/). You can perform a basic fetch with this method, as well as more complex operations like `UPDATE`, `DELETE` and `INSERT`.
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const postData = await datasquirel.post({
     key: "aldhkf89asdflksdafh908asdfjkhasdf", // Fullaccess API Key
@@ -56,7 +70,7 @@ const postData = await datasquirel.post({
 You can simply replace the `payload` object with an SQL string and it does everything you provide in the SQL command.
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const postData = await datasquirel.post({
     key: process.env.FULL_ACCESS_API_KEY,
@@ -67,7 +81,7 @@ const postData = await datasquirel.post({
 You can add a condition to the `payload` object to filter the results
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const postData = await datasquirel.post({
     key: process.env.FULL_ACCESS_API_KEY,
@@ -82,7 +96,7 @@ const postData = await datasquirel.post({
 You can use `identifierColumnName` and `identifierValue` when updating an entry.
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const postData = await datasquirel.post({
     key: process.env.FULL_ACCESS_API_KEY,
@@ -104,7 +118,7 @@ const postData = await datasquirel.post({
 This method requires is similar to the `post` method, but with different parameters.
 
 ```js
-const datasquirel = require("datasquirel");
+const datasquirel = require("@moduletrace/datasquirel");
 
 const postData = await datasquirel.uploadImage({
     key: process.env.FULL_ACCESS_API_KEY,
