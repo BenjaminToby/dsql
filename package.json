@@ -1,6 +1,6 @@
 {
     "name": "datasquirel",
-    "version": "2.4.4",
+    "version": "2.4.5",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
@@ -8,6 +8,7 @@
         "dsql-dump": "./engine/dump.js"
     },
     "scripts": {
+        "compile": "tsc --declaration --allowJs --emitDeclarationOnly --resolveJsonModule index.js",
         "compile-tsc": "rm -rf dist && tsc --declaration --allowJs --outDir dist --emitDeclarationOnly --resolveJsonModule index.js && cat ./dist/index.d.ts > ./index.d.ts"
     },
     "repository": {
