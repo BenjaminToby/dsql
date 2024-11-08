@@ -9,6 +9,8 @@ const inputFileToBase64 = require("./media/inputFileToBase64");
 const getAccessToken = require("./auth/google/getAccessToken");
 const getGithubAccessToken = require("./auth/github/getAccessToken");
 const logout = require("./auth/logout");
+const { fetchApi } = require("./fetch");
+const clientFetch = require("./fetch");
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -37,11 +39,16 @@ const auth = {
 };
 
 /**
+ * Fetch
+ */
+const fetch = {
+    fetchApi,
+    clientFetch,
+};
+
+/**
  * Main Export
  */
-const datasquirelClient = {
-    media: media,
-    auth: auth,
-};
+const datasquirelClient = { media, auth, fetch };
 
 module.exports = datasquirelClient;

@@ -27,6 +27,7 @@ const getToken = require("./users/get-token");
 const validateToken = require("./users/validate-token");
 
 const sanitizeSql = require("./utils/functions/sanitizeSql");
+const datasquirelClient = require("./client");
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -71,6 +72,7 @@ const datasquirel = {
     user: user,
     getSchema: getSchema,
     sanitizeSql: sanitizeSql,
+    client: datasquirelClient,
 };
 
 module.exports = datasquirel;

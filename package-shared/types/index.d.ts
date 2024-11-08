@@ -1,4 +1,4 @@
-import http from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 
 import { Editor } from "tinymce";
 export type DSQL_DatabaseFullName = string;
@@ -186,9 +186,9 @@ export interface PackageUserLoginLocalBody {
     dbSchema?: DSQL_DatabaseSchemaType;
 }
 
-type Request = http.IncomingMessage;
+type Request = IncomingMessage;
 
-type Response = http.ServerResponse;
+type Response = ServerResponse;
 
 type ImageInputFileToBase64FunctionReturn = {
     imageBase64: string;
@@ -1095,4 +1095,39 @@ export type CheckApiCredentialsFnParam = {
     key?: string;
     database?: string;
     table?: string;
+};
+
+export type FetchApiFn = (
+    url: string,
+    options?: FetchApiOptions,
+    csrf?: boolean
+) => Promise<any>;
+
+type FetchApiOptions = {
+    method:
+        | "POST"
+        | "GET"
+        | "DELETE"
+        | "PUT"
+        | "PATCH"
+        | "post"
+        | "get"
+        | "delete"
+        | "put"
+        | "patch";
+    body?: object | string;
+    headers?: FetchHeader;
+};
+
+export type AuthCsrfHeaderName = "x-csrf-auth";
+
+type FetchHeader = HeadersInit & {
+    [key in AuthCsrfHeaderName]?: string | null;
+};
+
+export type FetchApiReturn = {
+    success: boolean;
+    payload: any;
+    msg?: string;
+    [key: string]: any;
 };

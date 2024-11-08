@@ -1,11 +1,14 @@
 {
     "name": "datasquirel",
-    "version": "2.4.3",
+    "version": "2.4.4",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {
         "dsql-watch": "./engine/dsql.js",
         "dsql-dump": "./engine/dump.js"
+    },
+    "scripts": {
+        "compile-tsc": "rm -rf dist && tsc --declaration --allowJs --outDir dist --emitDeclarationOnly --resolveJsonModule index.js && cat ./dist/index.d.ts > ./index.d.ts"
     },
     "repository": {
         "type": "git",

@@ -29,7 +29,8 @@
         "types",
         "users",
         "utils",
-        "package-shared"
+        "package-shared",
+        "client"
     ],
     "exclude": ["node_modules", "dump"]
 }
