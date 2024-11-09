@@ -1153,14 +1153,15 @@ export type ServerQueryParam = {
     [key: string]: any;
 };
 
-export type ServerQueryQueryObject = {
-    [key: string]: {
-        value: string | string[];
-        operator?: "AND" | "OR";
-        equality?: "EQUAL" | "LIKE";
-        tableName?: string;
+export type ServerQueryQueryObject<T extends object = { [key: string]: any }> =
+    {
+        [key in keyof T]: {
+            value: string | string[];
+            operator?: "AND" | "OR";
+            equality?: "EQUAL" | "LIKE";
+            tableName?: string;
+        };
     };
-};
 
 export type FetchDataParams = {
     path: string;
