@@ -1174,26 +1174,31 @@ export type AuthFetchQuery = ServerQueryParam & {
     [key: string]: string | number | { [key: string]: any };
 };
 
-export type ServerQueryParamsJoin = {
+export type ServerQueryParamsJoin<
+    Table extends string = string,
+    Field extends object = { [key: string]: any }
+> = {
     joinType: "INNER JOIN" | "JOIN" | "LEFT JOIN" | "RIGHT JOIN";
-    tableName: string;
+    tableName: Table;
     match?:
-        | ServerQueryParamsJoinMatchObject
-        | ServerQueryParamsJoinMatchObject[];
+        | ServerQueryParamsJoinMatchObject<Field>
+        | ServerQueryParamsJoinMatchObject<Field>[];
     selectFields?: (
-        | string
+        | keyof Field
         | {
-              field: string;
+              field: keyof Field;
               alias?: string;
           }
     )[];
 };
 
-export type ServerQueryParamsJoinMatchObject = {
+export type ServerQueryParamsJoinMatchObject<
+    Field extends object = { [key: string]: any }
+> = {
     /** Field name from the **Root Table** */
     source: string | ServerQueryParamsJoinMatchSourceTargetObject;
     /** Field name from the **Join Table** */
-    target: string | ServerQueryParamsJoinMatchSourceTargetObject;
+    target: keyof Field | ServerQueryParamsJoinMatchSourceTargetObject;
 };
 
 export type ServerQueryParamsJoinMatchSourceTargetObject = {
