@@ -27,6 +27,7 @@ import datasquirelClient = require("./client");
 export namespace sql {
     export { sqlGenerator };
     export { sqlInsertGenerator };
+    export { sqlDeleteGenerator };
 }
 import uploadImage = require("./utils/upload-image");
 import uploadFile = require("./utils/upload-file");
@@ -45,4 +46,5 @@ import loginWithGoogle = require("./users/social/google-auth");
 import loginWithGithub = require("./users/social/github-auth");
 import sqlGenerator = require("./functions/sql/sql-generator");
 import sqlInsertGenerator = require("./functions/sql/sql-insert-generator");
+import sqlDeleteGenerator = require("./functions/sql/sql-delete-generator");
 export { get, post, getSchema, sanitizeSql, datasquirelClient as client };
