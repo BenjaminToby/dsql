@@ -29,6 +29,7 @@ const validateToken = require("./users/validate-token");
 const sanitizeSql = require("./utils/functions/sanitizeSql");
 const datasquirelClient = require("./client");
 const sqlGenerator = require("./functions/sql/sql-generator");
+const sqlInsertGenerator = require("./functions/sql/sql-insert-generator");
 
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -68,6 +69,7 @@ const media = {
  */
 const sql = {
     sqlGenerator,
+    sqlInsertGenerator,
 };
 
 /**
