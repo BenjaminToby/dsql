@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @typedef {object} SQLINsertGenReturn
+ * @typedef {object} SQLInsertGenReturn
  * @property {string} query
  * @property {string[]} values
  */
@@ -11,7 +11,7 @@
  * @param {any[]} param0.data
  * @param {string} param0.tableName
  *
- * @return {SQLINsertGenReturn | undefined}
+ * @return {SQLInsertGenReturn | undefined}
  */
 function sqlInsertGenerator({ tableName, data }) {
     try {
