@@ -71,8 +71,7 @@ function sqlGenerator({ tableName, genObject }) {
             typeof mtch.source == "object" ? mtch.source.fieldName : mtch.source
         }=${(() => {
             if (mtch.targetLiteral) {
-                sqlSearhValues.push(mtch.targetLiteral);
-                return "?";
+                return `'${mtch.targetLiteral}'`;
             }
 
             return `${
