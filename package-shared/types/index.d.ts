@@ -1168,6 +1168,7 @@ export type FetchDataParams = {
     method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
     body?: object | string;
     query?: AuthFetchQuery;
+    tableName?: string;
 };
 
 export type AuthFetchQuery = ServerQueryParam & {
@@ -1196,9 +1197,11 @@ export type ServerQueryParamsJoinMatchObject<
     Field extends object = { [key: string]: any }
 > = {
     /** Field name from the **Root Table** */
-    source: string | ServerQueryParamsJoinMatchSourceTargetObject;
+    source?: string | ServerQueryParamsJoinMatchSourceTargetObject;
     /** Field name from the **Join Table** */
-    target: keyof Field | ServerQueryParamsJoinMatchSourceTargetObject;
+    target?: keyof Field | ServerQueryParamsJoinMatchSourceTargetObject;
+    /** A literal value: No source and target Needed! */
+    targetLiteral?: string;
 };
 
 export type ServerQueryParamsJoinMatchSourceTargetObject = {

@@ -69,13 +69,22 @@ function sqlGenerator({ tableName, genObject }) {
             typeof mtch.source == "object" ? mtch.source.tableName : tableName
         }.${
             typeof mtch.source == "object" ? mtch.source.fieldName : mtch.source
-        }=${
-            typeof mtch.target == "object"
-                ? mtch.target.tableName
-                : join.tableName
-        }.${
-            typeof mtch.target == "object" ? mtch.target.fieldName : mtch.target
-        }`;
+        }=${(() => {
+            if (mtch.targetLiteral) {
+                sqlSearhValues.push(mtch.targetLiteral);
+                return "?";
+            }
+
+            return `${
+                typeof mtch.target == "object"
+                    ? mtch.target.tableName
+                    : join.tableName
+            }.${
+                typeof mtch.target == "object"
+                    ? mtch.target.fieldName
+                    : mtch.target
+            }`;
+        })()}`;
     }
 
     let queryString = (() => {
