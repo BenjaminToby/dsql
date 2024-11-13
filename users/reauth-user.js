@@ -13,6 +13,7 @@ const encrypt = require("../functions/encrypt");
 
 const userAuth = require("./user-auth");
 const localReauthUser = require("../engine/user/reauth-user");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -56,9 +57,7 @@ async function reauthUser({
      *
      * @description Check Encryption Keys
      */
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     const existingUser = userAuth({
         database,
@@ -134,9 +133,7 @@ async function reauthUser({
                 additionalFields,
             });
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -144,8 +141,8 @@ async function reauthUser({
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/user/reauth-user`,
                 },
 

@@ -8,6 +8,7 @@ const https = require("https");
 const path = require("path");
 const fs = require("fs");
 const localPost = require("../engine/query/post");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -31,15 +32,7 @@ const localPost = require("../engine/query/post");
  * @returns { Promise<import("../package-shared/types").PostReturn> } - Return Object
  */
 async function post({ key, query, queryValues, database, tableName }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
-    const remoteHost = process.env.DSQL_API_REMOTE_HOST?.match(/.*\..*/)
-        ? process.env.DSQL_API_REMOTE_HOST
-        : undefined;
-    const remoteHostPort = process.env.DSQL_API_REMOTE_HOST_PORT?.match(/./)
-        ? process.env.DSQL_API_REMOTE_HOST_PORT
-        : undefined;
+    const { host, port, scheme } = grabHostNames();
 
     /**
      * Check for local DB settings
@@ -104,7 +97,7 @@ async function post({ key, query, queryValues, database, tableName }) {
 
         const reqPayload = reqPayloadString;
 
-        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
+        const httpsRequest = scheme.request(
             {
                 method: "POST",
                 headers: {
@@ -112,8 +105,8 @@ async function post({ key, query, queryValues, database, tableName }) {
                     "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
-                port: remoteHostPort || localHostPort || 443,
-                hostname: remoteHost || localHost || "datasquirel.com",
+                port,
+                hostname: host,
                 path: `/api/query/post`,
             },
 

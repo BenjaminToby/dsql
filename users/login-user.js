@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const encrypt = require("../functions/encrypt");
 const loginLocalUser = require("../engine/user/login-user");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -56,9 +57,7 @@ async function loginUser({
     temp_code_field,
     token,
 }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     const defaultTempLoginFieldName = "temp_login_code";
     const emailLoginTempCodeFieldName = email_login
@@ -171,9 +170,7 @@ async function loginUser({
 
             const reqPayloadJSON = JSON.stringify(reqPayload);
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -181,8 +178,8 @@ async function loginUser({
                         "Content-Length": Buffer.from(reqPayloadJSON).length,
                         Authorization: key,
                     },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/user/login-user`,
                 },
 

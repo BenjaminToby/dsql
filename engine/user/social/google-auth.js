@@ -6,13 +6,9 @@
  * ==============================================================================
  */
 const http = require("http");
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const encrypt = require("../../../functions/encrypt");
-const decrypt = require("../../../functions/decrypt");
 const handleSocialDb = require("./utils/handleSocialDb");
 const httpsRequest = require("./utils/httpsRequest");
+const grabHostNames = require("../../../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -60,9 +56,7 @@ async function localGoogleAuth({
      *
      * @description Send a boolean response
      */
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     try {
         /**
@@ -73,7 +67,7 @@ async function localGoogleAuth({
          */
         const payloadResponse = await httpsRequest({
             method: "POST",
-            hostname: localHost || "datasquirel.com",
+            hostname: host,
             path: "/user/grab-google-user-from-token",
             body: {
                 token: token,

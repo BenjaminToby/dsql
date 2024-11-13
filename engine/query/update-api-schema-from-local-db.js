@@ -7,6 +7,7 @@ const https = require("https");
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const grabHostNames = require("../../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -38,10 +39,7 @@ async function updateApiSchemaFromLocalDb() {
         const key = process.env.DSQL_KEY || "";
 
         const dbSchema = JSON.parse(fs.readFileSync(dbSchemaPath, "utf8"));
-
-        const scheme = process.env.DSQL_HTTP_SCHEME;
-        const localHost = process.env.DSQL_LOCAL_HOST;
-        const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+        const { host, port, scheme } = grabHostNames();
 
         /**
          * Make https request
@@ -68,9 +66,7 @@ async function updateApiSchemaFromLocalDb() {
 
             const reqPayload = reqPayloadString;
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -78,8 +74,8 @@ async function updateApiSchemaFromLocalDb() {
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/query/update-schema-from-single-database`,
                 },
 

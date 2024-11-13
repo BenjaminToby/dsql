@@ -7,6 +7,7 @@
  */
 const http = require("http");
 const https = require("https");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -28,15 +29,7 @@ const https = require("https");
  * @returns { Promise<GetSchemaReturn> } - Return Object
  */
 async function getSchema({ key, database, field, table }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
-    const remoteHost = process.env.DSQL_API_REMOTE_HOST?.match(/.*\..*/)
-        ? process.env.DSQL_API_REMOTE_HOST
-        : undefined;
-    const remoteHostPort = process.env.DSQL_API_REMOTE_HOST_PORT?.match(/./)
-        ? process.env.DSQL_API_REMOTE_HOST_PORT
-        : undefined;
+    const { host, port, scheme } = grabHostNames();
 
     /**
      * Make https request
@@ -53,7 +46,7 @@ async function getSchema({ key, database, field, table }) {
             .map((k) => `${k}=${queryObject[k]}`)
             .join("&");
 
-        (scheme?.match(/^http$/i) ? http : https)
+        scheme
             .request(
                 {
                     method: "GET",
@@ -61,8 +54,8 @@ async function getSchema({ key, database, field, table }) {
                         "Content-Type": "application/json",
                         Authorization: key,
                     },
-                    port: remoteHostPort || localHostPort || 443,
-                    hostname: remoteHost || localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path:
                         "/api/query/get-schema" +
                         (query?.match(/./) ? `?${query}` : ""),

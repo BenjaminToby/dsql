@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const encrypt = require("../../functions/encrypt");
 const localGoogleAuth = require("../../engine/user/social/google-auth");
+const grabHostNames = require("../../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -55,9 +56,7 @@ async function googleAuth({
     encryptionSalt,
     additionalFields,
 }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     /**
      * Check inputs
@@ -189,9 +188,7 @@ async function googleAuth({
                 additionalFields,
             });
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -199,8 +196,8 @@ async function googleAuth({
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/user/google-login`,
                 },
 

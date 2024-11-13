@@ -10,6 +10,7 @@ const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const localAddUser = require("../engine/user/add-user");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -54,9 +55,7 @@ async function addUser({
         DSQL_FULL_SYNC,
     } = process.env;
 
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     if (
         DSQL_HOST?.match(/./) &&
@@ -97,7 +96,7 @@ async function addUser({
             encryptionKey,
         });
 
-        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
+        const httpsRequest = scheme.request(
             {
                 method: "POST",
                 headers: {
@@ -105,8 +104,8 @@ async function addUser({
                     "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
-                port: localHostPort || 443,
-                hostname: localHost || "datasquirel.com",
+                port,
+                hostname: host,
                 path: `/api/user/add-user`,
             },
 

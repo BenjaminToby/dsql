@@ -11,6 +11,7 @@ const path = require("path");
 const fs = require("fs");
 const localGet = require("../engine/query/get");
 const serializeQuery = require("./functions/serialize-query");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -34,15 +35,7 @@ const serializeQuery = require("./functions/serialize-query");
  * @returns { Promise<import("../package-shared/types").GetReturn> } - Return Object
  */
 async function get({ key, db, query, queryValues, tableName }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
-    const remoteHost = process.env.DSQL_API_REMOTE_HOST?.match(/.*\..*/)
-        ? process.env.DSQL_API_REMOTE_HOST
-        : undefined;
-    const remoteHostPort = process.env.DSQL_API_REMOTE_HOST_PORT?.match(/./)
-        ? process.env.DSQL_API_REMOTE_HOST_PORT
-        : undefined;
+    const { host, port, scheme } = grabHostNames();
 
     /**
      * Check for local DB settings
@@ -109,12 +102,12 @@ async function get({ key, db, query, queryValues, tableName }) {
                 "Content-Type": "application/json",
                 Authorization: key,
             },
-            port: remoteHostPort || localHostPort || 443,
-            hostname: remoteHost || localHost || "datasquirel.com",
+            port,
+            hostname: host,
             path: encodeURI(path),
         };
 
-        (scheme?.match(/^http$/i) ? http : https)
+        scheme
             .request(
                 requestObject,
 

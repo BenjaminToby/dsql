@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
@@ -5,6 +7,7 @@
  */
 const http = require("http");
 const https = require("https");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -19,7 +22,7 @@ const https = require("https");
  * @property {{
  *   urlPath: string,
  *   urlThumbnailPath: string
- * }} payload - Payload containing the url for the image and its thumbnail
+ * } | null} payload - Payload containing the url for the image and its thumbnail
  *  @property {string} [msg] - An optional message
  */
 
@@ -36,15 +39,7 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> } - Image Url
  */
 async function uploadImage({ key, url }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
-    const remoteHost = process.env.DSQL_API_REMOTE_HOST?.match(/.*\..*/)
-        ? process.env.DSQL_API_REMOTE_HOST
-        : undefined;
-    const remoteHostPort = process.env.DSQL_API_REMOTE_HOST_PORT?.match(/./)
-        ? process.env.DSQL_API_REMOTE_HOST_PORT
-        : undefined;
+    const { host, port, scheme } = grabHostNames();
 
     try {
         /**
@@ -55,9 +50,7 @@ async function uploadImage({ key, url }) {
         const httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify({ url: url });
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -65,8 +58,8 @@ async function uploadImage({ key, url }) {
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: remoteHostPort || localHostPort || 443,
-                    hostname: remoteHost || localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/query/delete-file`,
                 },
 

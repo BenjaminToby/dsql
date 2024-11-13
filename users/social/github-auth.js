@@ -11,6 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const encrypt = require("../../functions/encrypt");
 const localGithubAuth = require("../../engine/user/social/github-auth");
+const grabHostNames = require("../../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -64,9 +65,7 @@ async function githubAuth({
      *
      * @description Check inputs
      */
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     if (!key || key?.match(/ /)) {
         return {
@@ -193,9 +192,7 @@ async function githubAuth({
                 additionalFields,
             });
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -203,8 +200,8 @@ async function githubAuth({
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: localHostPort || 443,
-                    hostname: localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/user/github-login`,
                 },
 

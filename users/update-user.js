@@ -10,6 +10,7 @@ const https = require("https");
 const path = require("path");
 const fs = require("fs");
 const localUpdateUser = require("../engine/user/update-user");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -47,9 +48,7 @@ async function updateUser({ key, payload, database }) {
         DSQL_FULL_SYNC,
     } = process.env;
 
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     if (
         DSQL_HOST?.match(/./) &&
@@ -87,7 +86,7 @@ async function updateUser({ key, payload, database }) {
             database,
         });
 
-        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
+        const httpsRequest = scheme.request(
             {
                 method: "POST",
                 headers: {
@@ -95,8 +94,8 @@ async function updateUser({ key, payload, database }) {
                     "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
-                port: localHostPort || 443,
-                hostname: localHost || "datasquirel.com",
+                port,
+                hostname: host,
                 path: `/api/user/update-user`,
             },
 

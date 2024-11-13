@@ -1,9 +1,10 @@
+// @ts-check
+
 /**
  * Imports
  * ==============================================================================
  */
-const https = require("https");
-const http = require("http");
+const grabHostNames = require("../../../../package-shared/utils/grab-host-names");
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -28,18 +29,17 @@ const http = require("http");
 function httpsRequest({ url, method, hostname, path, href, headers, body }) {
     const reqPayloadString = body ? JSON.stringify(body) : null;
 
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
     ////////////////////////////////////////////////
 
+    /** @type {any} */
     let requestOptions = {
         method: method,
-        hostname: localHost || hostname,
-        port: localHostPort || 443,
+        hostname: host,
+        port,
         headers: {},
     };
 
@@ -59,7 +59,7 @@ function httpsRequest({ url, method, hostname, path, href, headers, body }) {
     ////////////////////////////////////////////////
 
     return new Promise((res, rej) => {
-        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
+        const httpsRequest = scheme.request(
             /* ====== Request Options object ====== */
             // @ts-ignore
             url ? url : requestOptions,

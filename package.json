@@ -1,6 +1,6 @@
 {
     "name": "@moduletrace/datasquirel",
-    "version": "2.6.2",
+    "version": "2.6.3",
     "description": "Cloud-based SQL data management tool",
     "main": "index.js",
     "bin": {

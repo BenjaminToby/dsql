@@ -7,6 +7,7 @@
  */
 const http = require("http");
 const https = require("https");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -43,15 +44,7 @@ const https = require("https");
  * @returns { Promise<FunctionReturn> } - Return Object
  */
 async function uploadImage({ key, payload }) {
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
-    const remoteHost = process.env.DSQL_API_REMOTE_HOST?.match(/.*\..*/)
-        ? process.env.DSQL_API_REMOTE_HOST
-        : undefined;
-    const remoteHostPort = process.env.DSQL_API_REMOTE_HOST_PORT?.match(/./)
-        ? process.env.DSQL_API_REMOTE_HOST_PORT
-        : undefined;
+    const { host, port, scheme } = grabHostNames();
 
     try {
         /**
@@ -62,9 +55,7 @@ async function uploadImage({ key, payload }) {
         const httpResponse = await new Promise((resolve, reject) => {
             const reqPayload = JSON.stringify(payload);
 
-            const httpsRequest = (
-                scheme?.match(/^http$/i) ? http : https
-            ).request(
+            const httpsRequest = scheme.request(
                 {
                     method: "POST",
                     headers: {
@@ -72,8 +63,8 @@ async function uploadImage({ key, payload }) {
                         "Content-Length": Buffer.from(reqPayload).length,
                         Authorization: key,
                     },
-                    port: remoteHostPort || localHostPort || 443,
-                    hostname: remoteHost || localHost || "datasquirel.com",
+                    port,
+                    hostname: host,
                     path: `/api/query/add-file`,
                 },
 

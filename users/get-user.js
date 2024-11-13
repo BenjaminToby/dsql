@@ -1,11 +1,16 @@
+// @ts-check
+
 /**
  * ==============================================================================
  * Imports
  * ==============================================================================
  */
+const path = require("path");
+const fs = require("fs");
 const https = require("https");
 const http = require("http");
 const getLocalUser = require("../engine/user/get-user");
+const grabHostNames = require("../package-shared/utils/grab-host-names");
 
 /** ****************************************************************************** */
 /** ****************************************************************************** */
@@ -26,7 +31,7 @@ const getLocalUser = require("../engine/user/get-user");
  * @param {number} params.userId - user id
  * @param {string[]} [params.fields] - fields to select
  *
- * @returns { Promise<import("../types/user.td").GetUserFunctionReturn>}
+ * @returns { Promise<import("../package-shared/types").GetUserFunctionReturn>}
  */
 async function getUser({ key, userId, database, fields }) {
     /**
@@ -58,9 +63,7 @@ async function getUser({ key, userId, database, fields }) {
         fields: [...new Set(updatedFields)],
     });
 
-    const scheme = process.env.DSQL_HTTP_SCHEME;
-    const localHost = process.env.DSQL_LOCAL_HOST;
-    const localHostPort = process.env.DSQL_LOCAL_HOST_PORT;
+    const { host, port, scheme } = grabHostNames();
 
     /**
      * Check for local DB settings
@@ -83,7 +86,7 @@ async function getUser({ key, userId, database, fields }) {
         DSQL_PASS?.match(/./) &&
         DSQL_DB_NAME?.match(/./)
     ) {
-        /** @type {DSQL_DatabaseSchemaType | undefined} */
+        /** @type {import("../package-shared/types").DSQL_DatabaseSchemaType | undefined} */
         let dbSchema;
 
         try {
@@ -109,7 +112,7 @@ async function getUser({ key, userId, database, fields }) {
      * @description make a request to datasquirel.com
      */
     const httpResponse = await new Promise((resolve, reject) => {
-        const httpsRequest = (scheme?.match(/^http$/i) ? http : https).request(
+        const httpsRequest = scheme.request(
             {
                 method: "POST",
                 headers: {
@@ -117,8 +120,8 @@ async function getUser({ key, userId, database, fields }) {
                     "Content-Length": Buffer.from(reqPayload).length,
                     Authorization: key,
                 },
-                port: localHostPort || 443,
-                hostname: localHost || "datasquirel.com",
+                port,
+                hostname: host,
                 path: `/api/user/get-user`,
             },
 
