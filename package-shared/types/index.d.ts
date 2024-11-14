@@ -1172,7 +1172,7 @@ export type FetchDataParams = {
 };
 
 export type AuthFetchQuery = ServerQueryParam & {
-    [key: string]: string | number | { [key: string]: any };
+    [key: string]: any;
 };
 
 export type ServerQueryParamsJoin<

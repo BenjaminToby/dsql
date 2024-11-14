@@ -105,10 +105,17 @@ function sqlGenerator({ tableName, genObject }) {
         }
 
         if (genObject.join) {
+            /** @type {string[]} */
+            const existingJoinTableNames = [tableName];
+
             str +=
                 "," +
                 genObject.join
                     .map((joinObj) => {
+                        if (existingJoinTableNames.includes(joinObj.tableName))
+                            return null;
+                        existingJoinTableNames.push(joinObj.tableName);
+
                         if (joinObj.selectFields) {
                             return joinObj.selectFields
                                 .map((slFld) => {
@@ -126,6 +133,7 @@ function sqlGenerator({ tableName, genObject }) {
                             return `${joinObj.tableName}.*`;
                         }
                     })
+                    .filter((_) => Boolean(_))
                     .join(",");
         }
 
